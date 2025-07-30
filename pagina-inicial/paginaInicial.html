@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Sport Ativa - Página Inicial</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <!-- CSS personalizado -->
+    <link rel="stylesheet" href="paginaInicial.css">
+</head>
+
+<body>
+
+    <!-- Navbar Topo -->
+    <!-- Navbar Superior -->
+    <header class="navbar-top py-3 shadow-sm">
+        <div class="container d-flex justify-content-between align-items-center flex-wrap">
+
+            <!-- Logo -->
+            <a href="#" class="navbar-brand d-flex align-items-center mb-2 mb-md-0 text-white text-decoration-none">
+                <i class="bi bi-basket-fill me-2 fs-3"></i>
+                <span class="fs-4">Sport Ativa</span>
+            </a>
+
+            <!-- Barra de busca -->
+            <form class="d-flex flex-grow-1 mx-4" role="search">
+                <input class="form-control form-control-lg rounded-start border-0" type="search"
+                    placeholder="O que você procura?" aria-label="Pesquisar">
+                <button class="btn btn-light btn-lg rounded-end" type="submit">
+                    <i class="bi bi-search"></i>
+                </button>
+            </form>
+
+
+            <!-- Ícones de ação -->
+            <a href="#" class="text-white text-decoration-none d-flex align-items-center">
+                <i class="bi bi-person-circle fs-4 me-1"></i>
+                <span id="nome-usuario">Entrar ou cadastrar-se</span>
+            </a>
+
+            <a href="#" class="text-white fs-4 text-decoration-none position-relative">
+                <i class="bi bi-heart"></i>
+            </a>
+            <a href="#" class="text-white fs-4 text-decoration-none position-relative">
+                <i class="bi bi-cart"></i>
+            </a>
+        </div>
+
+        </div>
+    </header>
+
+
+    <!-- Menu horizontal aprimorado -->
+    <nav class="menu-horizontal bg-white border-bottom shadow-sm">
+        <div class="container">
+            <ul class="nav justify-content-between flex-wrap py-2 px-1">
+                <li class="nav-item"><a class="nav-link menu-link" href="#">Esportes</a></li>
+                <li class="nav-item"><a class="nav-link menu-link" href="#">Homens</a></li>
+                <li class="nav-item"><a class="nav-link menu-link active" href="#">Mulheres</a></li>
+                <li class="nav-item"><a class="nav-link menu-link" href="#">Crianças</a></li>
+                <li class="nav-item"><a class="nav-link menu-link" href="#">Calçados</a></li>
+                <li class="nav-item"><a class="nav-link menu-link" href="#">Corrida</a></li>
+                <li class="nav-item"><a class="nav-link menu-link" href="#">Futebol</a></li>
+                <li class="nav-item"><a class="nav-link menu-link" href="#">Basquete</a></li>
+                <li class="nav-item"><a class="nav-link menu-link" href="#">Bicicleta</a></li>
+                <li class="nav-item"><a class="nav-link menu-link" href="#">Marcas</a></li>
+                <li class="nav-item"><a class="nav-link menu-link destaque" href="#">Outlet</a></li>
+            </ul>
+        </div>
+    </nav>
+
+
+    <!-- Conteúdo principal -->
+    <div class="container-fluid mt-4">
+        <div class="row">
+
+            <!-- Sidebar -->
+            <aside class="col-md-3 sidebar bg-light p-3 border-end">
+                <h4 class="mb-4 text-danger">Filtros</h4>
+                <div class="accordion" id="filtroAccordion">
+
+                    <!-- Marca -->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingMarca">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#collapseMarca">
+                                Marca
+                            </button>
+                        </h2>
+                        <div id="collapseMarca" class="accordion-collapse collapse" data-bs-parent="#filtroAccordion">
+                            <div class="accordion-body">
+                                <div><input type="checkbox"> Nike</div>
+                                <div><input type="checkbox"> Adidas</div>
+                                <div><input type="checkbox"> Puma</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tamanho -->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#collapseTamanho">
+                                Tamanho
+                            </button>
+                        </h2>
+                        <div id="collapseTamanho" class="accordion-collapse collapse" data-bs-parent="#filtroAccordion">
+                            <div class="accordion-body">
+                                <div><input type="checkbox"> P</div>
+                                <div><input type="checkbox"> M</div>
+                                <div><input type="checkbox"> G</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Gênero -->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#collapseGenero">
+                                Gênero
+                            </button>
+                        </h2>
+                        <div id="collapseGenero" class="accordion-collapse collapse" data-bs-parent="#filtroAccordion">
+                            <div class="accordion-body">
+                                <div><input type="checkbox"> Masculino</div>
+                                <div><input type="checkbox"> Feminino</div>
+                                <div><input type="checkbox"> Infantil</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Produtos -->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#collapseProduto">
+                                Produtos
+                            </button>
+                        </h2>
+                        <div id="collapseProduto" class="accordion-collapse collapse" data-bs-parent="#filtroAccordion">
+                            <div class="accordion-body">
+                                <div><input type="checkbox"> Camisetas</div>
+                                <div><input type="checkbox"> Tênis</div>
+                                <div><input type="checkbox"> Shorts</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Preço -->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#collapsePreco">
+                                Preço
+                            </button>
+                        </h2>
+                        <div id="collapsePreco" class="accordion-collapse collapse" data-bs-parent="#filtroAccordion">
+                            <div class="accordion-body">
+                                <div><input type="checkbox"> Até R$ 100</div>
+                                <div><input type="checkbox"> R$ 100 - R$ 200</div>
+                                <div><input type="checkbox"> Acima de R$ 200</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Esportes -->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#collapseEsporte">
+                                Esportes
+                            </button>
+                        </h2>
+                        <div id="collapseEsporte" class="accordion-collapse collapse" data-bs-parent="#filtroAccordion">
+                            <div class="accordion-body">
+                                <div><input type="checkbox"> Futebol</div>
+                                <div><input type="checkbox"> Corrida</div>
+                                <div><input type="checkbox"> Basquete</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Cor -->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#collapseCor">
+                                Cor
+                            </button>
+                        </h2>
+                        <div id="collapseCor" class="accordion-collapse collapse" data-bs-parent="#filtroAccordion">
+                            <div class="accordion-body">
+                                <div><input type="checkbox"> Preto</div>
+                                <div><input type="checkbox"> Vermelho</div>
+                                <div><input type="checkbox"> Azul</div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </aside>
+
+            <!-- Conteúdo principal / Cards -->
+            <main class="col-md-9">
+                <h2 class="mb-3">Roupas esportivas adulto e infantil</h2>
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <div class="btn-group" role="group">
+                        <button class="btn btn-outline-secondary">Até R$ 100</button>
+                        <button class="btn btn-outline-secondary">R$ 100 - R$ 200</button>
+                        <button class="btn btn-outline-secondary">R$ 200 - R$ 300</button>
+                    </div>
+                    <select class="form-select w-auto">
+                        <option>Ordenar por Relevância</option>
+                        <option>Menor preço</option>
+                        <option>Maior preço</option>
+                        <option>Mais vendidos</option>
+                    </select>
+                </div>
+
+                <!-- Cards de Produtos -->
+                <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
+
+                    <!-- Card 1 -->
+                    <div class="col">
+                        <div class="card product-card h-100 shadow-sm">
+                            <img src="https://via.placeholder.com/300x300" class="card-img-top" alt="Produto">
+                            <div class="card-body d-flex flex-column justify-content-between">
+                                <div>
+                                    <h5 class="card-title">Tênis de Corrida</h5>
+                                    <p class="card-text text-muted small">Conforto ideal para longas distâncias.</p>
+                                    <p class="mb-1"><strong>Tamanho:</strong> 42</p>
+                                    <p class="mb-2"><strong>Cor:</strong> Preto</p>
+                                </div>
+                                <div>
+                                    <p class="price mb-1"><strong>R$ 249,90</strong></p>
+                                    <button class="btn btn-outline-danger w-100">Ver produto</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 2 -->
+                    <div class="col">
+                        <div class="card product-card h-100 shadow-sm">
+                            <img src="https://via.placeholder.com/300x300" class="card-img-top" alt="Produto">
+                            <div class="card-body d-flex flex-column justify-content-between">
+                                <div>
+                                    <h5 class="card-title">Camiseta Dry Fit</h5>
+                                    <p class="card-text text-muted small">Ideal para treinos intensos e absorção de
+                                        suor.</p>
+                                    <p class="mb-1"><strong>Tamanho:</strong> M</p>
+                                    <p class="mb-2"><strong>Cor:</strong> Azul</p>
+                                </div>
+                                <div>
+                                    <p class="price mb-1"><strong>R$ 79,90</strong></p>
+                                    <button class="btn btn-outline-danger w-100">Ver produto</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 3 -->
+                    <div class="col">
+                        <div class="card product-card h-100 shadow-sm">
+                            <img src="https://via.placeholder.com/300x300" class="card-img-top" alt="Produto">
+                            <div class="card-body d-flex flex-column justify-content-between">
+                                <div>
+                                    <h5 class="card-title">Shorts Esportivo</h5>
+                                    <p class="card-text text-muted small">Respirável e com tecido leve.</p>
+                                    <p class="mb-1"><strong>Tamanho:</strong> G</p>
+                                    <p class="mb-2"><strong>Cor:</strong> Cinza</p>
+                                </div>
+                                <div>
+                                    <p class="price mb-1"><strong>R$ 59,90</strong></p>
+                                    <button class="btn btn-outline-danger w-100">Ver produto</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 4 -->
+                    <div class="col">
+                        <div class="card product-card h-100 shadow-sm">
+                            <img src="https://via.placeholder.com/300x300" class="card-img-top" alt="Produto">
+                            <div class="card-body d-flex flex-column justify-content-between">
+                                <div>
+                                    <h5 class="card-title">Top Fitness</h5>
+                                    <p class="card-text text-muted small">Suporte ideal para treinos de alta
+                                        intensidade.</p>
+                                    <p class="mb-1"><strong>Tamanho:</strong> P</p>
+                                    <p class="mb-2"><strong>Cor:</strong> Rosa</p>
+                                </div>
+                                <div>
+                                    <p class="price mb-1"><strong>R$ 69,90</strong></p>
+                                    <button class="btn btn-outline-danger w-100">Ver produto</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Card 1 -->
+                    <div class="col">
+                        <div class="card product-card h-100 shadow-sm">
+                            <img src="https://via.placeholder.com/300x300" class="card-img-top" alt="Produto">
+                            <div class="card-body d-flex flex-column justify-content-between">
+                                <div>
+                                    <h5 class="card-title">Tênis de Corrida</h5>
+                                    <p class="card-text text-muted small">Conforto ideal para longas distâncias.</p>
+                                    <p class="mb-1"><strong>Tamanho:</strong> 42</p>
+                                    <p class="mb-2"><strong>Cor:</strong> Preto</p>
+                                </div>
+                                <div>
+                                    <p class="price mb-1"><strong>R$ 249,90</strong></p>
+                                    <button class="btn btn-outline-danger w-100">Ver produto</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 2 -->
+                    <div class="col">
+                        <div class="card product-card h-100 shadow-sm">
+                            <img src="https://via.placeholder.com/300x300" class="card-img-top" alt="Produto">
+                            <div class="card-body d-flex flex-column justify-content-between">
+                                <div>
+                                    <h5 class="card-title">Camiseta Dry Fit</h5>
+                                    <p class="card-text text-muted small">Ideal para treinos intensos e absorção de
+                                        suor.</p>
+                                    <p class="mb-1"><strong>Tamanho:</strong> M</p>
+                                    <p class="mb-2"><strong>Cor:</strong> Azul</p>
+                                </div>
+                                <div>
+                                    <p class="price mb-1"><strong>R$ 79,90</strong></p>
+                                    <button class="btn btn-outline-danger w-100">Ver produto</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 3 -->
+                    <div class="col">
+                        <div class="card product-card h-100 shadow-sm">
+                            <img src="https://via.placeholder.com/300x300" class="card-img-top" alt="Produto">
+                            <div class="card-body d-flex flex-column justify-content-between">
+                                <div>
+                                    <h5 class="card-title">Shorts Esportivo</h5>
+                                    <p class="card-text text-muted small">Respirável e com tecido leve.</p>
+                                    <p class="mb-1"><strong>Tamanho:</strong> G</p>
+                                    <p class="mb-2"><strong>Cor:</strong> Cinza</p>
+                                </div>
+                                <div>
+                                    <p class="price mb-1"><strong>R$ 59,90</strong></p>
+                                    <button class="btn btn-outline-danger w-100">Ver produto</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 4 -->
+                    <div class="col">
+                        <div class="card product-card h-100 shadow-sm">
+                            <img src="https://via.placeholder.com/300x300" class="card-img-top" alt="Produto">
+                            <div class="card-body d-flex flex-column justify-content-between">
+                                <div>
+                                    <h5 class="card-title">Top Fitness</h5>
+                                    <p class="card-text text-muted small">Suporte ideal para treinos de alta
+                                        intensidade.</p>
+                                    <p class="mb-1"><strong>Tamanho:</strong> P</p>
+                                    <p class="mb-2"><strong>Cor:</strong> Rosa</p>
+                                </div>
+                                <div>
+                                    <p class="price mb-1"><strong>R$ 69,90</strong></p>
+                                    <button class="btn btn-outline-danger w-100">Ver produto</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Card 1 -->
+                    <div class="col">
+                        <div class="card product-card h-100 shadow-sm">
+                            <img src="https://via.placeholder.com/300x300" class="card-img-top" alt="Produto">
+                            <div class="card-body d-flex flex-column justify-content-between">
+                                <div>
+                                    <h5 class="card-title">Tênis de Corrida</h5>
+                                    <p class="card-text text-muted small">Conforto ideal para longas distâncias.</p>
+                                    <p class="mb-1"><strong>Tamanho:</strong> 42</p>
+                                    <p class="mb-2"><strong>Cor:</strong> Preto</p>
+                                </div>
+                                <div>
+                                    <p class="price mb-1"><strong>R$ 249,90</strong></p>
+                                    <button class="btn btn-outline-danger w-100">Ver produto</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 2 -->
+                    <div class="col">
+                        <div class="card product-card h-100 shadow-sm">
+                            <img src="https://via.placeholder.com/300x300" class="card-img-top" alt="Produto">
+                            <div class="card-body d-flex flex-column justify-content-between">
+                                <div>
+                                    <h5 class="card-title">Camiseta Dry Fit</h5>
+                                    <p class="card-text text-muted small">Ideal para treinos intensos e absorção de
+                                        suor.</p>
+                                    <p class="mb-1"><strong>Tamanho:</strong> M</p>
+                                    <p class="mb-2"><strong>Cor:</strong> Azul</p>
+                                </div>
+                                <div>
+                                    <p class="price mb-1"><strong>R$ 79,90</strong></p>
+                                    <button class="btn btn-outline-danger w-100">Ver produto</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 3 -->
+                    <div class="col">
+                        <div class="card product-card h-100 shadow-sm">
+                            <img src="https://via.placeholder.com/300x300" class="card-img-top" alt="Produto">
+                            <div class="card-body d-flex flex-column justify-content-between">
+                                <div>
+                                    <h5 class="card-title">Shorts Esportivo</h5>
+                                    <p class="card-text text-muted small">Respirável e com tecido leve.</p>
+                                    <p class="mb-1"><strong>Tamanho:</strong> G</p>
+                                    <p class="mb-2"><strong>Cor:</strong> Cinza</p>
+                                </div>
+                                <div>
+                                    <p class="price mb-1"><strong>R$ 59,90</strong></p>
+                                    <button class="btn btn-outline-danger w-100">Ver produto</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 4 -->
+                    <div class="col">
+                        <div class="card product-card h-100 shadow-sm">
+                            <img src="https://via.placeholder.com/300x300" class="card-img-top" alt="Produto">
+                            <div class="card-body d-flex flex-column justify-content-between">
+                                <div>
+                                    <h5 class="card-title">Top Fitness</h5>
+                                    <p class="card-text text-muted small">Suporte ideal para treinos de alta
+                                        intensidade.</p>
+                                    <p class="mb-1"><strong>Tamanho:</strong> P</p>
+                                    <p class="mb-2"><strong>Cor:</strong> Rosa</p>
+                                </div>
+                                <div>
+                                    <p class="price mb-1"><strong>R$ 69,90</strong></p>
+                                    <button class="btn btn-outline-danger w-100">Ver produto</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Você pode duplicar mais cards abaixo conforme necessário -->
+
+                </div>
+
+            </main>
+        </div>
+    </div>
+    <footer class="footer bg-dark text-white pt-5 pb-3 mt-5">
+        <div class="container">
+            <div class="row">
+
+                <!-- Logo e descrição -->
+                <div class="col-md-4 mb-4">
+                    <h4 class="text-danger fw-bold">Sport Ativa</h4>
+                    <p class="small">Movimente seu estilo com os melhores produtos esportivos para todas as idades.</p>
+                    <div class="d-flex gap-3">
+                        <a href="#" class="text-white"><i class="bi bi-facebook fs-5"></i></a>
+                        <a href="#" class="text-white"><i class="bi bi-instagram fs-5"></i></a>
+                        <a href="#" class="text-white"><i class="bi bi-youtube fs-5"></i></a>
+                        <a href="#" class="text-white"><i class="bi bi-twitter fs-5"></i></a>
+                    </div>
+                </div>
+
+                <!-- Links rápidos -->
+                <div class="col-md-2 mb-4">
+                    <h6 class="text-uppercase fw-bold">Institucional</h6>
+                    <ul class="list-unstyled small">
+                        <li><a href="#" class="text-white text-decoration-none">Sobre nós</a></li>
+                        <li><a href="#" class="text-white text-decoration-none">Trabalhe conosco</a></li>
+                        <li><a href="#" class="text-white text-decoration-none">Lojas físicas</a></li>
+                    </ul>
+                </div>
+
+                <!-- Ajuda -->
+                <div class="col-md-3 mb-4">
+                    <h6 class="text-uppercase fw-bold">Ajuda</h6>
+                    <ul class="list-unstyled small">
+                        <li><a href="#" class="text-white text-decoration-none">Fale conosco</a></li>
+                        <li><a href="#" class="text-white text-decoration-none">Política de troca</a></li>
+                        <li><a href="#" class="text-white text-decoration-none">Prazo de entrega</a></li>
+                    </ul>
+                </div>
+
+                <!-- Categorias -->
+                <div class="col-md-3 mb-4">
+                    <h6 class="text-uppercase fw-bold">Categorias</h6>
+                    <ul class="list-unstyled small">
+                        <li><a href="#" class="text-white text-decoration-none">Roupas</a></li>
+                        <li><a href="#" class="text-white text-decoration-none">Tênis</a></li>
+                        <li><a href="#" class="text-white text-decoration-none">Esportes</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <hr class="border-top border-secondary">
+
+            <div class="text-center small">
+                <p class="mb-0">© 2025 Sport Ativa. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const usuarioLogado = JSON.parse(localStorage.getItem("usuarioLogado"));
+            if (usuarioLogado && usuarioLogado.nome) {
+                document.getElementById("nome-usuario").textContent = usuarioLogado.nome.split(" ")[0];
+            }
+        });
+    </script>
+
+</body>
+
+</html>

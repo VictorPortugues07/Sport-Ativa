@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Sport Ativa - Login / Cadastro</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="login.css" rel="stylesheet">
+</head>
+<body>
+  <div class="container d-flex justify-content-center align-items-center min-vh-100">
+    <div class="card shadow-lg form-container">
+      <div class="card-body">
+        <h2 class="text-center mb-4" id="titulo-formulario">Login</h2>
+        <form id="formulario-login">
+          <div class="form-group d-none" id="grupo-nome">
+            <label for="nome">Nome</label>
+            <input type="text" class="form-control" id="nome" name="nome">
+          </div>
+          <div class="form-group d-none" id="grupo-nascimento">
+            <label for="nascimento">Data de Nascimento</label>
+            <input type="date" class="form-control" id="nascimento" name="nascimento">
+          </div>
+          <div class="form-group d-none" id="grupo-email">
+            <label for="email">Email</label>
+            <input type="email" class="form-control" id="email" name="email">
+          </div>
+          <div class="form-group d-none" id="grupo-cep">
+            <label for="cep">CEP</label>
+            <input type="text" class="form-control" id="cep" name="cep" maxlength="9" placeholder="00000-000">
+          </div>
+          <div class="form-group">
+            <label for="cpf">CPF</label>
+            <input type="text" class="form-control" id="cpf" name="cpf" maxlength="14" placeholder="000.000.000-00" required>
+          </div>
+          <div class="form-group">
+            <label for="senha">Senha</label>
+            <input type="password" class="form-control" id="senha" name="senha" required>
+          </div>
+          <button type="submit" class="btn btn-danger w-100 mt-3" id="botao-enviar">Entrar</button>
+        </form>
+        <button class="btn btn-outline-secondary w-100 mt-3" id="botao-alternar">Não tem conta? Cadastre-se</button>
+      </div>
+    </div>
+  </div>
+  <a href="../pagina-inicial/paginaInicial.html">Ir para página inicial</a>
+
+  <script src="login.js"></script>
+</body>
+</html>

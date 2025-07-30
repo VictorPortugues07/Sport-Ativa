@@ -1,0 +1,186 @@
+/* Reset básico */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: #f5f5f5;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #333;
+}
+
+/* Navbar Superior */
+/* Navbar Superior Estilizada */
+.navbar-top {
+  background-color: #b30000;
+  color: #fff;
+}
+
+.navbar-top .navbar-brand {
+  color: #fff;
+  font-size: 1.6rem;
+  font-weight: bold;
+}
+
+.navbar-top .form-control {
+  background-color: #f1f1f1;
+  color: #333;
+  border: none;
+}
+
+.navbar-top .form-control::placeholder {
+  color: #999;
+}
+
+.navbar-top .btn {
+  background-color: #ffffff;
+  color: #b30000;
+  border: none;
+}
+
+.navbar-top .btn:hover {
+  background-color: #b30000;
+  color: #fff;
+}
+
+.navbar-top a {
+  color: #ffffff;
+  font-weight: 500;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.navbar-top a:hover {
+  color: #e6e6e6;
+}
+
+/* Menu horizontal moderno */
+.menu-horizontal {
+  background-color: #ffffff;
+  border-bottom: 1px solid #ddd;
+}
+
+.menu-horizontal .nav-link {
+  padding: 8px 16px;
+  margin: 4px;
+  border-radius: 5px;
+  color: #333;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.menu-horizontal .nav-link:hover {
+  background-color: #f1f1f1;
+  color: #b30000;
+}
+
+.menu-horizontal .nav-link.active {
+  background-color: #b30000;
+  color: #fff !important;
+}
+
+.menu-horizontal .nav-link.destaque {
+  color: #b30000;
+  font-weight: 600;
+}
+
+/* Sidebar / Filtros */
+.sidebar {
+  background-color: #eeeeee;
+  border-right: 1px solid #ccc;
+  min-height: 100%;
+  padding: 20px;
+}
+
+.sidebar h4 {
+  color: #b30000;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+.accordion-button {
+  background-color: #f9f9f9;
+  color: #333;
+}
+
+.accordion-button:not(.collapsed) {
+  background-color: #b30000;
+  color: #fff;
+}
+
+.accordion-body input[type="checkbox"] {
+  margin-right: 8px;
+}
+
+/* Botões */
+.btn-outline-danger {
+  border-color: #b30000;
+  color: #b30000;
+}
+
+.btn-outline-danger:hover {
+  background-color: #b30000;
+  color: #fff;
+}
+
+/* Cards de Produto */
+.product-card {
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  background-color: #fff;
+  transition: box-shadow 0.3s ease;
+}
+
+.product-card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+}
+
+.card-title {
+  color: #b30000;
+  font-weight: 600;
+}
+
+.card-text {
+  font-size: 0.95rem;
+  color: #666;
+}
+
+.product-info {
+  font-size: 0.85rem;
+  color: #777;
+}
+
+/* Rodapé Moderno */
+footer {
+  background-color: #b30000;
+  color: #fff;
+  padding: 40px 0;
+}
+
+footer a {
+  color: #eee;
+  text-decoration: none;
+}
+
+footer a:hover {
+  color: #fff;
+  text-decoration: underline;
+}
+
+footer h5 {
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+
+footer .social-icons i {
+  font-size: 24px;
+  margin-right: 15px;
+  color: #fff;
+  transition: color 0.3s ease;
+}
+
+footer .social-icons i:hover {
+  color: #ccc;
+}
