@@ -39,23 +39,55 @@
                     </form>
                 </div>
 
-                <!-- Ícones à direita -->
-                <div
-                    class="col-12 col-md-3 d-flex justify-content-center justify-content-md-end align-items-center gap-4">
-                    <a href="#" class="text-white text-decoration-none d-flex align-items-center">
-                        <i class="bi bi-person-circle fs-4 me-1"></i>
-                        <span id="nome-usuario">Entrar ou cadastrar-se</span>
-                    </a>
-                    <a href="#" class="text-white fs-4 text-decoration-none">
+                <!-- Área do usuário -->
+                <div class="col-12 col-md-3 d-flex justify-content-center justify-content-md-end align-items-center gap-4">
+                    <!-- Área que muda conforme login -->
+                    <div id="area-usuario" class="d-flex align-items-center">
+                        <!-- Quando não logado -->
+                        <div id="nao-logado" class="d-flex flex-column align-items-center">
+                            <a href="../pagina-login/login.html" class="text-white text-decoration-none d-flex align-items-center">
+                                <i class="bi bi-person-circle fs-4 me-1"></i>
+                                <span class="small">Entrar ou<br>cadastrar-se</span>
+                            </a>
+                        </div>
+                        
+                        <!-- Quando logado -->
+                        <div id="logado" class="d-none">
+                            <div class="dropdown">
+                                <button class="btn btn-link text-white text-decoration-none p-0 d-flex align-items-center" type="button" data-bs-toggle="dropdown">
+                                    <i class="bi bi-person-circle fs-4 me-2"></i>
+                                    <div class="d-flex flex-column align-items-start">
+                                        <span class="small">Olá,</span>
+                                        <span id="nome-usuario" class="fw-bold">Usuário</span>
+                                    </div>
+                                    <i class="bi bi-chevron-down ms-1"></i>
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="../pagina-usuario/perfilUsuario.html">
+                                        <i class="bi bi-person me-2"></i>Meu Perfil
+                                    </a></li>
+                                    <li><a class="dropdown-item" href="#">
+                                        <i class="bi bi-box me-2"></i>Meus Pedidos
+                                    </a></li>
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li><a class="dropdown-item" href="#" id="btn-logout">
+                                        <i class="bi bi-box-arrow-right me-2"></i>Sair
+                                    </a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Carrinho -->
+                    <a href="#" class="text-white fs-4 text-decoration-none position-relative">
                         <i class="bi bi-cart"></i>
+                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-warning text-dark" id="cart-count">0</span>
                     </a>
                 </div>
 
             </div>
         </div>
     </header>
-
-
 
     <!-- Menu horizontal aprimorado -->
     <nav class="menu-horizontal bg-white border-bottom shadow-sm">
@@ -75,7 +107,6 @@
             </ul>
         </div>
     </nav>
-
 
     <!-- Conteúdo principal -->
     <div class="container-fluid mt-4">
@@ -141,11 +172,11 @@
                     <div class="accordion-item">
                         <h2 class="accordion-header">
                             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#collapseProduto">
+                                data-bs-target="#collapseProdutos">
                                 Produtos
                             </button>
                         </h2>
-                        <div id="collapseProduto" class="accordion-collapse collapse" data-bs-parent="#filtroAccordion">
+                        <div id="collapseProdutos" class="accordion-collapse collapse" data-bs-parent="#filtroAccordion">
                             <div class="accordion-body">
                                 <div><input type="checkbox"> Camisetas</div>
                                 <div><input type="checkbox"> Tênis</div>
@@ -154,32 +185,15 @@
                         </div>
                     </div>
 
-                    <!-- Preço -->
-                    <div class="accordion-item">
-                        <h2 class="accordion-header">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#collapsePreco">
-                                Preço
-                            </button>
-                        </h2>
-                        <div id="collapsePreco" class="accordion-collapse collapse" data-bs-parent="#filtroAccordion">
-                            <div class="accordion-body">
-                                <div><input type="checkbox"> Até R$ 100</div>
-                                <div><input type="checkbox"> R$ 100 - R$ 200</div>
-                                <div><input type="checkbox"> Acima de R$ 200</div>
-                            </div>
-                        </div>
-                    </div>
-
                     <!-- Esportes -->
                     <div class="accordion-item">
                         <h2 class="accordion-header">
                             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#collapseEsporte">
+                                data-bs-target="#collapseEsportes">
                                 Esportes
                             </button>
                         </h2>
-                        <div id="collapseEsporte" class="accordion-collapse collapse" data-bs-parent="#filtroAccordion">
+                        <div id="collapseEsportes" class="accordion-collapse collapse" data-bs-parent="#filtroAccordion">
                             <div class="accordion-body">
                                 <div><input type="checkbox"> Futebol</div>
                                 <div><input type="checkbox"> Corrida</div>
@@ -201,6 +215,8 @@
                                 <div><input type="checkbox"> Preto</div>
                                 <div><input type="checkbox"> Vermelho</div>
                                 <div><input type="checkbox"> Azul</div>
+                                <div><input type="checkbox"> Branco</div>
+                                <div><input type="checkbox"> Cinza</div>
                             </div>
                         </div>
                     </div>
@@ -211,11 +227,13 @@
             <!-- Conteúdo principal / Cards -->
             <main class="col-md-9">
                 <h2 class="mb-3">Roupas esportivas adulto e infantil</h2>
-                <div class="d-flex justify-content-between align-items-center mb-3">
-                    <div class="btn-group" role="group">
-                        <button class="btn btn-outline-secondary">Até R$ 100</button>
-                        <button class="btn btn-outline-secondary">R$ 100 - R$ 200</button>
-                        <button class="btn btn-outline-secondary">R$ 200 - R$ 300</button>
+                <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
+                    <div class="btn-group flex-wrap" role="group">
+                        <button class="btn btn-outline-secondary" data-preco="Até R$ 100">Até R$ 100</button>
+                        <button class="btn btn-outline-secondary" data-preco="R$ 100 - R$ 200">R$ 100 - R$ 200</button>
+                        <button class="btn btn-outline-secondary" data-preco="R$ 200 - R$ 300">R$ 200 - R$ 300</button>
+                        <button class="btn btn-outline-secondary" data-preco="Acima de R$ 300">Acima de R$ 300</button>
+                        <button class="btn btn-outline-secondary" data-preco="Todos">Todos os valores</button>
                     </div>
                     <select class="form-select w-auto">
                         <option>Ordenar por Relevância</option>
@@ -225,72 +243,104 @@
                     </select>
                 </div>
 
-                <main class="container mt-4">
-                    <h2 class="mb-4">Roupas esportivas adulto e infantil</h2>
-                    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4" id="container-produtos">
-                        <!-- Cards serão injetados aqui via JS -->
-                    </div>
-                </main>
+                <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4" id="container-produtos">
+                    <!-- Cards serão injetados aqui via JS -->
+                </div>
+            </main>
         </div>
     </div>
+
+    <!-- Rodapé renovado -->
     <footer class="footer bg-dark text-white pt-5 pb-3 mt-5">
         <div class="container">
             <div class="row">
 
-                <!-- Logo e descrição -->
+                <!-- Logo, descrição e redes sociais -->
                 <div class="col-md-4 mb-4">
-                    <h4 class="text-danger fw-bold">Sport Ativa</h4>
-                    <p class="small">Movimente seu estilo com os melhores produtos esportivos para todas as idades.</p>
+                    <div class="d-flex align-items-center mb-3">
+                        <i class="bi bi-basket-fill me-2 fs-3 text-danger"></i>
+                        <h4 class="text-danger fw-bold mb-0">Sport Ativa</h4>
+                    </div>
+                    <p class="small mb-3">Movimente seu estilo com os melhores produtos esportivos para todas as idades e modalidades.</p>
                     <div class="d-flex gap-3">
                         <a href="#" class="text-white"><i class="bi bi-facebook fs-5"></i></a>
                         <a href="#" class="text-white"><i class="bi bi-instagram fs-5"></i></a>
                         <a href="#" class="text-white"><i class="bi bi-youtube fs-5"></i></a>
                         <a href="#" class="text-white"><i class="bi bi-twitter fs-5"></i></a>
+                        <a href="#" class="text-white"><i class="bi bi-whatsapp fs-5"></i></a>
                     </div>
                 </div>
 
-                <!-- Links rápidos -->
-                <div class="col-md-2 mb-4">
-                    <h6 class="text-uppercase fw-bold">Institucional</h6>
-                    <ul class="list-unstyled small">
-                        <li><a href="#" class="text-white text-decoration-none">Sobre nós</a></li>
-                        <li><a href="#" class="text-white text-decoration-none">Trabalhe conosco</a></li>
-                        <li><a href="#" class="text-white text-decoration-none">Lojas físicas</a></li>
-                    </ul>
+                <!-- Newsletter -->
+                <div class="col-md-4 mb-4">
+                    <h6 class="text-uppercase fw-bold mb-3">Newsletter</h6>
+                    <p class="small mb-3">Receba ofertas exclusivas e novidades em primeira mão!</p>
+                    <form class="d-flex">
+                        <input type="email" class="form-control me-2" placeholder="Seu e-mail">
+                        <button class="btn btn-danger" type="submit">
+                            <i class="bi bi-envelope"></i>
+                        </button>
+                    </form>
                 </div>
 
-                <!-- Ajuda -->
-                <div class="col-md-3 mb-4">
-                    <h6 class="text-uppercase fw-bold">Ajuda</h6>
-                    <ul class="list-unstyled small">
-                        <li><a href="#" class="text-white text-decoration-none">Fale conosco</a></li>
-                        <li><a href="#" class="text-white text-decoration-none">Política de troca</a></li>
-                        <li><a href="#" class="text-white text-decoration-none">Prazo de entrega</a></li>
-                    </ul>
+                <!-- Atendimento e Informações -->
+                <div class="col-md-4 mb-4">
+                    <h6 class="text-uppercase fw-bold mb-3">Atendimento</h6>
+                    <div class="d-flex align-items-center mb-2">
+                        <i class="bi bi-telephone me-2"></i>
+                        <span class="small">(11) 4000-0000</span>
+                    </div>
+                    <div class="d-flex align-items-center mb-2">
+                        <i class="bi bi-whatsapp me-2"></i>
+                        <span class="small">(11) 99999-9999</span>
+                    </div>
+                    <div class="d-flex align-items-center mb-2">
+                        <i class="bi bi-envelope me-2"></i>
+                        <span class="small">contato@sportativa.com.br</span>
+                    </div>
+                    <div class="d-flex align-items-center">
+                        <i class="bi bi-clock me-2"></i>
+                        <span class="small">Seg-Sex: 8h às 18h</span>
+                    </div>
                 </div>
 
-                <!-- Categorias -->
-                <div class="col-md-3 mb-4">
-                    <h6 class="text-uppercase fw-bold">Categorias</h6>
-                    <ul class="list-unstyled small">
-                        <li><a href="#" class="text-white text-decoration-none">Roupas</a></li>
-                        <li><a href="#" class="text-white text-decoration-none">Tênis</a></li>
-                        <li><a href="#" class="text-white text-decoration-none">Esportes</a></li>
-                    </ul>
+            </div>
+
+            <!-- Formas de pagamento e segurança -->
+            <div class="row mt-4 pt-3 border-top border-secondary">
+                <div class="col-md-6 mb-3">
+                    <h6 class="small fw-bold mb-2">Formas de Pagamento:</h6>
+                    <div class="d-flex gap-2 flex-wrap">
+                        <span class="badge bg-light text-dark">Visa</span>
+                        <span class="badge bg-light text-dark">Mastercard</span>
+                        <span class="badge bg-light text-dark">Elo</span>
+                        <span class="badge bg-light text-dark">PIX</span>
+                        <span class="badge bg-light text-dark">Boleto</span>
+                    </div>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <h6 class="small fw-bold mb-2">Segurança e Garantias:</h6>
+                    <div class="d-flex gap-2 align-items-center">
+                        <i class="bi bi-shield-check text-success"></i>
+                        <span class="small">Site Seguro SSL</span>
+                        <i class="bi bi-truck ms-3"></i>
+                        <span class="small">Frete Grátis*</span>
+                    </div>
                 </div>
             </div>
 
             <hr class="border-top border-secondary">
 
             <div class="text-center small">
-                <p class="mb-0">© 2025 Sport Ativa. Todos os direitos reservados.</p>
+                <p class="mb-1">© 2025 Sport Ativa. Todos os direitos reservados.</p>
+                <p class="mb-0">CNPJ: 12.345.678/0001-99 | *Frete grátis nas compras acima de R$ 199,90</p>
             </div>
         </div>
     </footer>
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="../pagina-inicial/cardsProdutos.js"></script>
+    <script src="cardsProdutos.js"></script>
 
 </body>
 

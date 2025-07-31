@@ -77,6 +77,34 @@ body {
   font-size: 1.5rem;
 }
 
+/* Dropdown do usuário */
+.dropdown-toggle::after {
+  display: none;
+}
+
+.dropdown-menu {
+  border: none;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  border-radius: 8px;
+  min-width: 200px;
+}
+
+.dropdown-item {
+  padding: 10px 15px;
+  transition: background-color 0.3s ease;
+}
+
+.dropdown-item:hover {
+  background-color: #f8f9fa;
+  color: #b30000;
+}
+
+/* Badge do carrinho */
+.badge {
+  font-size: 0.7rem;
+  padding: 0.25em 0.5em;
+}
+
 /* Menu horizontal moderno */
 .menu-horizontal {
   background-color: #ffffff;
@@ -124,18 +152,48 @@ body {
 .accordion-button {
   background-color: #f9f9f9;
   color: #333;
+  font-weight: 500;
 }
 
 .accordion-button:not(.collapsed) {
   background-color: #b30000;
   color: #fff;
+  box-shadow: none;
+}
+
+.accordion-button:focus {
+  box-shadow: none;
 }
 
 .accordion-body input[type="checkbox"] {
   margin-right: 8px;
 }
 
-/* Botões */
+.accordion-body div {
+  padding: 5px 0;
+  font-size: 0.95rem;
+}
+
+/* Botões de filtro de preço */
+.btn-group {
+  gap: 5px;
+}
+
+.btn-outline-secondary {
+  border-color: #b30000;
+  color: #b30000;
+  font-size: 0.9rem;
+  padding: 6px 12px;
+}
+
+.btn-outline-secondary:hover,
+.btn-outline-secondary.active {
+  background-color: #b30000;
+  border-color: #b30000;
+  color: #fff;
+}
+
+/* Botões principais */
 .btn-outline-danger {
   border-color: #b30000;
   color: #b30000;
@@ -146,26 +204,56 @@ body {
   color: #fff;
 }
 
+.btn-danger {
+  background-color: #b30000;
+  border-color: #b30000;
+}
+
+.btn-danger:hover {
+  background-color: #990000;
+  border-color: #990000;
+}
+
 /* Cards de Produto */
 .product-card {
   border: 1px solid #ddd;
   border-radius: 10px;
   background-color: #fff;
-  transition: box-shadow 0.3s ease;
+  transition: all 0.3s ease;
+  overflow: hidden;
 }
 
 .product-card:hover {
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  transform: translateY(-2px);
+}
+
+.product-card .card-img-top {
+  height: 200px;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.product-card:hover .card-img-top {
+  transform: scale(1.05);
 }
 
 .card-title {
   color: #b30000;
   font-weight: 600;
+  font-size: 1.1rem;
 }
 
 .card-text {
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   color: #666;
+  line-height: 1.4;
+}
+
+.price {
+  font-size: 1.2rem;
+  color: #b30000;
+  font-weight: 700;
 }
 
 .product-info {
@@ -175,22 +263,23 @@ body {
 
 /* Rodapé Moderno */
 footer {
-  background-color: #b30000;
+  background-color: #1a1a1a;
   color: #fff;
-  padding: 40px 0;
+  padding: 40px 0 20px;
 }
 
 footer a {
-  color: #eee;
+  color: #ccc;
   text-decoration: none;
+  transition: color 0.3s ease;
 }
 
 footer a:hover {
   color: #fff;
-  text-decoration: underline;
+  text-decoration: none;
 }
 
-footer h5 {
+footer h4, footer h6 {
   font-weight: 600;
   margin-bottom: 15px;
 }
@@ -198,10 +287,88 @@ footer h5 {
 footer .social-icons i {
   font-size: 24px;
   margin-right: 15px;
-  color: #fff;
-  transition: color 0.3s ease;
+  color: #ccc;
+  transition: all 0.3s ease;
 }
 
-footer .social-icons i:hover {
-  color: #ccc;
+footer .social-icons a:hover i {
+  color: #b30000;
+  transform: translateY(-2px);
+}
+
+/* Newsletter */
+footer .form-control {
+  background-color: #333;
+  border: 1px solid #555;
+  color: #fff;
+  border-radius: 5px 0 0 5px;
+}
+
+footer .form-control::placeholder {
+  color: #aaa;
+}
+
+footer .form-control:focus {
+  background-color: #333;
+  border-color: #b30000;
+  color: #fff;
+  box-shadow: none;
+}
+
+footer .btn-danger {
+  border-radius: 0 5px 5px 0;
+}
+
+/* Badges de pagamento */
+.badge {
+  font-size: 0.8rem;
+  padding: 6px 10px;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .navbar-top .navbar-brand {
+    font-size: 1.4rem;
+  }
+  
+  .menu-horizontal .nav {
+    justify-content: flex-start !important;
+  }
+  
+  .btn-group {
+    flex-direction: column;
+    width: 100%;
+  }
+  
+  .btn-group .btn {
+    border-radius: 5px !important;
+    margin-bottom: 5px;
+  }
+  
+  .sidebar {
+    padding: 15px;
+  }
+  
+  footer .d-flex {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+}
+
+@media (max-width: 576px) {
+  .product-card .card-img-top {
+    height: 180px;
+  }
+  
+  .card-title {
+    font-size: 1rem;
+  }
+  
+  .card-text {
+    font-size: 0.85rem;
+  }
+  
+  .price {
+    font-size: 1.1rem;
+  }
 }
