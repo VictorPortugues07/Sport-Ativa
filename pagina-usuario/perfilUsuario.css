@@ -11,7 +11,7 @@ body {
   color: #333;
 }
 
-/* Navbar Superior */
+/* Navbar Superior - Mesma da página inicial */
 .navbar-top {
   background-color: #b30000;
   color: #fff;
@@ -55,45 +55,158 @@ body {
   color: #fff;
 }
 
-/* Conteúdo da página de cadastro */
-main {
-  margin-top: 40px;
+/* Dropdown do usuário */
+.dropdown-toggle::after {
+  display: none;
 }
 
-h2 {
-  font-weight: 600;
+.dropdown-menu {
+  border: none;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  border-radius: 8px;
+  min-width: 200px;
+}
+
+.dropdown-item {
+  padding: 10px 15px;
+  transition: background-color 0.3s ease;
+}
+
+.dropdown-item:hover {
+  background-color: #f8f9fa;
   color: #b30000;
-  margin-bottom: 20px;
 }
 
-/* Formulário de Cadastro */
-#form-cadastro {
-  background-color: #fff;
-  border: 1px solid #ddd;
-  padding: 30px;
+.dropdown-item.active {
+  background-color: #b30000;
+  color: #fff;
+}
+
+/* Badge do carrinho */
+.badge {
+  font-size: 0.7rem;
+  padding: 0.25em 0.5em;
+}
+
+/* Breadcrumb */
+.breadcrumb {
+  background-color: transparent;
+  padding: 0;
+  margin-bottom: 0;
+}
+
+.breadcrumb-item + .breadcrumb-item::before {
+  color: #b30000;
+  content: "›";
+  font-weight: bold;
+}
+
+.breadcrumb-item a {
+  color: #b30000;
+  text-decoration: none;
+}
+
+.breadcrumb-item a:hover {
+  color: #990000;
+  text-decoration: underline;
+}
+
+.breadcrumb-item.active {
+  color: #666;
+}
+
+/* Cards */
+.card {
   border-radius: 10px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
 }
 
-#form-cadastro .form-label {
-  font-weight: 500;
+.card-header {
+  border-bottom: 1px solid #dee2e6;
+  padding: 1.25rem;
+}
+
+.card-header.bg-danger {
+  background-color: #b30000 !important;
+  border-bottom: none;
+}
+
+.card-body {
+  padding: 2rem;
+}
+
+/* Sidebar da conta */
+.list-group-item {
+  border: none;
+  padding: 15px 20px;
+  transition: all 0.3s ease;
   color: #333;
 }
 
-#form-cadastro input {
-  background-color: #f9f9f9;
-  border: 1px solid #ccc;
-  padding: 10px;
-  border-radius: 6px;
+.list-group-item:hover {
+  background-color: #f8f9fa;
+  color: #b30000;
 }
 
-#form-cadastro input:disabled {
-  background-color: #eaeaea;
-  color: #777;
+.list-group-item.active {
+  background-color: #b30000;
+  color: #fff;
+  border-color: #b30000;
+}
+
+.list-group-item.active:hover {
+  background-color: #990000;
+}
+
+.list-group-item i {
+  width: 20px;
+  text-align: center;
+}
+
+/* Seções do formulário */
+h6.text-danger {
+  color: #b30000 !important;
+  font-weight: 600;
+  padding-bottom: 8px;
+  border-bottom: 2px solid #f8f9fa;
+  margin-bottom: 15px !important;
+}
+
+/* Formulário */
+.form-label {
+  font-weight: 500;
+  color: #495057;
+  margin-bottom: 6px;
+}
+
+.form-control {
+  border: 1px solid #ced4da;
+  border-radius: 6px;
+  padding: 12px 15px;
+  transition: all 0.3s ease;
+  background-color: #fff;
+}
+
+.form-control:focus {
+  border-color: #b30000;
+  box-shadow: 0 0 0 0.2rem rgba(179, 0, 0, 0.15);
+}
+
+.form-control:disabled {
+  background-color: #f8f9fa;
+  color: #6c757d;
   cursor: not-allowed;
+  border-color: #e9ecef;
 }
 
 /* Botões */
+.btn {
+  border-radius: 6px;
+  padding: 10px 20px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
 .btn-outline-danger {
   border-color: #b30000;
   color: #b30000;
@@ -101,6 +214,7 @@ h2 {
 
 .btn-outline-danger:hover {
   background-color: #b30000;
+  border-color: #b30000;
   color: #fff;
 }
 
@@ -112,4 +226,112 @@ h2 {
 .btn-danger:hover {
   background-color: #990000;
   border-color: #990000;
+}
+
+.btn-success {
+  background-color: #28a745;
+  border-color: #28a745;
+}
+
+.btn-success:hover {
+  background-color: #218838;
+  border-color: #1e7e34;
+}
+
+.btn-outline-secondary {
+  border-color: #6c757d;
+  color: #6c757d;
+}
+
+.btn-outline-secondary:hover {
+  background-color: #6c757d;
+  border-color: #6c757d;
+  color: #fff;
+}
+
+/* Estados de edição */
+.form-control:not(:disabled) {
+  background-color: #fff;
+  border-color: #b30000;
+}
+
+.form-control:not(:disabled):focus {
+  border-color: #990000;
+  box-shadow: 0 0 0 0.2rem rgba(179, 0, 0, 0.25);
+}
+
+/* Animações */
+.card {
+  transition: all 0.3s ease;
+}
+
+.card:hover {
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .navbar-top .navbar-brand {
+    font-size: 1.4rem;
+  }
+  
+  .card-body {
+    padding: 1.5rem;
+  }
+  
+  .btn {
+    padding: 8px 16px;
+    font-size: 0.9rem;
+  }
+  
+  h6.text-danger {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .card-body {
+    padding: 1rem;
+  }
+  
+  .form-control {
+    padding: 10px 12px;
+  }
+  
+  .btn {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+  
+  .d-flex.justify-content-end.gap-2 {
+    flex-direction: column-reverse;
+  }
+}
+
+/* Melhorias visuais */
+.shadow-sm {
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075) !important;
+}
+
+/* Ícones */
+.bi {
+  font-size: inherit;
+}
+
+/* Separadores visuais */
+hr {
+  margin: 2rem 0 1rem;
+  border-color: #dee2e6;
+}
+
+/* Feedback visual para mudanças */
+.form-control.changed {
+  border-color: #28a745;
+  background-color: #f8fff9;
+}
+
+/* Loading states */
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
 }
