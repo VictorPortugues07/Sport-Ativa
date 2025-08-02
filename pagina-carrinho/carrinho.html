@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Sport Ativa - Meu Carrinho</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="carrinho.css" />
+  </head>
+  <body>
+    <!-- Navbar superior -->
+    <header class="navbar-top py-3 shadow-sm">
+      <div class="container">
+        <div class="row align-items-center gx-2 gy-2">
+          <!-- Logo -->
+          <div
+            class="col-12 col-md-3 d-flex justify-content-center justify-content-md-start"
+          >
+            <a
+              href="../pagina-inicial/paginaInicial.html"
+              class="navbar-brand d-flex align-items-center text-white text-decoration-none"
+            >
+              <i class="bi bi-basket-fill me-2 fs-3"></i>
+              <span class="fs-4 fw-bold">Sport Ativa</span>
+            </a>
+          </div>
+
+          <!-- Barra de busca -->
+          <div class="col-12 col-md-6">
+            <form class="d-flex" role="search">
+              <input
+                class="form-control form-control-lg rounded-start border-0"
+                type="search"
+                placeholder="Buscar produtos..."
+              />
+              <button class="btn btn-search rounded-end" type="submit">
+                <i class="bi bi-search"></i>
+              </button>
+            </form>
+          </div>
+
+          <!-- Área do usuário -->
+          <div
+            class="col-12 col-md-3 d-flex justify-content-center justify-content-md-end align-items-center gap-4"
+          >
+            <div class="d-flex align-items-center">
+              <div class="dropdown">
+                <button
+                  class="btn btn-link text-white text-decoration-none p-0 d-flex align-items-center"
+                  type="button"
+                  data-bs-toggle="dropdown"
+                >
+                  <i class="bi bi-person-circle fs-4 me-2"></i>
+                  <div class="d-flex flex-column align-items-start">
+                    <span class="small">Olá,</span>
+                    <span id="nome-usuario-nav" class="fw-bold">Usuário</span>
+                  </div>
+                  <i class="bi bi-chevron-down ms-1"></i>
+                </button>
+                <ul class="dropdown-menu">
+                  <li>
+                    <a
+                      class="dropdown-item"
+                      href="../pagina-usuario/perfilUsuario.html"
+                    >
+                      <i class="bi bi-person me-2"></i>Meu Perfil
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      class="dropdown-item"
+                      href="../pagina-pedidos/pedidos.html"
+                    >
+                      <i class="bi bi-box me-2"></i>Meus Pedidos
+                    </a>
+                  </li>
+                  <li><hr class="dropdown-divider" /></li>
+                  <li>
+                    <a class="dropdown-item" href="#" id="btn-logout">
+                      <i class="bi bi-box-arrow-right me-2"></i>Sair
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- Carrinho -->
+            <a
+              href="#"
+              class="text-white fs-4 text-decoration-none position-relative"
+            >
+              <i class="bi bi-cart"></i>
+              <span
+                class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-warning text-dark"
+                id="cart-count"
+                >0</span
+              >
+            </a>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Breadcrumb -->
+    <div class="container mt-3">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item">
+            <a
+              href="../pagina-inicial/paginaInicial.html"
+              class="text-decoration-none"
+              >Início</a
+            >
+          </li>
+          <li class="breadcrumb-item active" aria-current="page">Carrinho</li>
+        </ol>
+      </nav>
+    </div>
+
+    <!-- Conteúdo principal -->
+    <main class="container mt-4">
+      <div class="row">
+        <!-- Lista de produtos -->
+        <div class="col-md-8">
+          <div class="card border-0 shadow-sm">
+            <div class="card-header bg-light border-0">
+              <h4 class="mb-0 text-danger">
+                <i class="bi bi-cart me-2"></i>Meu Carrinho
+              </h4>
+            </div>
+
+            <div class="card-body" id="tabela-carrinho">
+              <!-- Lista de produtos será inserida aqui pelo JavaScript -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Resumo e pagamento -->
+        <div class="col-md-4">
+          <div class="card border-0 shadow-sm sticky-top">
+            <div class="card-header bg-danger text-white">
+              <h5 class="mb-0">
+                <i class="bi bi-credit-card me-2"></i>Resumo do Pedido
+              </h5>
+            </div>
+
+            <div class="card-body">
+              <div class="d-flex justify-content-between mb-2">
+                <span>Subtotal:</span>
+                <span id="subtotal">R$ 0,00</span>
+              </div>
+              <div class="d-flex justify-content-between mb-2">
+                <span>Frete:</span>
+                <span id="frete">R$ 15,00</span>
+              </div>
+              <hr />
+              <div class="d-flex justify-content-between mb-3">
+                <strong>Total:</strong>
+                <strong id="total" class="text-danger">R$ 0,00</strong>
+              </div>
+
+              <!-- Forma de pagamento -->
+              <h6 class="text-danger mb-3">Forma de Pagamento</h6>
+
+              <div class="mb-3">
+                <div class="form-check mb-2">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    name="pagamento"
+                    id="cartao"
+                    value="cartao"
+                    checked
+                  />
+                  <label class="form-check-label" for="cartao">
+                    <i class="bi bi-credit-card me-2"></i>Cartão de
+                    Crédito/Débito
+                  </label>
+                </div>
+                <div class="form-check mb-2">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    name="pagamento"
+                    id="pix"
+                    value="pix"
+                  />
+                  <label class="form-check-label" for="pix">
+                    <i class="bi bi-qr-code me-2"></i>PIX
+                  </label>
+                </div>
+                <div class="form-check mb-3">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    name="pagamento"
+                    id="boleto"
+                    value="boleto"
+                  />
+                  <label class="form-check-label" for="boleto">
+                    <i class="bi bi-file-earmark-text me-2"></i>Boleto Bancário
+                  </label>
+                </div>
+              </div>
+
+              <!-- Campos do cartão -->
+              <div id="campos-cartao" class="mb-3">
+                <div class="mb-2">
+                  <label for="numero-cartao" class="form-label small"
+                    >Número do Cartão</label
+                  >
+                  <input
+                    type="text"
+                    class="form-control form-control-sm"
+                    id="numero-cartao"
+                    placeholder="0000 0000 0000 0000"
+                  />
+                </div>
+                <div class="row g-2">
+                  <div class="col-6">
+                    <label for="validade" class="form-label small"
+                      >Validade</label
+                    >
+                    <input
+                      type="text"
+                      class="form-control form-control-sm"
+                      id="validade"
+                      placeholder="MM/AA"
+                    />
+                  </div>
+                  <div class="col-6">
+                    <label for="cvv" class="form-label small">CVV</label>
+                    <input
+                      type="text"
+                      class="form-control form-control-sm"
+                      id="cvv"
+                      placeholder="123"
+                    />
+                  </div>
+                </div>
+                <div class="mt-2">
+                  <label for="nome-cartao" class="form-label small"
+                    >Nome no Cartão</label
+                  >
+                  <input
+                    type="text"
+                    class="form-control form-control-sm"
+                    id="nome-cartao"
+                    placeholder="Nome como no cartão"
+                  />
+                </div>
+              </div>
+
+              <button
+                class="btn btn-success w-100 btn-lg"
+                id="btn-finalizar"
+                disabled
+              >
+                <i class="bi bi-check-circle me-2"></i>Finalizar Compra
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Modal de confirmação -->
+    <div class="modal fade" id="modalConfirmacao" tabindex="-1">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header bg-success text-white">
+            <h5 class="modal-title">
+              <i class="bi bi-check-circle me-2"></i>Compra Realizada!
+            </h5>
+          </div>
+          <div class="modal-body text-center">
+            <i
+              class="bi bi-check-circle-fill text-success"
+              style="font-size: 4rem"
+            ></i>
+            <h4 class="mt-3">Pedido confirmado!</h4>
+            <p class="text-muted">Seu pedido foi processado com sucesso.</p>
+            <div id="info-pagamento" class="mt-3"></div>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-success"
+              data-bs-dismiss="modal"
+              id="btn-continuar"
+            >
+              Continuar Comprando
+            </button>
+            <a
+              href="../pagina-pedidos/pedidos.html"
+              class="btn btn-outline-success"
+            >
+              Ver Meus Pedidos
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="carrinho.js"></script>
+  </body>
+</html>
