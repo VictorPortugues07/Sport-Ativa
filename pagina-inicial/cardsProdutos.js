@@ -22,6 +22,9 @@ document.addEventListener("DOMContentLoaded", () => {
       produtosFiltrados = [...produtos];
       renderizarProdutos(produtosFiltrados);
       atualizarContadorCarrinho();
+
+      // ✅ SALVA OS PRODUTOS NO LOCALSTORAGE PARA O CARRINHO USAR
+      localStorage.setItem("produtosDisponiveis", JSON.stringify(produtos));
     })
     .catch((error) => {
       console.error("Erro ao carregar produtos:", error);
@@ -29,6 +32,13 @@ document.addEventListener("DOMContentLoaded", () => {
       produtos = produtosFallback;
       produtosFiltrados = [...produtos];
       renderizarProdutos(produtosFiltrados);
+      atualizarContadorCarrinho();
+
+      // ✅ Fallback também salvo
+      localStorage.setItem(
+        "produtosDisponiveis",
+        JSON.stringify(produtosFallback)
+      );
     });
 
   // Adiciona eventos aos filtros
@@ -63,6 +73,7 @@ document.addEventListener("DOMContentLoaded", () => {
       e.preventDefault();
       localStorage.removeItem("usuarioLogado");
       verificarStatusLogin();
+      atualizarContadorCarrinho(); // Atualizar contador após logout
       alert("Logout realizado com sucesso!");
     });
   }
@@ -84,6 +95,15 @@ document.addEventListener("DOMContentLoaded", () => {
       naoLogado.classList.remove("d-none");
       logado.classList.add("d-none");
     }
+  }
+
+  // ✅ FUNÇÃO PARA OBTER CHAVE DO CARRINHO DO USUÁRIO
+  function obterChaveCarrinho() {
+    const usuarioLogado = JSON.parse(localStorage.getItem("usuarioLogado"));
+    if (!usuarioLogado || !usuarioLogado.cpf) {
+      return null; // Usuário não logado
+    }
+    return `carrinho_${usuarioLogado.cpf}`;
   }
 
   function aplicarFiltros() {
@@ -234,20 +254,32 @@ document.addEventListener("DOMContentLoaded", () => {
       });
   }
 
+  // ✅ FUNÇÃO CORRIGIDA - USA CHAVE ESPECÍFICA DO USUÁRIO
   function adicionarAoCarrinho(id) {
+    const carrinhoKey = obterChaveCarrinho();
+
+    // Verificar se usuário está logado
+    if (!carrinhoKey) {
+      alert("Você precisa estar logado para adicionar produtos ao carrinho!");
+      window.location.href = "../pagina-login/login.html";
+      return;
+    }
+
     const produto = produtos.find((p) => p.id == id);
     if (!produto) return;
 
-    let carrinho = JSON.parse(localStorage.getItem("carrinho")) || [];
+    // ✅ USAR CHAVE ESPECÍFICA DO USUÁRIO
+    let carrinho = JSON.parse(localStorage.getItem(carrinhoKey)) || [];
     const existe = carrinho.find((item) => item.id == id);
 
     if (existe) {
       existe.quantidade += 1;
     } else {
-      carrinho.push({ ...produto, quantidade: 1 });
+      carrinho.push({ id: parseInt(id), quantidade: 1 }); // Salvar apenas ID e quantidade
     }
 
-    localStorage.setItem("carrinho", JSON.stringify(carrinho));
+    // ✅ SALVAR COM CHAVE ESPECÍFICA DO USUÁRIO
+    localStorage.setItem(carrinhoKey, JSON.stringify(carrinho));
     atualizarContadorCarrinho();
 
     // Feedback visual melhorado
@@ -266,14 +298,26 @@ document.addEventListener("DOMContentLoaded", () => {
     }, 1500);
   }
 
+  // ✅ FUNÇÃO CORRIGIDA - USA CHAVE ESPECÍFICA DO USUÁRIO
   function atualizarContadorCarrinho() {
-    const carrinho = JSON.parse(localStorage.getItem("carrinho")) || [];
-    const total = carrinho.reduce((acc, item) => acc + item.quantidade, 0);
+    const carrinhoKey = obterChaveCarrinho();
     const contador = document.getElementById("cart-count");
-    if (contador) {
-      contador.textContent = total;
-      contador.style.display = total > 0 ? "inline" : "none";
+
+    if (!contador) return;
+
+    // Se usuário não está logado, mostrar 0
+    if (!carrinhoKey) {
+      contador.textContent = "0";
+      contador.style.display = "none";
+      return;
     }
+
+    // ✅ USAR CHAVE ESPECÍFICA DO USUÁRIO
+    const carrinho = JSON.parse(localStorage.getItem(carrinhoKey)) || [];
+    const total = carrinho.reduce((acc, item) => acc + item.quantidade, 0);
+
+    contador.textContent = total;
+    contador.style.display = total > 0 ? "inline" : "none";
   }
 
   // Produtos de fallback caso o JSON não carregue
@@ -290,6 +334,7 @@ document.addEventListener("DOMContentLoaded", () => {
       categoria: "Corrida",
       genero: "Masculino",
       vendas: 150,
+      esporte: "Corrida",
       imagem: "https://via.placeholder.com/300x300?text=Tênis+Corrida",
     },
     {
@@ -304,6 +349,7 @@ document.addEventListener("DOMContentLoaded", () => {
       categoria: "Corrida",
       genero: "Masculino",
       vendas: 200,
+      esporte: "Corrida",
       imagem: "https://via.placeholder.com/300x300?text=Camiseta+Dry+Fit",
     },
     {
@@ -318,6 +364,7 @@ document.addEventListener("DOMContentLoaded", () => {
       categoria: "Corrida",
       genero: "Masculino",
       vendas: 120,
+      esporte: "Corrida",
       imagem: "https://via.placeholder.com/300x300?text=Shorts+Esportivo",
     },
     {
@@ -332,6 +379,7 @@ document.addEventListener("DOMContentLoaded", () => {
       categoria: "Corrida",
       genero: "Feminino",
       vendas: 180,
+      esporte: "Corrida",
       imagem: "https://via.placeholder.com/300x300?text=Top+Fitness",
     },
   ];

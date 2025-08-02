@@ -12,13 +12,21 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Carregar usuário logado
   const usuarioLogado = JSON.parse(localStorage.getItem("usuarioLogado"));
-  if (usuarioLogado) {
-    const nomeUsuario = usuarioLogado.nome?.split(" ")[0] || "Usuário";
-    document.getElementById("nome-usuario-nav").textContent = nomeUsuario;
+  if (!usuarioLogado) {
+    // Se não há usuário logado, redirecionar para login
+    window.location.href = "../pagina-login/login.html";
+    return;
   }
 
-  // Carregar carrinho do localStorage
-  let carrinho = JSON.parse(localStorage.getItem("carrinho")) || [];
+  const nomeUsuario = usuarioLogado.nome?.split(" ")[0] || "Usuário";
+  document.getElementById("nome-usuario-nav").textContent = nomeUsuario;
+
+  // Chaves específicas do usuário
+  const carrinhoKey = `carrinho_${usuarioLogado.cpf}`;
+  const pedidosKey = `pedidos_${usuarioLogado.cpf}`;
+
+  // Carregar carrinho do localStorage (específico do usuário)
+  let carrinho = JSON.parse(localStorage.getItem(carrinhoKey)) || [];
 
   // Produtos exemplo (normalmente viria de uma API)
   let produtos = [];
@@ -209,9 +217,9 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   };
 
-  // Função para salvar carrinho
+  // Função para salvar carrinho (específico do usuário)
   function salvarCarrinho() {
-    localStorage.setItem("carrinho", JSON.stringify(carrinho));
+    localStorage.setItem(carrinhoKey, JSON.stringify(carrinho));
   }
 
   // Gerenciar formas de pagamento
@@ -247,6 +255,7 @@ document.addEventListener("DOMContentLoaded", () => {
   cvv.addEventListener("input", (e) => {
     e.target.value = e.target.value.replace(/\D/g, "").substring(0, 3);
   });
+
   // Finalizar compra
   btnFinalizar.addEventListener("click", () => {
     const formaPagamento = document.querySelector(
@@ -287,12 +296,13 @@ document.addEventListener("DOMContentLoaded", () => {
       total,
       pagamento: formaPagamento,
       status: "Pendente",
+      usuarioCpf: usuarioLogado.cpf, // Adicionar referência do usuário
     };
 
-    // Salvar pedido no localStorage (ou enviar para backend, se aplicável)
-    let pedidos = JSON.parse(localStorage.getItem("pedidos")) || [];
+    // Salvar pedido no localStorage (específico do usuário)
+    let pedidos = JSON.parse(localStorage.getItem(pedidosKey)) || [];
     pedidos.push(pedido);
-    localStorage.setItem("pedidos", JSON.stringify(pedidos));
+    localStorage.setItem(pedidosKey, JSON.stringify(pedidos));
 
     // Limpar carrinho
     carrinho = [];
@@ -303,7 +313,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Redirecionar ou mostrar confirmação
     alert("Compra finalizada com sucesso!");
-    window.location.href = "../pagina-usuario/perfilUsuario.html"; // redireciona para a página de pedidos
+    window.location.href = "../pagina-pedidos/pedidos.html"; // Corrigido o caminho
+  });
+
+  // Logout
+  document.getElementById("btn-logout")?.addEventListener("click", (e) => {
+    e.preventDefault();
+    if (confirm("Deseja realmente sair?")) {
+      localStorage.removeItem("usuarioLogado");
+      window.location.href = "../pagina-login/login.html";
+    }
   });
 
   // Inicializar a página ao carregar

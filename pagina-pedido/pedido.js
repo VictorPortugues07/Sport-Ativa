@@ -12,14 +12,22 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Carregar usuário logado
   const usuarioLogado = JSON.parse(localStorage.getItem("usuarioLogado"));
-  if (usuarioLogado) {
-    const nomeUsuario = usuarioLogado.nome?.split(" ")[0] || "Usuário";
-    document.getElementById("nome-usuario-nav").textContent = nomeUsuario;
+  if (!usuarioLogado) {
+    // Se não há usuário logado, redirecionar para login
+    window.location.href = "../pagina-login/login.html";
+    return;
   }
 
-  // Atualizar contador do carrinho
+  const nomeUsuario = usuarioLogado.nome?.split(" ")[0] || "Usuário";
+  document.getElementById("nome-usuario-nav").textContent = nomeUsuario;
+
+  // Chaves específicas do usuário
+  const carrinhoKey = `carrinho_${usuarioLogado.cpf}`;
+  const pedidosKey = `pedidos_${usuarioLogado.cpf}`;
+
+  // Atualizar contador do carrinho (específico do usuário)
   function atualizarContadorCarrinho() {
-    const carrinho = JSON.parse(localStorage.getItem("carrinho")) || [];
+    const carrinho = JSON.parse(localStorage.getItem(carrinhoKey)) || [];
     const totalItens = carrinho.reduce(
       (total, item) => total + item.quantidade,
       0
@@ -48,9 +56,9 @@ document.addEventListener("DOMContentLoaded", () => {
     return dataEntrega.toISOString();
   }
 
-  // Função para atualizar status dos pedidos automaticamente
+  // Função para atualizar status dos pedidos automaticamente (específico do usuário)
   function atualizarStatusPedidos() {
-    let pedidos = JSON.parse(localStorage.getItem("pedidos")) || [];
+    let pedidos = JSON.parse(localStorage.getItem(pedidosKey)) || [];
     let foiAtualizado = false;
 
     pedidos.forEach((pedido) => {
@@ -86,7 +94,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     if (foiAtualizado) {
-      localStorage.setItem("pedidos", JSON.stringify(pedidos));
+      localStorage.setItem(pedidosKey, JSON.stringify(pedidos));
     }
 
     return pedidos;
@@ -283,7 +291,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Função para ver detalhes do pedido
   window.verDetalhes = function (pedidoId) {
-    const pedidos = JSON.parse(localStorage.getItem("pedidos")) || [];
+    const pedidos = JSON.parse(localStorage.getItem(pedidosKey)) || [];
     const pedido = pedidos.find((p) => p.id === pedidoId);
 
     if (!pedido) return;
@@ -422,12 +430,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Função para cancelar pedido
   function cancelarPedido(pedidoId) {
-    let pedidos = JSON.parse(localStorage.getItem("pedidos")) || [];
+    let pedidos = JSON.parse(localStorage.getItem(pedidosKey)) || [];
     const pedidoIndex = pedidos.findIndex((p) => p.id === pedidoId);
 
     if (pedidoIndex !== -1) {
       pedidos[pedidoIndex].status = "Cancelado";
-      localStorage.setItem("pedidos", JSON.stringify(pedidos));
+      localStorage.setItem(pedidosKey, JSON.stringify(pedidos));
       renderizarPedidos();
 
       // Mostrar notificação de sucesso
@@ -453,12 +461,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Função para comprar novamente
   window.comprarNovamente = function (pedidoId) {
-    const pedidos = JSON.parse(localStorage.getItem("pedidos")) || [];
+    const pedidos = JSON.parse(localStorage.getItem(pedidosKey)) || [];
     const pedido = pedidos.find((p) => p.id === pedidoId);
 
     if (!pedido) return;
 
-    let carrinho = JSON.parse(localStorage.getItem("carrinho")) || [];
+    let carrinho = JSON.parse(localStorage.getItem(carrinhoKey)) || [];
 
     // Adicionar todos os itens do pedido ao carrinho
     pedido.itens.forEach((item) => {
@@ -474,7 +482,7 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
 
-    localStorage.setItem("carrinho", JSON.stringify(carrinho));
+    localStorage.setItem(carrinhoKey, JSON.stringify(carrinho));
     atualizarContadorCarrinho();
 
     // Mostrar notificação e redirecionar
