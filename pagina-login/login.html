@@ -1,49 +1,270 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-<head>
-  <meta charset="UTF-8">
-  <title>Sport Ativa - Login / Cadastro</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="login.css" rel="stylesheet">
-</head>
-<body>
-  <div class="container d-flex justify-content-center align-items-center min-vh-100">
-    <div class="card shadow-lg form-container">
-      <div class="card-body">
-        <h2 class="text-center mb-4" id="titulo-formulario">Login</h2>
-        <form id="formulario-login">
-          <div class="form-group d-none" id="grupo-nome">
-            <label for="nome">Nome</label>
-            <input type="text" class="form-control" id="nome" name="nome">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Sport Ativa - Login / Cadastro</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
+      rel="stylesheet"
+    />
+    <link href="login.css" rel="stylesheet" />
+  </head>
+  <body>
+    <div
+      class="container d-flex justify-content-center align-items-center min-vh-100 py-4"
+    >
+      <div class="card shadow-lg form-container">
+        <div class="card-header bg-danger text-white text-center">
+          <div class="d-flex align-items-center justify-content-center">
+            <i class="bi bi-basket-fill me-2 fs-4"></i>
+            <div>
+              <h4 class="mb-0">Sport Ativa</h4>
+              <small>Sua loja de artigos esportivos</small>
+            </div>
           </div>
-          <div class="form-group d-none" id="grupo-nascimento">
-            <label for="nascimento">Data de Nascimento</label>
-            <input type="date" class="form-control" id="nascimento" name="nascimento">
+        </div>
+        <div class="card-body p-4">
+          <h2 class="text-center mb-4" id="titulo-formulario">Login</h2>
+
+          <form id="formulario-login">
+            <!-- ===== INFORMAÇÕES PESSOAIS ===== -->
+            <div class="d-none" id="secao-pessoal">
+              <div class="section-title">
+                <i class="bi bi-person me-2"></i>Informações Pessoais
+              </div>
+              <div class="row">
+                <div class="col-md-8">
+                  <div class="form-group">
+                    <label for="nome" class="form-label">Nome Completo</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="nome"
+                      name="nome"
+                      placeholder="Digite seu nome completo"
+                    />
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label for="nascimento" class="form-label"
+                      >Data de Nascimento</label
+                    >
+                    <input
+                      type="date"
+                      class="form-control"
+                      id="nascimento"
+                      name="nascimento"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- ===== CONTATO ===== -->
+            <div class="d-none" id="secao-contato">
+              <div class="section-title">
+                <i class="bi bi-envelope me-2"></i>Contato
+              </div>
+              <div class="row">
+                <div class="col-md-8">
+                  <div class="form-group">
+                    <label for="email" class="form-label">E-mail</label>
+                    <input
+                      type="email"
+                      class="form-control"
+                      id="email"
+                      name="email"
+                      placeholder="seu@email.com"
+                    />
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label for="telefone" class="form-label">Telefone</label>
+                    <input
+                      type="tel"
+                      class="form-control"
+                      id="telefone"
+                      name="telefone"
+                      placeholder="(11) 99999-9999"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- ===== ENDEREÇO ===== -->
+            <div class="d-none" id="secao-endereco">
+              <div class="section-title">
+                <i class="bi bi-geo-alt me-2"></i>Endereço
+              </div>
+              <div class="row">
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label for="cep" class="form-label">CEP</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="cep"
+                      name="cep"
+                      placeholder="00000-000"
+                    />
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="endereco" class="form-label">Endereço</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="endereco"
+                      name="endereco"
+                      placeholder="Rua, Avenida..."
+                    />
+                  </div>
+                </div>
+                <div class="col-md-2">
+                  <div class="form-group">
+                    <label for="numero" class="form-label">Número</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="numero"
+                      name="numero"
+                      placeholder="123"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="complemento" class="form-label"
+                      >Complemento</label
+                    >
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="complemento"
+                      name="complemento"
+                      placeholder="Apto, Casa... (opcional)"
+                    />
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="bairro" class="form-label">Bairro</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="bairro"
+                      name="bairro"
+                      placeholder="Nome do bairro"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="cidade" class="form-label">Cidade</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="cidade"
+                  name="cidade"
+                  placeholder="Nome da cidade"
+                />
+              </div>
+            </div>
+
+            <!-- ===== SEGURANÇA ===== -->
+            <div class="section-title" id="titulo-seguranca">
+              <i class="bi bi-shield-lock me-2"></i>Dados de Acesso
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="cpf" class="form-label">CPF</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="cpf"
+                    name="cpf"
+                    placeholder="000.000.000-00"
+                    required
+                  />
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="senha" class="form-label">Senha</label>
+                  <input
+                    type="password"
+                    class="form-control"
+                    id="senha"
+                    name="senha"
+                    placeholder="Digite sua senha"
+                    required
+                  />
+                </div>
+              </div>
+            </div>
+
+            <!-- Campo de confirmação de senha (só no cadastro) -->
+            <div class="d-none" id="grupo-confirmar-senha">
+              <div class="form-group">
+                <label for="confirmar-senha" class="form-label"
+                  >Confirmar Senha</label
+                >
+                <input
+                  type="password"
+                  class="form-control"
+                  id="confirmar-senha"
+                  name="confirmar-senha"
+                  placeholder="Digite novamente sua senha"
+                />
+              </div>
+            </div>
+
+            <button
+              type="submit"
+              class="btn btn-danger w-100 mt-3"
+              id="botao-enviar"
+            >
+              <span
+                class="loading-spinner spinner-border spinner-border-sm me-2"
+                role="status"
+              ></span>
+              <span id="texto-botao">Entrar</span>
+            </button>
+          </form>
+
+          <div class="text-center mt-3">
+            <button class="btn btn-outline-secondary w-100" id="botao-alternar">
+              Não tem conta? Cadastre-se
+            </button>
           </div>
-          <div class="form-group d-none" id="grupo-email">
-            <label for="email">Email</label>
-            <input type="email" class="form-control" id="email" name="email">
+
+          <div class="text-center mt-3">
+            <a
+              href="../pagina-inicial/paginaInicial.html"
+              class="text-decoration-none"
+            >
+              <i class="bi bi-arrow-left me-1"></i>Voltar para página inicial
+            </a>
           </div>
-          <div class="form-group d-none" id="grupo-cep">
-            <label for="cep">CEP</label>
-            <input type="text" class="form-control" id="cep" name="cep" maxlength="9" placeholder="00000-000">
-          </div>
-          <div class="form-group">
-            <label for="cpf">CPF</label>
-            <input type="text" class="form-control" id="cpf" name="cpf" maxlength="14" placeholder="000.000.000-00" required>
-          </div>
-          <div class="form-group">
-            <label for="senha">Senha</label>
-            <input type="password" class="form-control" id="senha" name="senha" required>
-          </div>
-          <button type="submit" class="btn btn-danger w-100 mt-3" id="botao-enviar">Entrar</button>
-        </form>
-        <button class="btn btn-outline-secondary w-100 mt-3" id="botao-alternar">Não tem conta? Cadastre-se</button>
+        </div>
       </div>
     </div>
-  </div>
-  <a href="../pagina-inicial/paginaInicial.html">Ir para página inicial</a>
 
-  <script src="login.js"></script>
-</body>
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/imask"></script>
+    <script src="login.js"></script>
+  </body>
 </html>

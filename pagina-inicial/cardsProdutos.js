@@ -14,9 +14,14 @@ document.addEventListener("DOMContentLoaded", () => {
   // Verificar se usuário está logado e atualizar interface
   verificarStatusLogin();
 
-  // Carregar produtos do JSON e renderizar
+  // ✅ CARREGAR APENAS PRODUTOS DO JSON - SEM FALLBACK
   fetch("produtos_ficticios.json")
-    .then((res) => res.json())
+    .then((res) => {
+      if (!res.ok) {
+        throw new Error(`HTTP error! status: ${res.status}`);
+      }
+      return res.json();
+    })
     .then((data) => {
       produtos = data;
       produtosFiltrados = [...produtos];
@@ -25,20 +30,21 @@ document.addEventListener("DOMContentLoaded", () => {
 
       // ✅ SALVA OS PRODUTOS NO LOCALSTORAGE PARA O CARRINHO USAR
       localStorage.setItem("produtosDisponiveis", JSON.stringify(produtos));
+
+      console.log("✅ Produtos carregados do JSON:", produtos.length);
+      console.log("📦 Primeiros 3 produtos:", produtos.slice(0, 3));
     })
     .catch((error) => {
-      console.error("Erro ao carregar produtos:", error);
-      // Usar produtos de fallback caso o JSON não carregue
-      produtos = produtosFallback;
-      produtosFiltrados = [...produtos];
-      renderizarProdutos(produtosFiltrados);
-      atualizarContadorCarrinho();
-
-      // ✅ Fallback também salvo
-      localStorage.setItem(
-        "produtosDisponiveis",
-        JSON.stringify(produtosFallback)
-      );
+      console.error("❌ Erro ao carregar produtos do JSON:", error);
+      container.innerHTML = `
+        <div class="col-12">
+          <div class="alert alert-danger text-center">
+            <h4>Erro ao carregar produtos</h4>
+            <p>Não foi possível carregar o arquivo produtos_ficticios.json</p>
+            <p class="small">Verifique se o arquivo existe e está no caminho correto.</p>
+          </div>
+        </div>
+      `;
     });
 
   // Adiciona eventos aos filtros
@@ -73,7 +79,7 @@ document.addEventListener("DOMContentLoaded", () => {
       e.preventDefault();
       localStorage.removeItem("usuarioLogado");
       verificarStatusLogin();
-      atualizarContadorCarrinho(); // Atualizar contador após logout
+      atualizarContadorCarrinho();
       alert("Logout realizado com sucesso!");
     });
   }
@@ -101,12 +107,18 @@ document.addEventListener("DOMContentLoaded", () => {
   function obterChaveCarrinho() {
     const usuarioLogado = JSON.parse(localStorage.getItem("usuarioLogado"));
     if (!usuarioLogado || !usuarioLogado.cpf) {
-      return null; // Usuário não logado
+      return null;
     }
     return `carrinho_${usuarioLogado.cpf}`;
   }
 
   function aplicarFiltros() {
+    // ✅ SÓ APLICA FILTROS SE OS PRODUTOS JÁ FORAM CARREGADOS
+    if (produtos.length === 0) {
+      console.log("⚠️ Produtos ainda não foram carregados");
+      return;
+    }
+
     const filtros = {
       marca: obterFiltrosPorCategoria("Marca"),
       tamanho: obterFiltrosPorCategoria("Tamanho"),
@@ -118,23 +130,48 @@ document.addEventListener("DOMContentLoaded", () => {
       categoria: obterCategoriaAtiva(),
     };
 
+    console.log("🔍 Filtros aplicados:", filtros);
+
+    // ✅ SEMPRE PARTIR DO ARRAY ORIGINAL DE PRODUTOS DO JSON
     produtosFiltrados = produtos.filter((prod) => {
+      // Verificar cada filtro individualmente
+      const passaMarca =
+        filtros.marca.length === 0 || filtros.marca.includes(prod.marca);
+      const passaTamanho =
+        filtros.tamanho.length === 0 || filtros.tamanho.includes(prod.tamanho);
+      const passaGenero =
+        filtros.genero.length === 0 || filtros.genero.includes(prod.genero);
+      const passaProduto =
+        filtros.produto.length === 0 || filtros.produto.includes(prod.tipo);
+      const passaEsporte =
+        filtros.esporte.length === 0 || filtros.esporte.includes(prod.esporte);
+      const passaCor =
+        filtros.cor.length === 0 || filtros.cor.includes(prod.cor);
+      const passaCategoria =
+        filtros.categoria.length === 0 || prod.categoria === filtros.categoria;
+
+      // ✅ FILTRO DE PREÇO BASEADO NOS DADOS DO JSON
+      let passaPreco = true;
+      if (filtros.preco.length > 0 && !filtros.preco.includes("Todos")) {
+        const faixaProduto = getFaixaDePreco(prod.preco);
+        passaPreco = filtros.preco.includes(faixaProduto);
+      }
+
       return (
-        (filtros.marca.length === 0 || filtros.marca.includes(prod.marca)) &&
-        (filtros.tamanho.length === 0 ||
-          filtros.tamanho.includes(prod.tamanho)) &&
-        (filtros.genero.length === 0 || filtros.genero.includes(prod.genero)) &&
-        (filtros.produto.length === 0 || filtros.produto.includes(prod.tipo)) &&
-        (filtros.esporte.length === 0 ||
-          filtros.esporte.includes(prod.esporte)) &&
-        (filtros.cor.length === 0 || filtros.cor.includes(prod.cor)) &&
-        (filtros.categoria.length === 0 ||
-          prod.categoria === filtros.categoria) &&
-        (filtros.preco.length === 0 ||
-          filtros.preco.includes("Todos") ||
-          filtros.preco.includes(getFaixaDePreco(prod.preco)))
+        passaMarca &&
+        passaTamanho &&
+        passaGenero &&
+        passaProduto &&
+        passaEsporte &&
+        passaCor &&
+        passaCategoria &&
+        passaPreco
       );
     });
+
+    console.log(
+      `📊 Produtos encontrados: ${produtosFiltrados.length} de ${produtos.length} total`
+    );
 
     aplicarOrdenacao();
   }
@@ -177,25 +214,29 @@ document.addEventListener("DOMContentLoaded", () => {
     return ativo.textContent.trim();
   }
 
+  // ✅ FUNÇÃO DE FAIXA DE PREÇO BASEADA NOS VALORES DO SEU JSON
   function getFaixaDePreco(preco) {
-    if (preco <= 100) return "Até R$ 100";
-    if (preco <= 200) return "R$ 100 - R$ 200";
-    if (preco <= 300) return "R$ 200 - R$ 300";
-    if (preco > 300) return "Acima de R$ 300";
+    const precoNum = parseFloat(preco);
+    if (precoNum <= 100) return "Até R$ 100";
+    if (precoNum <= 200) return "R$ 100 - R$ 200";
+    if (precoNum <= 300) return "R$ 200 - R$ 300";
+    if (precoNum > 300) return "Acima de R$ 300";
+    return "Outros";
   }
 
   function renderizarProdutos(lista) {
     container.innerHTML = "";
+
     if (lista.length === 0) {
       container.innerHTML = `
-                <div class="col-12">
-                    <div class="text-center py-5">
-                        <i class="bi bi-search fs-1 text-muted mb-3"></i>
-                        <p class='text-muted fs-5'>Nenhum produto encontrado.</p>
-                        <p class='text-muted'>Tente ajustar os filtros ou buscar por outros termos.</p>
-                    </div>
-                </div>
-            `;
+        <div class="col-12">
+          <div class="text-center py-5">
+            <i class="bi bi-search fs-1 text-muted mb-3"></i>
+            <p class='text-muted fs-5'>Nenhum produto encontrado.</p>
+            <p class='text-muted'>Tente ajustar os filtros ou buscar por outros termos.</p>
+          </div>
+        </div>
+      `;
       return;
     }
 
@@ -204,41 +245,31 @@ document.addEventListener("DOMContentLoaded", () => {
       col.className = "col";
 
       col.innerHTML = `
-                <div class="card product-card h-100 shadow-sm">
-                    <img src="${prod.imagem}" class="card-img-top" alt="${
+        <div class="card product-card h-100 shadow-sm">
+          <img src="${prod.imagem}" class="card-img-top" alt="${
         prod.nome
       }" loading="lazy">
-                    <div class="card-body d-flex flex-column justify-content-between">
-                        <div>
-                            <h5 class="card-title">${prod.nome}</h5>
-                            <p class="card-text text-muted small">${
-                              prod.descricao
-                            }</p>
-                            <div class="product-info">
-                                <p class="mb-1"><strong>Tamanho:</strong> ${
-                                  prod.tamanho
-                                }</p>
-                                <p class="mb-1"><strong>Cor:</strong> ${
-                                  prod.cor
-                                }</p>
-                                <p class="mb-2"><strong>Marca:</strong> ${
-                                  prod.marca
-                                }</p>
-                            </div>
-                        </div>
-                        <div>
-                            <p class="price mb-2"><strong>R$ ${prod.preco
-                              .toFixed(2)
-                              .replace(".", ",")}</strong></p>
-                            <button class="btn ${btnAddCartClass} w-100" data-id="${
-        prod.id
-      }">
-                                <i class="bi bi-cart-plus me-1"></i>Adicionar ao carrinho
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            `;
+          <div class="card-body d-flex flex-column justify-content-between">
+            <div>
+              <h5 class="card-title">${prod.nome}</h5>
+              <p class="card-text text-muted small">${prod.descricao}</p>
+              <div class="product-info">
+                <p class="mb-1"><strong>Tamanho:</strong> ${prod.tamanho}</p>
+                <p class="mb-1"><strong>Cor:</strong> ${prod.cor}</p>
+                <p class="mb-2"><strong>Marca:</strong> ${prod.marca}</p>
+              </div>
+            </div>
+            <div>
+              <p class="price mb-2"><strong>R$ ${prod.preco
+                .toFixed(2)
+                .replace(".", ",")}</strong></p>
+              <button class="btn ${btnAddCartClass} w-100" data-id="${prod.id}">
+                <i class="bi bi-cart-plus me-1"></i>Adicionar ao carrinho
+              </button>
+            </div>
+          </div>
+        </div>
+      `;
 
       container.appendChild(col);
     });
@@ -275,7 +306,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (existe) {
       existe.quantidade += 1;
     } else {
-      carrinho.push({ id: parseInt(id), quantidade: 1 }); // Salvar apenas ID e quantidade
+      carrinho.push({ id: parseInt(id), quantidade: 1 });
     }
 
     // ✅ SALVAR COM CHAVE ESPECÍFICA DO USUÁRIO
@@ -319,68 +350,4 @@ document.addEventListener("DOMContentLoaded", () => {
     contador.textContent = total;
     contador.style.display = total > 0 ? "inline" : "none";
   }
-
-  // Produtos de fallback caso o JSON não carregue
-  const produtosFallback = [
-    {
-      id: 1,
-      nome: "Tênis de Corrida",
-      descricao: "Conforto ideal para longas distâncias.",
-      preco: 249.9,
-      tamanho: "42",
-      cor: "Preto",
-      marca: "Nike",
-      tipo: "Tênis",
-      categoria: "Corrida",
-      genero: "Masculino",
-      vendas: 150,
-      esporte: "Corrida",
-      imagem: "https://via.placeholder.com/300x300?text=Tênis+Corrida",
-    },
-    {
-      id: 2,
-      nome: "Camiseta Dry Fit",
-      descricao: "Ideal para treinos intensos e absorção de suor.",
-      preco: 79.9,
-      tamanho: "M",
-      cor: "Azul",
-      marca: "Adidas",
-      tipo: "Camisetas",
-      categoria: "Corrida",
-      genero: "Masculino",
-      vendas: 200,
-      esporte: "Corrida",
-      imagem: "https://via.placeholder.com/300x300?text=Camiseta+Dry+Fit",
-    },
-    {
-      id: 3,
-      nome: "Shorts Esportivo",
-      descricao: "Respirável e com tecido leve.",
-      preco: 59.9,
-      tamanho: "G",
-      cor: "Cinza",
-      marca: "Puma",
-      tipo: "Shorts",
-      categoria: "Corrida",
-      genero: "Masculino",
-      vendas: 120,
-      esporte: "Corrida",
-      imagem: "https://via.placeholder.com/300x300?text=Shorts+Esportivo",
-    },
-    {
-      id: 4,
-      nome: "Top Fitness",
-      descricao: "Suporte ideal para treinos de alta intensidade.",
-      preco: 69.9,
-      tamanho: "P",
-      cor: "Rosa",
-      marca: "Nike",
-      tipo: "Top",
-      categoria: "Corrida",
-      genero: "Feminino",
-      vendas: 180,
-      esporte: "Corrida",
-      imagem: "https://via.placeholder.com/300x300?text=Top+Fitness",
-    },
-  ];
 });
