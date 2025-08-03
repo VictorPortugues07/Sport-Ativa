@@ -21,16 +21,70 @@ document.addEventListener("DOMContentLoaded", () => {
 
   let usuarioOriginal = JSON.parse(localStorage.getItem("usuarioLogado")) || {};
 
+  // Função para converter data DD/MM/AAAA para AAAA-MM-DD (formato do input date)
+  function converterParaInputDate(data) {
+    if (!data) return "";
+
+    // Se já está no formato YYYY-MM-DD, retorna como está
+    if (data.match(/^\d{4}-\d{2}-\d{2}$/)) {
+      return data;
+    }
+
+    // Se está no formato DD/MM/AAAA, converte para YYYY-MM-DD
+    if (data.match(/^\d{2}\/\d{2}\/\d{4}$/)) {
+      const [dia, mes, ano] = data.split("/");
+      return `${ano}-${mes}-${dia}`;
+    }
+
+    return data;
+  }
+
+  // Função para converter data AAAA-MM-DD para DD/MM/AAAA (para exibição/armazenamento)
+  function converterParaFormatoBR(data) {
+    if (!data) return "";
+
+    // Se já está no formato DD/MM/AAAA, retorna como está
+    if (data.match(/^\d{2}\/\d{2}\/\d{4}$/)) {
+      return data;
+    }
+
+    // Se está no formato YYYY-MM-DD, converte para DD/MM/AAAA
+    if (data.match(/^\d{4}-\d{2}-\d{2}$/)) {
+      const [ano, mes, dia] = data.split("-");
+      return `${dia}/${mes}/${ano}`;
+    }
+
+    return data;
+  }
+
+  // Debug: vamos ver o que tem no localStorage
+  console.log("Dados do usuário:", usuarioOriginal);
+  console.log("Data de nascimento original:", usuarioOriginal.nascimento);
+
   // Preenche campos com os dados
   campos.forEach((id) => {
     const el = document.getElementById(id);
-    if (el) el.value = usuarioOriginal[id] || "";
+    if (el) {
+      let valor = usuarioOriginal[id] || "";
+
+      // Tratamento especial para o campo de data
+      if (id === "nascimento") {
+        valor = converterParaInputDate(valor);
+        console.log("Data convertida para input date:", valor);
+      }
+
+      el.value = valor;
+      console.log(`Campo ${id} preenchido com:`, el.value);
+    }
   });
 
   // Exibe nome do usuário na nav e sidebar
   const nomeUsuario = usuarioOriginal.nome?.split(" ")[0] || "Usuário";
-  document.getElementById("nome-usuario-nav").textContent = nomeUsuario;
-  document.getElementById("nome-usuario-sidebar").textContent = nomeUsuario;
+  const nomeNavEl = document.getElementById("nome-usuario-nav");
+  const nomeSidebarEl = document.getElementById("nome-usuario-sidebar");
+
+  if (nomeNavEl) nomeNavEl.textContent = nomeUsuario;
+  if (nomeSidebarEl) nomeSidebarEl.textContent = nomeUsuario;
 
   // Editar: habilita campos e exibe botões
   btnEditar.addEventListener("click", () => {
@@ -48,7 +102,14 @@ document.addEventListener("DOMContentLoaded", () => {
     campos.forEach((id) => {
       const el = document.getElementById(id);
       if (el) {
-        el.value = usuarioOriginal[id] || "";
+        let valor = usuarioOriginal[id] || "";
+
+        // Tratamento especial para data
+        if (id === "nascimento") {
+          valor = converterParaInputDate(valor);
+        }
+
+        el.value = valor;
         el.disabled = true;
       }
     });
@@ -74,8 +135,20 @@ document.addEventListener("DOMContentLoaded", () => {
     const novosDados = {};
     campos.forEach((id) => {
       const el = document.getElementById(id);
-      if (el) novosDados[id] = el.value.trim();
+      if (el) {
+        let valor = el.value.trim();
+
+        // Para a data, vamos armazenar no formato DD/MM/AAAA
+        if (id === "nascimento" && valor) {
+          valor = converterParaFormatoBR(valor);
+          console.log("Data sendo salva:", valor);
+        }
+
+        novosDados[id] = valor;
+      }
     });
+
+    console.log("Dados sendo salvos:", novosDados);
 
     // Atualiza localStorage: usuarioLogado
     localStorage.setItem("usuarioLogado", JSON.stringify(novosDados));
@@ -103,47 +176,43 @@ document.addEventListener("DOMContentLoaded", () => {
     usuarioOriginal = novosDados; // Atualiza o estado original
   });
 
-  // 🧩 Aplica máscaras com IMask.js
+  // 🧩 Aplica máscaras com IMask.js - APENAS para campos de texto
   if (window.IMask) {
-    const maskCPF = IMask(document.getElementById("cpf"), {
-      mask: "000.000.000-00",
-    });
+    setTimeout(() => {
+      const cpfEl = document.getElementById("cpf");
+      const telefoneEl = document.getElementById("telefone");
+      const cepEl = document.getElementById("cep");
 
-    const maskTelefone = IMask(document.getElementById("telefone"), {
-      mask: "(00) 00000-0000",
-    });
+      if (cpfEl) {
+        const maskCPF = IMask(cpfEl, {
+          mask: "000.000.000-00",
+        });
+      }
 
-    const maskCEP = IMask(document.getElementById("cep"), {
-      mask: "00000-000",
-    });
+      if (telefoneEl) {
+        const maskTelefone = IMask(telefoneEl, {
+          mask: "(00) 00000-0000",
+        });
+      }
 
-    const maskNascimento = IMask(document.getElementById("nascimento"), {
-      mask: Date,
-      pattern: "d/`m/`Y",
-      lazy: false,
-      format: function (date) {
-        const day = String(date.getDate()).padStart(2, "0");
-        const month = String(date.getMonth() + 1).padStart(2, "0");
-        const year = date.getFullYear();
-        return `${day}/${month}/${year}`;
-      },
-      parse: function (str) {
-        const [day, month, year] = str.split("/");
-        return new Date(`${year}-${month}-${day}`);
-      },
-      blocks: {
-        d: { mask: IMask.MaskedRange, from: 1, to: 31, maxLength: 2 },
-        m: { mask: IMask.MaskedRange, from: 1, to: 12, maxLength: 2 },
-        Y: { mask: IMask.MaskedRange, from: 1900, to: 2099, maxLength: 4 },
-      },
-    });
+      if (cepEl) {
+        const maskCEP = IMask(cepEl, {
+          mask: "00000-000",
+        });
+      }
+
+      // NÃO aplicamos máscara no campo de data porque é type="date"
+      console.log("Máscaras aplicadas (exceto data)");
+    }, 100);
   }
 });
+
 document.getElementById("btn-logout").addEventListener("click", (e) => {
   e.preventDefault();
-  localStorage.removeItem("usuarioLogado"); // Remove o login atual
-  window.location.href = "../pagina-login/login.html"; // Redireciona para a tela de login (ajuste o caminho conforme sua estrutura de pastas)
+  localStorage.removeItem("usuarioLogado");
+  window.location.href = "../pagina-login/login.html";
 });
+
 document.addEventListener("DOMContentLoaded", () => {
   function atualizarContadorCarrinho() {
     const contador = document.getElementById("cart-count");
