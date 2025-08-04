@@ -31,6 +31,17 @@ document.addEventListener("DOMContentLoaded", () => {
       // ✅ SALVA OS PRODUTOS NO LOCALSTORAGE PARA O CARRINHO USAR
       localStorage.setItem("produtosDisponiveis", JSON.stringify(produtos));
 
+      // Ativa a categoria "Todos" ao carregar
+      const menuTodos = Array.from(
+        document.querySelectorAll(".menu-link")
+      ).find((el) => el.textContent.trim().toLowerCase() === "todos");
+
+      if (menuTodos) {
+        menuLinks.forEach((l) => l.classList.remove("active"));
+        menuTodos.classList.add("active");
+        aplicarFiltros();
+      }
+
       console.log("✅ Produtos carregados do JSON:", produtos.length);
       console.log("📦 Primeiros 3 produtos:", produtos.slice(0, 3));
     })
@@ -211,7 +222,10 @@ document.addEventListener("DOMContentLoaded", () => {
   function obterCategoriaAtiva() {
     const ativo = document.querySelector(".menu-link.active");
     if (!ativo) return "";
-    return ativo.textContent.trim();
+    const categoria = ativo.textContent.trim();
+
+    // Se for "Todos", retorna vazio para não aplicar filtro de categoria
+    return categoria.toLowerCase() === "todos" ? "" : categoria;
   }
 
   // ✅ FUNÇÃO DE FAIXA DE PREÇO BASEADA NOS VALORES DO SEU JSON
