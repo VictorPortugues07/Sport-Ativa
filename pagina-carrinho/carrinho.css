@@ -365,3 +365,55 @@ body {
   pointer-events: none;
   opacity: 0.7;
 }
+
+/* Força o dropdown do usuário aparecer acima do resumo do pedido */
+.navbar-top .dropdown-menu {
+  z-index: 2000 !important;
+}
+
+/* Garante que o header superior fique acima de tudo */
+.navbar-top {
+  z-index: 1000;
+  position: relative;
+}
+
+/* Mantém o card sticky apenas dentro do conteúdo principal */
+.sticky-top {
+  position: sticky;
+  z-index: 100; /* menor que o dropdown */
+}
+
+/* Estilos para a logo personalizada */
+.logo-img {
+  border-radius: 8px;
+  transition: transform 0.3s ease;
+  object-fit: contain;
+  padding: 2px;
+}
+
+.navbar-brand:hover .logo-img {
+  transform: scale(1.05);
+}
+
+/* Ajustes responsivos para a logo */
+@media (max-width: 768px) {
+  .logo-img {
+    width: 35px;
+    height: 35px;
+  }
+
+  .navbar-brand .fs-4 {
+    font-size: 1.3rem !important;
+  }
+}
+
+@media (max-width: 576px) {
+  .logo-img {
+    width: 30px;
+    height: 30px;
+  }
+
+  .navbar-brand .fs-4 {
+    font-size: 1.2rem !important;
+  }
+}

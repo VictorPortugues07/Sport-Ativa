@@ -27,22 +27,31 @@
               href="../pagina-inicial/paginaInicial.html"
               class="navbar-brand d-flex align-items-center text-white text-decoration-none"
             >
-              <i class="bi bi-basket-fill me-2 fs-3"></i>
+              <img
+                src="../pagina-inicial/logo.png"
+                alt="Sport Ativa Logo"
+                class="logo-img me-2"
+                width="40"
+                height="40"
+              />
               <span class="fs-4 fw-bold">Sport Ativa</span>
             </a>
           </div>
 
-          <!-- Barra de busca -->
+          <!-- Barra de busca centralizada e estilizada -->
           <div class="col-12 col-md-6">
-            <form class="d-flex" role="search">
-              <input
-                class="form-control form-control-lg rounded-start border-0"
-                type="search"
-                placeholder="Buscar produtos..."
-              />
-              <button class="btn btn-search rounded-end" type="submit">
-                <i class="bi bi-search"></i>
-              </button>
+            <form class="search-container mx-auto" role="search">
+              <div class="input-group">
+                <input
+                  type="search"
+                  class="form-control"
+                  placeholder="Buscar produtos..."
+                  aria-label="Buscar produtos"
+                />
+                <button class="btn btn-search" type="submit">
+                  <i class="bi bi-search"></i>
+                </button>
+              </div>
             </form>
           </div>
 
@@ -76,7 +85,7 @@
                   <li>
                     <a
                       class="dropdown-item"
-                      href="../pagina-pedidos/pedidos.html"
+                      href="../pagina-pedido/pedido.html"
                     >
                       <i class="bi bi-box me-2"></i>Meus Pedidos
                     </a>

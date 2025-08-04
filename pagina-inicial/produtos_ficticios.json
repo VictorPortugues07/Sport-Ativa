@@ -418,7 +418,7 @@
   {
     "id": 27,
     "nome": "Calção de Futebol Nike",
-    "preco": 89.90,
+    "preco": 89.9,
     "tamanho": "M",
     "genero": "Masculino",
     "categoria": "Futebol",
@@ -434,7 +434,7 @@
   {
     "id": 28,
     "nome": "Regata Fitness Puma",
-    "preco": 75.50,
+    "preco": 75.5,
     "tamanho": "G",
     "genero": "Feminino",
     "categoria": "Mulheres",
@@ -450,7 +450,7 @@
   {
     "id": 29,
     "nome": "Chuteira Adidas",
-    "preco": 320.00,
+    "preco": 320.0,
     "tamanho": "G",
     "genero": "Masculino",
     "categoria": "Futebol",
@@ -466,7 +466,7 @@
   {
     "id": 30,
     "nome": "Conjunto Infantil Nike",
-    "preco": 150.00,
+    "preco": 150.0,
     "tamanho": "M",
     "genero": "Infantil",
     "categoria": "Crianças",

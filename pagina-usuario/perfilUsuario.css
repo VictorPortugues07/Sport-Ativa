@@ -7,7 +7,7 @@
 
 body {
   background-color: #f5f5f5;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   color: #333;
 }
 
@@ -274,16 +274,16 @@ h6.text-danger {
   .navbar-top .navbar-brand {
     font-size: 1.4rem;
   }
-  
+
   .card-body {
     padding: 1.5rem;
   }
-  
+
   .btn {
     padding: 8px 16px;
     font-size: 0.9rem;
   }
-  
+
   h6.text-danger {
     font-size: 1rem;
   }
@@ -293,16 +293,16 @@ h6.text-danger {
   .card-body {
     padding: 1rem;
   }
-  
+
   .form-control {
     padding: 10px 12px;
   }
-  
+
   .btn {
     width: 100%;
     margin-bottom: 10px;
   }
-  
+
   .d-flex.justify-content-end.gap-2 {
     flex-direction: column-reverse;
   }
@@ -334,4 +334,39 @@ hr {
 .btn:disabled {
   opacity: 0.6;
   cursor: not-allowed;
+}
+
+/* Estilos para a logo personalizada */
+.logo-img {
+  border-radius: 8px;
+  transition: transform 0.3s ease;
+  object-fit: contain;
+  padding: 2px;
+}
+
+.navbar-brand:hover .logo-img {
+  transform: scale(1.05);
+}
+
+/* Ajustes responsivos para a logo */
+@media (max-width: 768px) {
+  .logo-img {
+    width: 35px;
+    height: 35px;
+  }
+
+  .navbar-brand .fs-4 {
+    font-size: 1.3rem !important;
+  }
+}
+
+@media (max-width: 576px) {
+  .logo-img {
+    width: 30px;
+    height: 30px;
+  }
+
+  .navbar-brand .fs-4 {
+    font-size: 1.2rem !important;
+  }
 }

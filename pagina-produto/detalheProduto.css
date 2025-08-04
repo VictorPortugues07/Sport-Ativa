@@ -1,0 +1,328 @@
+/* Navbar com nova cor */
+.navbar-top {
+  background-color: #b30000; /* nova cor principal */
+  color: #fff;
+  padding: 10px 0;
+}
+
+.logo-img {
+  border-radius: 8px;
+  transition: transform 0.3s ease;
+  object-fit: contain;
+  padding: 2px;
+}
+
+.navbar-brand:hover .logo-img {
+  transform: scale(1.05);
+}
+
+.navbar-top .form-control {
+  background-color: #f1f1f1;
+  color: #333;
+  border: none;
+  border-radius: 8px 0 0 8px;
+  height: 45px;
+}
+
+.navbar-top .btn-search {
+  background-color: #fff;
+  color: #b30000;
+  border: none;
+  border-radius: 0 8px 8px 0;
+  height: 45px;
+  padding: 0 15px;
+  font-size: 1.3rem;
+  transition: background 0.3s ease;
+}
+
+.navbar-top .btn-search:hover {
+  background-color: #b30000;
+  color: #fff;
+}
+
+.navbar-top .user-area a:hover {
+  color: #e6e6e6;
+}
+
+.dropdown-item:hover {
+  background-color: #f8f9fa;
+  color: #b30000;
+}
+
+/* Informações do produto */
+.product-info {
+  padding: 0 15px;
+}
+
+.rating .stars {
+  display: inline-block;
+}
+
+.price-section {
+  background: #f8f9fa;
+  padding: 20px;
+  border-radius: 10px;
+  border-left: 4px solid #dc3545;
+}
+
+.price-current {
+  margin-bottom: 5px;
+}
+
+.price-installments {
+  font-size: 0.9rem;
+}
+
+/* Seção de especificações */
+.specifications {
+  background: #f8f9fa;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.specifications p {
+  margin-bottom: 8px;
+}
+
+/* Seletor de quantidade */
+.quantity-selector .input-group {
+  max-width: 150px;
+}
+
+.quantity-selector input {
+  border-left: none;
+  border-right: none;
+}
+
+.quantity-selector button {
+  border: 1px solid #ced4da;
+}
+
+/* Botões de ação */
+.action-buttons {
+  margin-top: 20px;
+}
+
+.btn-danger {
+  background: linear-gradient(135deg, #dc3545, #c82333);
+  border: none;
+  transition: all 0.3s ease;
+}
+
+.btn-danger:hover {
+  background: linear-gradient(135deg, #c82333, #b21e2f);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(220, 53, 69, 0.3);
+}
+
+.btn-outline-danger {
+  border: 2px solid #dc3545;
+  color: #dc3545;
+  transition: all 0.3s ease;
+}
+
+.btn-outline-danger:hover {
+  background-color: #dc3545;
+  border-color: #dc3545;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(220, 53, 69, 0.3);
+}
+
+/* Seção de benefícios */
+.benefits {
+  background: #f8f9fa;
+  padding: 20px;
+  border-radius: 10px;
+  margin-top: 20px;
+}
+
+.benefits i {
+  margin-bottom: 10px;
+}
+
+/* Produtos relacionados */
+.related-products {
+  border-top: 1px solid #dee2e6;
+  padding-top: 40px;
+}
+
+.related-product-card {
+  border: none;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.related-product-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.related-product-card img {
+  height: 200px;
+  object-fit: cover;
+}
+
+.related-product-card .card-title {
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.related-product-price {
+  color: #dc3545;
+  font-weight: bold;
+}
+
+/* Animações */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.product-info > * {
+  animation: fadeIn 0.6s ease-out;
+}
+
+/* Loading state */
+.spinner-border {
+  width: 3rem;
+  height: 3rem;
+}
+
+/* Breadcrumb */
+.breadcrumb {
+  background: transparent;
+  padding: 0;
+}
+
+.breadcrumb-item a {
+  color: #dc3545;
+  text-decoration: none;
+}
+
+.breadcrumb-item a:hover {
+  text-decoration: underline;
+}
+
+/* Modal de zoom */
+#imageZoomModal .modal-content {
+  border: none;
+  border-radius: 10px;
+}
+
+#imageZoomModal img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .product-info {
+    padding: 0;
+  }
+
+  .price-section {
+    margin-top: 20px;
+  }
+
+  .specifications {
+    margin-top: 20px;
+  }
+
+  .benefits {
+    margin-top: 20px;
+  }
+
+  .benefits .col-4 {
+    margin-bottom: 15px;
+  }
+
+  .action-buttons {
+    margin-top: 30px;
+  }
+
+  .related-product-card img {
+    height: 150px;
+  }
+}
+
+/* Estados dos botões */
+.btn-success-temp {
+  background-color: #28a745 !important;
+  border-color: #28a745 !important;
+}
+
+.btn-disabled-temp {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Footer (aproveitando da página inicial) */
+.footer {
+  margin-top: 80px;
+}
+
+.footer a {
+  transition: color 0.3s ease;
+}
+
+.footer a:hover {
+  color: #dc3545 !important;
+}
+
+/* Animação para adição ao carrinho */
+@keyframes addToCart {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.btn-add-animation {
+  animation: addToCart 0.3s ease;
+}
+
+/* Estilos para a logo personalizada */
+.logo-img {
+  border-radius: 8px;
+  transition: transform 0.3s ease;
+  object-fit: contain;
+  padding: 2px;
+}
+
+.navbar-brand:hover .logo-img {
+  transform: scale(1.05);
+}
+
+/* Ajustes responsivos para a logo */
+@media (max-width: 768px) {
+  .logo-img {
+    width: 35px;
+    height: 35px;
+  }
+
+  .navbar-brand .fs-4 {
+    font-size: 1.3rem !important;
+  }
+}
+
+@media (max-width: 576px) {
+  .logo-img {
+    width: 30px;
+    height: 30px;
+  }
+
+  .navbar-brand .fs-4 {
+    font-size: 1.2rem !important;
+  }
+}
