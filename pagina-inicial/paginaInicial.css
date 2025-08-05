@@ -407,3 +407,25 @@ footer .btn-danger {
     font-size: 1.2rem !important;
   }
 }
+/* Sugestões de busca */
+.sugestoes-busca {
+  max-height: 200px;
+  overflow-y: auto;
+  border-top: none !important;
+}
+
+.sugestao-item:hover {
+  background-color: #f8f9fa !important;
+}
+
+.sugestao-item:last-child {
+  border-bottom: none !important;
+}
+
+/* Estados de busca */
+.busca-carrinho-vazia,
+.busca-pedidos-vazia {
+  border: 2px dashed #dee2e6;
+  border-radius: 8px;
+  margin: 20px 0;
+}
