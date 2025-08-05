@@ -47,16 +47,32 @@ class BuscaDropdown {
       return;
     }
 
-    // Se não tiver, fazer fetch (só na página inicial)
-    if (window.location.pathname.includes("paginaInicial.html")) {
-      fetch("produtos_ficticios.json")
-        .then((res) => res.json())
-        .then((data) => {
-          this.produtos = data;
-          localStorage.setItem("produtosDisponiveis", JSON.stringify(data));
-        })
-        .catch((err) => console.log("Produtos não carregados:", err));
-    }
+    // Se não tiver, fazer fetch (ajustado para funcionar em qualquer página)
+    const isHomePage = window.location.pathname.includes("paginaInicial.html");
+    const jsonPath = isHomePage
+      ? "produtos_ficticios.json"
+      : "../pagina-inicial/produtos_ficticios.json";
+
+    fetch(jsonPath)
+      .then((res) => res.json())
+      .then((data) => {
+        this.produtos = data;
+        localStorage.setItem("produtosDisponiveis", JSON.stringify(data));
+      })
+      .catch((err) => {
+        console.log("Produtos não carregados:", err);
+        // Fallback: tentar o outro caminho
+        const fallbackPath = isHomePage
+          ? "../pagina-inicial/produtos_ficticios.json"
+          : "produtos_ficticios.json";
+        fetch(fallbackPath)
+          .then((res) => res.json())
+          .then((data) => {
+            this.produtos = data;
+            localStorage.setItem("produtosDisponiveis", JSON.stringify(data));
+          })
+          .catch((err2) => console.log("Fallback também falhou:", err2));
+      });
   }
 
   aoDigitar(e) {
@@ -167,7 +183,7 @@ class BuscaDropdown {
     });
 
     // Ordenar por relevância e limitar resultados
-    return resultados.sort((a, b) => b.relevancia - a.relevancia).slice(0, 8); // Máximo 8 resultados
+    return resultados.sort((a, b) => b.relevancia - a.relevancia).slice(0, 8);
   }
 
   mostrarDropdown(resultados, termo) {
@@ -255,8 +271,13 @@ class BuscaDropdown {
       </div>
     `;
 
-    // Event listeners
-    item.addEventListener("click", () => this.selecionarProduto(produto));
+    // Event listeners - IMPORTANTE: Clique no produto vai para a página de detalhes
+    item.addEventListener("click", (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      this.navegarParaProduto(produto);
+    });
+
     item.addEventListener("mouseenter", () => {
       this.indiceSelecionado = index;
       this.destacarItem();
@@ -325,7 +346,7 @@ class BuscaDropdown {
         const produtoId = itemSelecionado.dataset.produtoId;
         const produto = this.produtos.find((p) => p.id == produtoId);
         if (produto) {
-          this.selecionarProduto(produto);
+          this.navegarParaProduto(produto);
           return;
         }
       }
@@ -338,21 +359,35 @@ class BuscaDropdown {
     }
   }
 
-  selecionarProduto(produto) {
+  // NOVA FUNÇÃO: Método dedicado para navegar para a página do produto
+  navegarParaProduto(produto) {
     this.fecharDropdown();
 
-    // Se estiver na página inicial, aplicar filtro
-    if (window.location.pathname.includes("paginaInicial.html")) {
-      this.inputBusca.value = produto.nome;
-      // Disparar evento de busca na página
-      if (typeof aplicarFiltros === "function") {
-        termoBusca = produto.nome.toLowerCase();
-        aplicarFiltros();
-      }
+    // Determinar o caminho correto baseado na página atual
+    const currentPath = window.location.pathname;
+    let targetPath;
+
+    if (currentPath.includes("paginaInicial.html")) {
+      // Está na página inicial
+      targetPath = `../pagina-produto/detalheProduto.html?id=${produto.id}`;
+    } else if (currentPath.includes("pagina-produto")) {
+      // Já está na pasta de produto
+      targetPath = `detalheProduto.html?id=${produto.id}`;
     } else {
-      // Ir para página de detalhes do produto
-      window.location.href = `../pagina-produto/detalheProduto.html?id=${produto.id}`;
+      // Está em outra página (login, carrinho, etc.)
+      targetPath = `../pagina-produto/detalheProduto.html?id=${produto.id}`;
     }
+
+    console.log(`🔗 Navegando para: ${targetPath}`);
+    console.log(`📦 Produto selecionado:`, produto);
+
+    // Navegar para a página do produto
+    window.location.href = targetPath;
+  }
+
+  selecionarProduto(produto) {
+    // Mantido para compatibilidade, mas agora chama o novo método
+    this.navegarParaProduto(produto);
   }
 
   irParaBusca(termo) {
@@ -391,11 +426,11 @@ const estilosDropdown = `
 }
 
 .dropdown-item-busca:hover {
-  background-color: #f8f9fa !important;
+  background-color: #ffffffff !important;
 }
 
 .dropdown-item-busca.active {
-  background-color: #e9ecef !important;
+  background-color: #dbc6c6ff !important;
 }
 
 .dropdown-item-busca:last-child {
@@ -403,19 +438,19 @@ const estilosDropdown = `
 }
 
 .produto-thumb img {
-  border: 1px solid #dee2e6;
+  border: 1px solid #040404ff;
 }
 
 mark.bg-warning {
-  background-color: #fff3cd !important;
+  background-color: #b72424ff !important;
   padding: 2px 4px;
   border-radius: 3px;
   font-weight: bold;
 }
 
 kbd {
-  background-color: #e9ecef;
-  border: 1px solid #adb5bd;
+  background-color: #ebecedff;
+  border: 1px solid #efefefff;
   border-radius: 3px;
   padding: 2px 4px;
   font-size: 0.8em;
@@ -426,7 +461,7 @@ kbd {
 }
 
 .dropdown-busca::-webkit-scrollbar-track {
-  background: #f1f1f1;
+  background: #fdf9f9ff;
 }
 
 .dropdown-busca::-webkit-scrollbar-thumb {
@@ -448,8 +483,13 @@ kbd {
 </style>
 `;
 
-// Adicionar estilos ao head
-document.head.insertAdjacentHTML("beforeend", estilosDropdown);
+// Adicionar estilos ao head se ainda não existirem
+if (!document.querySelector("#busca-dropdown-styles")) {
+  const styleElement = document.createElement("style");
+  styleElement.id = "busca-dropdown-styles";
+  styleElement.innerHTML = estilosDropdown.replace(/<\/?style>/g, "");
+  document.head.appendChild(styleElement);
+}
 
 // ===== INICIALIZAÇÃO =====
 document.addEventListener("DOMContentLoaded", () => {

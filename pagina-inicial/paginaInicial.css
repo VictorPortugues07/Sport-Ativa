@@ -14,7 +14,7 @@ body {
 /* Navbar Superior Estilizada */
 .navbar-top {
   background-color: #b30000;
-  color: #fff;
+  color: #b30000;
   padding: 10px 0;
 }
 
@@ -28,7 +28,7 @@ body {
 }
 
 .navbar-top .form-control {
-  background-color: #f1f1f1;
+  background-color: #ffffff;
   color: #333;
   border: none;
   border-radius: 8px 0 0 8px;

@@ -272,3 +272,25 @@ input[required] ~ .form-label::after {
   border-radius: 8px;
   margin: 20px 0;
 }
+#logo {
+  width: 45px;
+  height: 45px;
+  border-radius: 8px;
+  transition: transform 0.3s ease;
+  object-fit: contain;
+  padding: 2px;
+}
+
+@media (max-width: 768px) {
+  #logo {
+    width: 35px;
+    height: 35px;
+  }
+}
+
+@media (max-width: 576px) {
+  #logo {
+    width: 30px;
+    height: 30px;
+  }
+}

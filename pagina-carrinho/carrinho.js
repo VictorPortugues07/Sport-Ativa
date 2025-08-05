@@ -313,7 +313,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Redirecionar ou mostrar confirmação
     alert("Compra finalizada com sucesso!");
-    window.location.href = "../pagina-pedidos/pedidos.html"; // Corrigido o caminho
+    window.location.href = "../pagina-pedido/pedido.html"; // Corrigido o caminho
   });
 
   // Logout
