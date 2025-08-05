@@ -1,4 +1,3 @@
-/* Reset básico */
 * {
   box-sizing: border-box;
   margin: 0;
@@ -11,7 +10,6 @@ body {
   color: #333;
 }
 
-/* Navbar Superior Estilizada */
 .navbar-top {
   background-color: #b30000;
   color: #b30000;
@@ -77,7 +75,6 @@ body {
   font-size: 1.5rem;
 }
 
-/* Dropdown do usuário */
 .dropdown-toggle::after {
   display: none;
 }
@@ -99,13 +96,11 @@ body {
   color: #b30000;
 }
 
-/* Badge do carrinho */
 .badge {
   font-size: 0.7rem;
   padding: 0.25em 0.5em;
 }
 
-/* Menu horizontal moderno */
 .menu-horizontal {
   background-color: #ffffff;
   border-bottom: 1px solid #ddd;
@@ -135,7 +130,6 @@ body {
   font-weight: 600;
 }
 
-/* Sidebar / Filtros */
 .sidebar {
   background-color: #eeeeee;
   border-right: 1px solid #ccc;
@@ -174,7 +168,6 @@ body {
   font-size: 0.95rem;
 }
 
-/* Botões de filtro de preço */
 .btn-group {
   gap: 5px;
 }
@@ -193,7 +186,6 @@ body {
   color: #fff;
 }
 
-/* Botões principais */
 .btn-outline-danger {
   border-color: #b30000;
   color: #b30000;
@@ -214,7 +206,6 @@ body {
   border-color: #990000;
 }
 
-/* Cards de Produto */
 .product-card {
   border: 1px solid #ddd;
   border-radius: 10px;
@@ -261,7 +252,6 @@ body {
   color: #777;
 }
 
-/* Rodapé Moderno */
 footer {
   background-color: #1a1a1a;
   color: #fff;
@@ -297,7 +287,6 @@ footer .social-icons a:hover i {
   transform: translateY(-2px);
 }
 
-/* Newsletter */
 footer .form-control {
   background-color: #333;
   border: 1px solid #555;
@@ -320,13 +309,11 @@ footer .btn-danger {
   border-radius: 0 5px 5px 0;
 }
 
-/* Badges de pagamento */
 .badge {
   font-size: 0.8rem;
   padding: 6px 10px;
 }
 
-/* Responsividade */
 @media (max-width: 768px) {
   .navbar-top .navbar-brand {
     font-size: 1.4rem;
@@ -373,7 +360,6 @@ footer .btn-danger {
     font-size: 1.1rem;
   }
 }
-/* Estilos para a logo personalizada */
 .logo-img {
   border-radius: 8px;
   transition: transform 0.3s ease;
@@ -385,7 +371,6 @@ footer .btn-danger {
   transform: scale(1.05);
 }
 
-/* Ajustes responsivos para a logo */
 @media (max-width: 768px) {
   .logo-img {
     width: 35px;
@@ -407,7 +392,6 @@ footer .btn-danger {
     font-size: 1.2rem !important;
   }
 }
-/* Sugestões de busca */
 .sugestoes-busca {
   max-height: 200px;
   overflow-y: auto;
@@ -422,7 +406,6 @@ footer .btn-danger {
   border-bottom: none !important;
 }
 
-/* Estados de busca */
 .busca-carrinho-vazia,
 .busca-pedidos-vazia {
   border: 2px dashed #dee2e6;

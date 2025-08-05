@@ -1,5 +1,3 @@
-// ===== PÁGINA DE DETALHES DO PRODUTO =====
-
 class DetalheProduto {
   constructor() {
     this.produto = null;
@@ -9,7 +7,6 @@ class DetalheProduto {
   }
 
   inicializar() {
-    // Obter ID do produto da URL
     this.produtoId = this.obterIdDaURL();
 
     if (!this.produtoId) {
@@ -17,13 +14,11 @@ class DetalheProduto {
       return;
     }
 
-    // Carregar produtos e mostrar detalhes
     this.carregarProdutos();
 
-    // Configurar event listeners
     this.configurarEventListeners();
 
-    console.log(`📦 Iniciando página de produto com ID: ${this.produtoId}`);
+    console.log(`Iniciando página de produto com ID: ${this.produtoId}`);
   }
 
   obterIdDaURL() {
@@ -33,14 +28,12 @@ class DetalheProduto {
 
   async carregarProdutos() {
     try {
-      // Tentar pegar do localStorage primeiro
       const produtosLocal = localStorage.getItem("produtosDisponiveis");
 
       if (produtosLocal) {
         this.produtos = JSON.parse(produtosLocal);
         this.processarProduto();
       } else {
-        // Carregar do JSON
         const response = await fetch(
           "../pagina-inicial/produtos_ficticios.json"
         );
@@ -51,7 +44,6 @@ class DetalheProduto {
         const data = await response.json();
         this.produtos = data;
 
-        // Salvar no localStorage para futuras consultas
         localStorage.setItem("produtosDisponiveis", JSON.stringify(data));
 
         this.processarProduto();
@@ -63,7 +55,6 @@ class DetalheProduto {
   }
 
   processarProduto() {
-    // Encontrar o produto pelo ID
     this.produto = this.produtos.find((p) => p.id == this.produtoId);
 
     if (!this.produto) {
@@ -71,51 +62,40 @@ class DetalheProduto {
       return;
     }
 
-    // Mostrar detalhes do produto
     this.mostrarDetalhes();
 
-    // Carregar produtos relacionados
     this.carregarProdutosRelacionados();
 
-    // Ocultar loading e mostrar conteúdo
     this.ocultarLoading();
   }
 
   mostrarDetalhes() {
     const produto = this.produto;
 
-    // Atualizar título da página
     document.title = `${produto.nome} - Sport Ativa`;
 
-    // Breadcrumb
     document.getElementById("breadcrumb-produto").textContent = produto.nome;
 
-    // Imagem
     const imagemElement = document.getElementById("produto-imagem");
     imagemElement.src = produto.imagem;
     imagemElement.alt = produto.nome;
 
-    // Informações básicas
     document.getElementById("produto-categoria").textContent =
       produto.categoria;
     document.getElementById("produto-nome").textContent = produto.nome;
     document.getElementById("produto-vendas").textContent = produto.vendas;
 
-    // Preço
     const precoFormatado = `R$ ${produto.preco.toFixed(2).replace(".", ",")}`;
     document.getElementById("produto-preco").textContent = precoFormatado;
 
-    // Preço parcelado (12x sem juros)
     const precoParcelado = `R$ ${(produto.preco / 12)
       .toFixed(2)
       .replace(".", ",")}`;
     document.getElementById("preco-parcelado").textContent = precoParcelado;
 
-    // Descrição
     document.getElementById("produto-descricao").textContent =
       produto.descricao;
 
-    // Especificações
     document.getElementById("produto-marca").textContent = produto.marca;
     document.getElementById("produto-tamanho").textContent = produto.tamanho;
     document.getElementById("produto-cor").textContent = produto.cor;
@@ -123,13 +103,12 @@ class DetalheProduto {
     document.getElementById("produto-esporte").textContent = produto.esporte;
     document.getElementById("produto-tipo").textContent = produto.tipo;
 
-    console.log("✅ Detalhes do produto carregados:", produto);
+    console.log("Detalhes do produto carregados:", produto);
   }
 
   carregarProdutosRelacionados() {
     const produto = this.produto;
 
-    // Encontrar produtos relacionados (mesma marca ou categoria)
     const relacionados = this.produtos
       .filter(
         (p) =>
@@ -138,7 +117,7 @@ class DetalheProduto {
             p.categoria === produto.categoria ||
             p.esporte === produto.esporte)
       )
-      .slice(0, 4); // Máximo 4 produtos
+      .slice(0, 4);
 
     const container = document.getElementById("produtos-relacionados");
     container.innerHTML = "";
@@ -148,7 +127,7 @@ class DetalheProduto {
       container.appendChild(produtoCard);
     });
 
-    console.log(`📦 ${relacionados.length} produtos relacionados carregados`);
+    console.log(`${relacionados.length} produtos relacionados carregados`);
   }
 
   criarCardProduto(produto) {
@@ -198,27 +177,23 @@ class DetalheProduto {
       }
     });
 
-    // Adicionar ao carrinho
     document
       .getElementById("btn-add-carrinho")
       .addEventListener("click", () => {
         this.adicionarAoCarrinho();
       });
 
-    // Comprar agora
     document
       .getElementById("btn-comprar-agora")
       .addEventListener("click", () => {
         this.comprarAgora();
       });
 
-    // Zoom da imagem
     const imagemProduto = document.getElementById("produto-imagem");
     imagemProduto.addEventListener("click", () => {
       this.abrirZoomImagem();
     });
 
-    // Modal de zoom
     document.getElementById("produto-imagem").addEventListener("click", () => {
       const modalImage = document.getElementById("modal-image");
       modalImage.src = this.produto.imagem;
@@ -236,10 +211,8 @@ class DetalheProduto {
 
     const quantidade = parseInt(document.getElementById("quantidade").value);
 
-    // Obter carrinho atual do localStorage
     let carrinho = JSON.parse(localStorage.getItem("carrinho")) || [];
 
-    // Verificar se produto já existe no carrinho
     const itemExistente = carrinho.find((item) => item.id === this.produto.id);
 
     if (itemExistente) {
@@ -251,25 +224,20 @@ class DetalheProduto {
       });
     }
 
-    // Salvar no localStorage
     localStorage.setItem("carrinho", JSON.stringify(carrinho));
 
-    // Atualizar contador do carrinho
     this.atualizarContadorCarrinho();
 
-    // Feedback visual
     this.mostrarFeedbackCarrinho(quantidade);
 
     console.log(
-      `🛒 Produto adicionado ao carrinho: ${this.produto.nome} (${quantidade}x)`
+      `Produto adicionado ao carrinho: ${this.produto.nome} (${quantidade}x)`
     );
   }
 
   comprarAgora() {
-    // Adicionar ao carrinho primeiro
     this.adicionarAoCarrinho();
 
-    // Redirecionar para o carrinho
     window.location.href = "../pagina-carrinho/carrinho.html";
   }
 
@@ -326,7 +294,6 @@ class DetalheProduto {
   }
 }
 
-// ===== SISTEMA DE AUTENTICAÇÃO (Mesmo da página inicial) =====
 class SistemaAutenticacao {
   constructor() {
     this.usuarioLogado = null;
@@ -340,7 +307,6 @@ class SistemaAutenticacao {
       this.atualizarInterfaceLogado();
     }
 
-    // Event listener para logout
     const btnLogout = document.getElementById("btn-logout");
     if (btnLogout) {
       btnLogout.addEventListener("click", (e) => {
@@ -366,19 +332,14 @@ class SistemaAutenticacao {
   }
 }
 
-// ===== INICIALIZAÇÃO =====
 document.addEventListener("DOMContentLoaded", () => {
-  // Inicializar página de produto
   new DetalheProduto();
 
-  // Inicializar sistema de autenticação
   new SistemaAutenticacao();
 
-  // Inicializar contador do carrinho
   atualizarContadorCarrinhoInicial();
 });
 
-// Função para atualizar contador do carrinho na inicialização
 function atualizarContadorCarrinhoInicial() {
   const carrinho = JSON.parse(localStorage.getItem("carrinho")) || [];
   const totalItens = carrinho.reduce(

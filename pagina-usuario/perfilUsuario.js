@@ -21,16 +21,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
   let usuarioOriginal = JSON.parse(localStorage.getItem("usuarioLogado")) || {};
 
-  // Função para converter data DD/MM/AAAA para AAAA-MM-DD (formato do input date)
   function converterParaInputDate(data) {
     if (!data) return "";
 
-    // Se já está no formato YYYY-MM-DD, retorna como está
     if (data.match(/^\d{4}-\d{2}-\d{2}$/)) {
       return data;
     }
 
-    // Se está no formato DD/MM/AAAA, converte para YYYY-MM-DD
     if (data.match(/^\d{2}\/\d{2}\/\d{4}$/)) {
       const [dia, mes, ano] = data.split("/");
       return `${ano}-${mes}-${dia}`;
@@ -39,16 +36,13 @@ document.addEventListener("DOMContentLoaded", () => {
     return data;
   }
 
-  // Função para converter data AAAA-MM-DD para DD/MM/AAAA (para exibição/armazenamento)
   function converterParaFormatoBR(data) {
     if (!data) return "";
 
-    // Se já está no formato DD/MM/AAAA, retorna como está
     if (data.match(/^\d{2}\/\d{2}\/\d{4}$/)) {
       return data;
     }
 
-    // Se está no formato YYYY-MM-DD, converte para DD/MM/AAAA
     if (data.match(/^\d{4}-\d{2}-\d{2}$/)) {
       const [ano, mes, dia] = data.split("-");
       return `${dia}/${mes}/${ano}`;
@@ -57,17 +51,14 @@ document.addEventListener("DOMContentLoaded", () => {
     return data;
   }
 
-  // Debug: vamos ver o que tem no localStorage
   console.log("Dados do usuário:", usuarioOriginal);
   console.log("Data de nascimento original:", usuarioOriginal.nascimento);
 
-  // Preenche campos com os dados
   campos.forEach((id) => {
     const el = document.getElementById(id);
     if (el) {
       let valor = usuarioOriginal[id] || "";
 
-      // Tratamento especial para o campo de data
       if (id === "nascimento") {
         valor = converterParaInputDate(valor);
         console.log("Data convertida para input date:", valor);
@@ -78,7 +69,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // Exibe nome do usuário na nav e sidebar
   const nomeUsuario = usuarioOriginal.nome?.split(" ")[0] || "Usuário";
   const nomeNavEl = document.getElementById("nome-usuario-nav");
   const nomeSidebarEl = document.getElementById("nome-usuario-sidebar");
@@ -86,7 +76,6 @@ document.addEventListener("DOMContentLoaded", () => {
   if (nomeNavEl) nomeNavEl.textContent = nomeUsuario;
   if (nomeSidebarEl) nomeSidebarEl.textContent = nomeUsuario;
 
-  // Editar: habilita campos e exibe botões
   btnEditar.addEventListener("click", () => {
     campos.forEach((id) => {
       const el = document.getElementById(id);
@@ -97,14 +86,12 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("campo-confirmar-senha").classList.remove("d-none");
   });
 
-  // Cancelar edição: restaura valores e desabilita campos
   btnCancelar.addEventListener("click", () => {
     campos.forEach((id) => {
       const el = document.getElementById(id);
       if (el) {
         let valor = usuarioOriginal[id] || "";
 
-        // Tratamento especial para data
         if (id === "nascimento") {
           valor = converterParaInputDate(valor);
         }
@@ -119,11 +106,9 @@ document.addEventListener("DOMContentLoaded", () => {
     botoesEdicao.classList.add("d-none");
   });
 
-  // Submissão do formulário
   form.addEventListener("submit", (e) => {
     e.preventDefault();
 
-    // Confirma senha
     const senha = document.getElementById("senha").value;
     const confirmarSenha = document.getElementById("confirmar-senha").value;
     if (senha !== confirmarSenha) {
@@ -131,14 +116,12 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    // Atualiza dados do objeto
     const novosDados = {};
     campos.forEach((id) => {
       const el = document.getElementById(id);
       if (el) {
         let valor = el.value.trim();
 
-        // Para a data, vamos armazenar no formato DD/MM/AAAA
         if (id === "nascimento" && valor) {
           valor = converterParaFormatoBR(valor);
           console.log("Data sendo salva:", valor);
@@ -150,10 +133,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     console.log("Dados sendo salvos:", novosDados);
 
-    // Atualiza localStorage: usuarioLogado
     localStorage.setItem("usuarioLogado", JSON.stringify(novosDados));
 
-    // Atualiza usuário na lista 'usuarios'
     const usuarios = JSON.parse(localStorage.getItem("usuarios")) || [];
     const index = usuarios.findIndex((u) => u.cpf === usuarioOriginal.cpf);
     if (index !== -1) {
@@ -161,7 +142,6 @@ document.addEventListener("DOMContentLoaded", () => {
       localStorage.setItem("usuarios", JSON.stringify(usuarios));
     }
 
-    // Atualiza campos novamente
     campos.forEach((id) => {
       const el = document.getElementById(id);
       if (el) el.disabled = true;
@@ -173,10 +153,9 @@ document.addEventListener("DOMContentLoaded", () => {
     botoesEdicao.classList.add("d-none");
 
     alert("Dados atualizados com sucesso!");
-    usuarioOriginal = novosDados; // Atualiza o estado original
+    usuarioOriginal = novosDados;
   });
 
-  // 🧩 Aplica máscaras com IMask.js - APENAS para campos de texto
   if (window.IMask) {
     setTimeout(() => {
       const cpfEl = document.getElementById("cpf");
@@ -201,7 +180,6 @@ document.addEventListener("DOMContentLoaded", () => {
         });
       }
 
-      // NÃO aplicamos máscara no campo de data porque é type="date"
       console.log("Máscaras aplicadas (exceto data)");
     }, 100);
   }

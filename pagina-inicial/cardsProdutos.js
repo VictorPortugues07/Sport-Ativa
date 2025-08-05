@@ -11,10 +11,8 @@ document.addEventListener("DOMContentLoaded", () => {
   let produtos = [];
   let produtosFiltrados = [];
 
-  // Verificar se usuário está logado e atualizar interface
   verificarStatusLogin();
 
-  // ✅ CARREGAR APENAS PRODUTOS DO JSON - SEM FALLBACK
   fetch("produtos_ficticios.json")
     .then((res) => {
       if (!res.ok) {
@@ -28,10 +26,8 @@ document.addEventListener("DOMContentLoaded", () => {
       renderizarProdutos(produtosFiltrados);
       atualizarContadorCarrinho();
 
-      // ✅ SALVA OS PRODUTOS NO LOCALSTORAGE PARA O CARRINHO USAR
       localStorage.setItem("produtosDisponiveis", JSON.stringify(produtos));
 
-      // Ativa a categoria "Todos" ao carregar
       const menuTodos = Array.from(
         document.querySelectorAll(".menu-link")
       ).find((el) => el.textContent.trim().toLowerCase() === "todos");
@@ -41,12 +37,9 @@ document.addEventListener("DOMContentLoaded", () => {
         menuTodos.classList.add("active");
         aplicarFiltros();
       }
-
-      console.log("✅ Produtos carregados do JSON:", produtos.length);
-      console.log("📦 Primeiros 3 produtos:", produtos.slice(0, 3));
     })
     .catch((error) => {
-      console.error("❌ Erro ao carregar produtos do JSON:", error);
+      console.error("Erro ao carregar produtos do JSON:", error);
       container.innerHTML = `
         <div class="col-12">
           <div class="alert alert-danger text-center">
@@ -58,7 +51,6 @@ document.addEventListener("DOMContentLoaded", () => {
       `;
     });
 
-  // Adiciona eventos aos filtros
   filtroCheckboxes.forEach((cb) =>
     cb.addEventListener("change", aplicarFiltros)
   );
@@ -83,7 +75,6 @@ document.addEventListener("DOMContentLoaded", () => {
     })
   );
 
-  // Logout
   const btnLogout = document.getElementById("btn-logout");
   if (btnLogout) {
     btnLogout.addEventListener("click", (e) => {
@@ -103,18 +94,15 @@ document.addEventListener("DOMContentLoaded", () => {
     const nomeUsuario = document.getElementById("nome-usuario");
 
     if (usuarioLogado && usuarioLogado.nome) {
-      // Usuário logado
       naoLogado.classList.add("d-none");
       logado.classList.remove("d-none");
       nomeUsuario.textContent = usuarioLogado.nome.split(" ")[0];
     } else {
-      // Usuário não logado
       naoLogado.classList.remove("d-none");
       logado.classList.add("d-none");
     }
   }
 
-  // ✅ FUNÇÃO PARA OBTER CHAVE DO CARRINHO DO USUÁRIO
   function obterChaveCarrinho() {
     const usuarioLogado = JSON.parse(localStorage.getItem("usuarioLogado"));
     if (!usuarioLogado || !usuarioLogado.cpf) {
@@ -124,9 +112,8 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function aplicarFiltros() {
-    // ✅ SÓ APLICA FILTROS SE OS PRODUTOS JÁ FORAM CARREGADOS
     if (produtos.length === 0) {
-      console.log("⚠️ Produtos ainda não foram carregados");
+      console.log("Produtos ainda não foram carregados");
       return;
     }
 
@@ -141,11 +128,9 @@ document.addEventListener("DOMContentLoaded", () => {
       categoria: obterCategoriaAtiva(),
     };
 
-    console.log("🔍 Filtros aplicados:", filtros);
+    console.log("Filtros aplicados:", filtros);
 
-    // ✅ SEMPRE PARTIR DO ARRAY ORIGINAL DE PRODUTOS DO JSON
     produtosFiltrados = produtos.filter((prod) => {
-      // Verificar cada filtro individualmente
       const passaMarca =
         filtros.marca.length === 0 || filtros.marca.includes(prod.marca);
       const passaTamanho =
@@ -161,7 +146,6 @@ document.addEventListener("DOMContentLoaded", () => {
       const passaCategoria =
         filtros.categoria.length === 0 || prod.categoria === filtros.categoria;
 
-      // ✅ FILTRO DE PREÇO BASEADO NOS DADOS DO JSON
       let passaPreco = true;
       if (filtros.preco.length > 0 && !filtros.preco.includes("Todos")) {
         const faixaProduto = getFaixaDePreco(prod.preco);
@@ -181,7 +165,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     console.log(
-      `📊 Produtos encontrados: ${produtosFiltrados.length} de ${produtos.length} total`
+      `Produtos encontrados: ${produtosFiltrados.length} de ${produtos.length} total`
     );
 
     aplicarOrdenacao();
@@ -224,11 +208,9 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!ativo) return "";
     const categoria = ativo.textContent.trim();
 
-    // Se for "Todos", retorna vazio para não aplicar filtro de categoria
     return categoria.toLowerCase() === "todos" ? "" : categoria;
   }
 
-  // ✅ FUNÇÃO DE FAIXA DE PREÇO BASEADA NOS VALORES DO SEU JSON
   function getFaixaDePreco(preco) {
     const precoNum = parseFloat(preco);
     if (precoNum <= 100) return "Até R$ 100";
@@ -299,7 +281,6 @@ document.addEventListener("DOMContentLoaded", () => {
       container.appendChild(col);
     });
 
-    // Adiciona eventos aos botões
     document
       .querySelectorAll(`.btn.${btnAddCartClass.replace(" ", ".")}`)
       .forEach((btn) => {
@@ -310,11 +291,9 @@ document.addEventListener("DOMContentLoaded", () => {
       });
   }
 
-  // ✅ FUNÇÃO CORRIGIDA - USA CHAVE ESPECÍFICA DO USUÁRIO
   function adicionarAoCarrinho(id) {
     const carrinhoKey = obterChaveCarrinho();
 
-    // Verificar se usuário está logado
     if (!carrinhoKey) {
       alert("Você precisa estar logado para adicionar produtos ao carrinho!");
       window.location.href = "../pagina-login/login.html";
@@ -324,7 +303,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const produto = produtos.find((p) => p.id == id);
     if (!produto) return;
 
-    // ✅ USAR CHAVE ESPECÍFICA DO USUÁRIO
     let carrinho = JSON.parse(localStorage.getItem(carrinhoKey)) || [];
     const existe = carrinho.find((item) => item.id == id);
 
@@ -334,11 +312,9 @@ document.addEventListener("DOMContentLoaded", () => {
       carrinho.push({ id: parseInt(id), quantidade: 1 });
     }
 
-    // ✅ SALVAR COM CHAVE ESPECÍFICA DO USUÁRIO
     localStorage.setItem(carrinhoKey, JSON.stringify(carrinho));
     atualizarContadorCarrinho();
 
-    // Feedback visual melhorado
     const btn = document.querySelector(`button[data-id="${id}"]`);
     const textoOriginal = btn.innerHTML;
     btn.innerHTML = '<i class="bi bi-check-circle me-1"></i>Adicionado!';
@@ -354,21 +330,18 @@ document.addEventListener("DOMContentLoaded", () => {
     }, 1500);
   }
 
-  // ✅ FUNÇÃO CORRIGIDA - USA CHAVE ESPECÍFICA DO USUÁRIO
   function atualizarContadorCarrinho() {
     const carrinhoKey = obterChaveCarrinho();
     const contador = document.getElementById("cart-count");
 
     if (!contador) return;
 
-    // Se usuário não está logado, mostrar 0
     if (!carrinhoKey) {
       contador.textContent = "0";
       contador.style.display = "none";
       return;
     }
 
-    // ✅ USAR CHAVE ESPECÍFICA DO USUÁRIO
     const carrinho = JSON.parse(localStorage.getItem(carrinhoKey)) || [];
     const total = carrinho.reduce((acc, item) => acc + item.quantidade, 0);
 
@@ -377,6 +350,5 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 function irParaDetalhes(produtoId) {
-  // Criar a pasta 'pagina-produto' no mesmo nível que 'pagina-inicial'
   window.location.href = `../pagina-produto/detalheProduto.html?id=${produtoId}`;
 }

@@ -15,11 +15,9 @@
     <link rel="stylesheet" href="carrinho.css" />
   </head>
   <body>
-    <!-- Navbar superior -->
     <header class="navbar-top py-3 shadow-sm">
       <div class="container">
         <div class="row align-items-center gx-2 gy-2">
-          <!-- Logo -->
           <div
             class="col-12 col-md-3 d-flex justify-content-center justify-content-md-start"
           >
@@ -38,7 +36,6 @@
             </a>
           </div>
 
-          <!-- Barra de busca centralizada e estilizada -->
           <div class="col-12 col-md-6">
             <form class="search-container mx-auto" role="search">
               <div class="input-group">
@@ -55,7 +52,6 @@
             </form>
           </div>
 
-          <!-- Área do usuário -->
           <div
             class="col-12 col-md-3 d-flex justify-content-center justify-content-md-end align-items-center gap-4"
           >
@@ -100,7 +96,6 @@
               </div>
             </div>
 
-            <!-- Carrinho -->
             <a
               href="#"
               class="text-white fs-4 text-decoration-none position-relative"
@@ -117,7 +112,6 @@
       </div>
     </header>
 
-    <!-- Breadcrumb -->
     <div class="container mt-3">
       <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
@@ -133,10 +127,8 @@
       </nav>
     </div>
 
-    <!-- Conteúdo principal -->
     <main class="container mt-4">
       <div class="row">
-        <!-- Lista de produtos -->
         <div class="col-md-8">
           <div class="card border-0 shadow-sm">
             <div class="card-header bg-light border-0">
@@ -145,13 +137,10 @@
               </h4>
             </div>
 
-            <div class="card-body" id="tabela-carrinho">
-              <!-- Lista de produtos será inserida aqui pelo JavaScript -->
-            </div>
+            <div class="card-body" id="tabela-carrinho"></div>
           </div>
         </div>
 
-        <!-- Resumo e pagamento -->
         <div class="col-md-4">
           <div class="card border-0 shadow-sm sticky-top">
             <div class="card-header bg-danger text-white">
@@ -175,7 +164,6 @@
                 <strong id="total" class="text-danger">R$ 0,00</strong>
               </div>
 
-              <!-- Forma de pagamento -->
               <h6 class="text-danger mb-3">Forma de Pagamento</h6>
 
               <div class="mb-3">
@@ -219,7 +207,6 @@
                 </div>
               </div>
 
-              <!-- Campos do cartão -->
               <div id="campos-cartao" class="mb-3">
                 <div class="mb-2">
                   <label for="numero-cartao" class="form-label small"
@@ -280,7 +267,6 @@
       </div>
     </main>
 
-    <!-- Modal de confirmação -->
     <div class="modal fade" id="modalConfirmacao" tabindex="-1">
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -318,7 +304,6 @@
       </div>
     </div>
 
-    <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="carrinho.js"></script>
     <script src="../pagina-inicial/buscaUniversal.js"></script>

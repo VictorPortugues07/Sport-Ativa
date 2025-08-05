@@ -1,11 +1,9 @@
-/* ===== CONFIGURAÇÕES GERAIS ===== */
 body {
   background: linear-gradient(135deg, #f5f5f5 0%, #eeeeee 100%);
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   color: #333;
 }
 
-/* ===== CONTAINER PRINCIPAL ===== */
 .form-container {
   width: 100%;
   max-width: 600px;
@@ -15,7 +13,6 @@ body {
   animation: fadeIn 0.5s ease-out;
 }
 
-/* ===== TÍTULOS ===== */
 h2 {
   color: #b30000;
   font-weight: 600;
@@ -25,7 +22,6 @@ h4 {
   font-weight: 700;
 }
 
-/* ===== BOTÕES PRINCIPAIS ===== */
 .btn-danger {
   background-color: #b30000;
   border-color: #b30000;
@@ -49,7 +45,6 @@ h4 {
   box-shadow: 0 0 0 0.2rem rgba(179, 0, 0, 0.25);
 }
 
-/* ===== BOTÕES SECUNDÁRIOS ===== */
 .btn-outline-secondary {
   color: #b30000;
   border-color: #b30000;
@@ -67,7 +62,6 @@ h4 {
   box-shadow: 0 3px 10px rgba(179, 0, 0, 0.2);
 }
 
-/* ===== SEÇÕES ===== */
 .section-title {
   color: #b30000;
   font-size: 0.95rem;
@@ -83,7 +77,6 @@ h4 {
   font-size: 1.1rem;
 }
 
-/* ===== FORMULÁRIOS ===== */
 .form-group {
   margin-bottom: 1.2rem;
 }
@@ -118,7 +111,6 @@ h4 {
   font-style: italic;
 }
 
-/* ===== VALIDAÇÃO ===== */
 .form-control.is-invalid {
   border-color: #b30000;
 }
@@ -127,7 +119,6 @@ h4 {
   border-color: #28a745;
 }
 
-/* ===== LOADING SPINNER ===== */
 .loading-spinner {
   display: none;
   width: 1rem;
@@ -135,7 +126,6 @@ h4 {
   border-width: 0.125em;
 }
 
-/* ===== CARD HEADER ===== */
 .card-header.bg-danger {
   background-color: #b30000 !important;
   border-bottom: none;
@@ -148,12 +138,10 @@ h4 {
   font-size: 0.85rem;
 }
 
-/* ===== CARD BODY ===== */
 .card-body {
   background-color: white;
 }
 
-/* ===== LINKS ===== */
 a {
   color: #b30000;
   transition: color 0.3s ease;
@@ -164,7 +152,6 @@ a:hover {
   text-decoration: none;
 }
 
-/* ===== RESPONSIVIDADE ===== */
 @media (max-width: 768px) {
   .form-container {
     max-width: 90%;
@@ -216,7 +203,6 @@ a:hover {
   }
 }
 
-/* ===== ANIMAÇÕES ===== */
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -228,7 +214,6 @@ a:hover {
   }
 }
 
-/* ===== EFEITOS ESPECIAIS ===== */
 .card {
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -239,7 +224,6 @@ a:hover {
   box-shadow: 0 15px 50px rgba(0, 0, 0, 0.15);
 }
 
-/* ===== CAMPOS OBRIGATÓRIOS ===== */
 .form-label::after {
   content: "";
 }
@@ -250,7 +234,6 @@ input[required] ~ .form-label::after {
   color: #b30000;
   font-weight: bold;
 }
-/* Sugestões de busca */
 .sugestoes-busca {
   max-height: 200px;
   overflow-y: auto;
@@ -265,7 +248,6 @@ input[required] ~ .form-label::after {
   border-bottom: none !important;
 }
 
-/* Estados de busca */
 .busca-carrinho-vazia,
 .busca-pedidos-vazia {
   border: 2px dashed #dee2e6;

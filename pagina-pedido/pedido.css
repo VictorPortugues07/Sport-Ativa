@@ -1,4 +1,3 @@
-/* Reset básico */
 * {
   box-sizing: border-box;
   margin: 0;
@@ -11,7 +10,6 @@ body {
   color: #333;
 }
 
-/* Navbar Superior */
 .navbar-top {
   background-color: #b30000;
   color: #b30000;
@@ -55,7 +53,6 @@ body {
   color: #fff;
 }
 
-/* Dropdown do usuário */
 .dropdown-toggle::after {
   display: none;
 }
@@ -77,13 +74,11 @@ body {
   color: #b30000;
 }
 
-/* Badge do carrinho */
 .badge {
   font-size: 0.7rem;
   padding: 0.25em 0.5em;
 }
 
-/* Breadcrumb */
 .breadcrumb {
   background-color: transparent;
   padding: 0;
@@ -110,7 +105,6 @@ body {
   color: #666;
 }
 
-/* Cards */
 .card {
   border-radius: 10px;
   overflow: hidden;
@@ -130,7 +124,6 @@ body {
   padding: 1.5rem;
 }
 
-/* Card do pedido */
 .pedido-card {
   border: 1px solid #eee;
   border-radius: 10px;
@@ -155,7 +148,6 @@ body {
   padding: 1.25rem;
 }
 
-/* Status badges */
 .status-badge {
   padding: 0.5rem 1rem;
   border-radius: 20px;
@@ -201,7 +193,6 @@ body {
   border: 1px solid #f5c6cb;
 }
 
-/* Informações do pedido */
 .pedido-info {
   font-size: 0.9rem;
   color: #666;
@@ -227,7 +218,6 @@ body {
   font-weight: 600;
 }
 
-/* Resumo dos itens */
 .itens-resumo {
   font-size: 0.9rem;
   color: #666;
@@ -236,7 +226,6 @@ body {
   margin: 0.5rem 0;
 }
 
-/* Botões */
 .btn {
   border-radius: 6px;
   padding: 8px 16px;
@@ -291,7 +280,6 @@ body {
   border-color: #1e7e34;
 }
 
-/* Estado vazio */
 .pedidos-vazio {
   text-align: center;
   padding: 3rem 1rem;
@@ -313,7 +301,6 @@ body {
   margin-bottom: 2rem;
 }
 
-/* Modal personalizado */
 .modal-header.bg-danger {
   background-color: #b30000 !important;
 }
@@ -323,7 +310,6 @@ body {
   color: #212529 !important;
 }
 
-/* Tabela de itens no modal */
 .item-modal {
   border-bottom: 1px solid #eee;
   padding: 1rem 0;
@@ -351,7 +337,6 @@ body {
   font-weight: bold;
 }
 
-/* Animações */
 .pedido-card {
   animation: fadeInUp 0.4s ease;
 }
@@ -367,7 +352,6 @@ body {
   }
 }
 
-/* Responsividade */
 @media (max-width: 768px) {
   .navbar-top .navbar-brand {
     font-size: 1.4rem;
@@ -419,7 +403,6 @@ body {
   }
 }
 
-/* Estados de loading */
 .btn:disabled {
   opacity: 0.6;
   cursor: not-allowed;
@@ -430,13 +413,11 @@ body {
   opacity: 0.7;
 }
 
-/* Ícones de pagamento */
 .pagamento-icone {
   margin-right: 0.5rem;
   color: #666;
 }
 
-/* Estilos para a logo personalizada */
 .logo-img {
   border-radius: 8px;
   transition: transform 0.3s ease;
@@ -448,7 +429,6 @@ body {
   transform: scale(1.05);
 }
 
-/* Ajustes responsivos para a logo */
 @media (max-width: 768px) {
   .logo-img {
     width: 35px;
@@ -470,7 +450,6 @@ body {
     font-size: 1.2rem !important;
   }
 }
-/* Sugestões de busca */
 .sugestoes-busca {
   max-height: 200px;
   overflow-y: auto;
@@ -485,7 +464,6 @@ body {
   border-bottom: none !important;
 }
 
-/* Estados de busca */
 .busca-carrinho-vazia,
 .busca-pedidos-vazia {
   border: 2px dashed #dee2e6;

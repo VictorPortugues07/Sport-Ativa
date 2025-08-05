@@ -1,4 +1,3 @@
-/* Reset básico */
 * {
   box-sizing: border-box;
   margin: 0;
@@ -11,7 +10,6 @@ body {
   color: #333;
 }
 
-/* Navbar Superior */
 .navbar-top {
   background-color: #b30000;
   color: #b30000;
@@ -55,7 +53,6 @@ body {
   color: #fff;
 }
 
-/* Dropdown do usuário */
 .dropdown-toggle::after {
   display: none;
 }
@@ -77,13 +74,11 @@ body {
   color: #b30000;
 }
 
-/* Badge do carrinho */
 .badge {
   font-size: 0.7rem;
   padding: 0.25em 0.5em;
 }
 
-/* Breadcrumb */
 .breadcrumb {
   background-color: transparent;
   padding: 0;
@@ -110,7 +105,6 @@ body {
   color: #666;
 }
 
-/* Cards */
 .card {
   border-radius: 10px;
   overflow: hidden;
@@ -130,7 +124,6 @@ body {
   padding: 1.5rem;
 }
 
-/* Item do carrinho */
 .item-carrinho {
   border-bottom: 1px solid #eee;
   padding: 1.5rem 0;
@@ -204,12 +197,10 @@ body {
   color: white;
 }
 
-/* Resumo do pedido */
 .sticky-top {
   top: 20px;
 }
 
-/* Formas de pagamento */
 .form-check-input:checked {
   background-color: #b30000;
   border-color: #b30000;
@@ -220,7 +211,6 @@ body {
   box-shadow: 0 0 0 0.25rem rgba(179, 0, 0, 0.25);
 }
 
-/* Campos de pagamento */
 #campos-cartao {
   display: block;
 }
@@ -229,7 +219,6 @@ body {
   display: none !important;
 }
 
-/* Botões */
 .btn {
   border-radius: 6px;
   padding: 10px 20px;
@@ -268,7 +257,6 @@ body {
   color: #fff;
 }
 
-/* Estado vazio do carrinho */
 .carrinho-vazio {
   text-align: center;
   padding: 3rem 1rem;
@@ -290,7 +278,6 @@ body {
   margin-bottom: 2rem;
 }
 
-/* Animações */
 .item-carrinho {
   animation: fadeIn 0.3s ease;
 }
@@ -306,12 +293,10 @@ body {
   }
 }
 
-/* Modal */
 .modal-header.bg-success {
   background-color: #28a745 !important;
 }
 
-/* Responsividade */
 @media (max-width: 768px) {
   .navbar-top .navbar-brand {
     font-size: 1.4rem;
@@ -355,7 +340,6 @@ body {
   }
 }
 
-/* Estados de loading */
 .btn:disabled {
   opacity: 0.6;
   cursor: not-allowed;
@@ -366,24 +350,20 @@ body {
   opacity: 0.7;
 }
 
-/* Força o dropdown do usuário aparecer acima do resumo do pedido */
 .navbar-top .dropdown-menu {
   z-index: 2000 !important;
 }
 
-/* Garante que o header superior fique acima de tudo */
 .navbar-top {
   z-index: 1000;
   position: relative;
 }
 
-/* Mantém o card sticky apenas dentro do conteúdo principal */
 .sticky-top {
   position: sticky;
-  z-index: 100; /* menor que o dropdown */
+  z-index: 100;
 }
 
-/* Estilos para a logo personalizada */
 .logo-img {
   border-radius: 8px;
   transition: transform 0.3s ease;
@@ -395,7 +375,6 @@ body {
   transform: scale(1.05);
 }
 
-/* Ajustes responsivos para a logo */
 @media (max-width: 768px) {
   .logo-img {
     width: 35px;
@@ -417,7 +396,6 @@ body {
     font-size: 1.2rem !important;
   }
 }
-/* Sugestões de busca */
 .sugestoes-busca {
   max-height: 200px;
   overflow-y: auto;
@@ -432,7 +410,6 @@ body {
   border-bottom: none !important;
 }
 
-/* Estados de busca */
 .busca-carrinho-vazia,
 .busca-pedidos-vazia {
   border: 2px dashed #dee2e6;

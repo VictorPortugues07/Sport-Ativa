@@ -19,7 +19,6 @@ document.addEventListener("DOMContentLoaded", () => {
   ];
   let modoCadastro = false;
 
-  // ===== MÁSCARAS COM IMASK =====
   const maskCPF = IMask(document.getElementById("cpf"), {
     mask: "000.000.000-00",
   });
@@ -32,28 +31,23 @@ document.addEventListener("DOMContentLoaded", () => {
     mask: "00000-000",
   });
 
-  // ===== ALTERNAR ENTRE LOGIN E CADASTRO =====
   botaoAlternar.addEventListener("click", () => {
     modoCadastro = !modoCadastro;
 
-    // Atualizar textos
     tituloFormulario.textContent = modoCadastro ? "Cadastro" : "Login";
     botaoAlternar.textContent = modoCadastro
       ? "Já tem conta? Fazer login"
       : "Não tem conta? Cadastre-se";
     textoBotao.textContent = modoCadastro ? "Cadastrar" : "Entrar";
 
-    // Mostrar/ocultar seções
     secoesCadastro.forEach((id) => {
       document.getElementById(id).classList.toggle("d-none", !modoCadastro);
     });
 
-    // Campo de confirmação de senha
     document
       .getElementById("grupo-confirmar-senha")
       .classList.toggle("d-none", !modoCadastro);
 
-    // Atualizar campos obrigatórios
     camposObrigatoriosCadastro.forEach((id) => {
       const campo = document.getElementById(id);
       if (campo) {
@@ -61,27 +55,22 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
 
-    // Limpar formulário ao alternar
     formulario.reset();
 
-    // Limpar máscaras
     maskCPF.value = "";
     maskTelefone.value = "";
     maskCEP.value = "";
 
-    // Limpar classes de validação
     document.querySelectorAll(".form-control").forEach((campo) => {
       campo.classList.remove("is-valid", "is-invalid");
     });
   });
 
-  // ===== BUSCAR CEP AUTOMATICAMENTE =====
   document.getElementById("cep").addEventListener("blur", async (e) => {
     const cep = e.target.value.replace(/\D/g, "");
 
     if (cep.length === 8) {
       try {
-        // Mostrar que está buscando
         const enderecoField = document.getElementById("endereco");
         const bairroField = document.getElementById("bairro");
         const cidadeField = document.getElementById("cidade");
@@ -98,16 +87,13 @@ document.addEventListener("DOMContentLoaded", () => {
           bairroField.value = data.bairro || "";
           cidadeField.value = data.localidade || "";
 
-          // Marcar CEP como válido
           e.target.classList.add("is-valid");
           e.target.classList.remove("is-invalid");
 
-          // Focar no campo número se o endereço foi preenchido
           if (data.logradouro) {
             document.getElementById("numero").focus();
           }
         } else {
-          // CEP não encontrado
           e.target.classList.add("is-invalid");
           e.target.classList.remove("is-valid");
           showToast(
@@ -116,7 +102,6 @@ document.addEventListener("DOMContentLoaded", () => {
           );
         }
 
-        // Restaurar placeholders
         enderecoField.placeholder = "Rua, Avenida...";
         bairroField.placeholder = "Nome do bairro";
         cidadeField.placeholder = "Nome da cidade";
@@ -126,7 +111,6 @@ document.addEventListener("DOMContentLoaded", () => {
         e.target.classList.remove("is-valid");
         showToast("Erro ao buscar CEP. Verifique sua conexão.", "error");
 
-        // Restaurar placeholders
         document.getElementById("endereco").placeholder = "Rua, Avenida...";
         document.getElementById("bairro").placeholder = "Nome do bairro";
         document.getElementById("cidade").placeholder = "Nome da cidade";
@@ -134,16 +118,12 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // ===== VALIDAÇÕES =====
   function validarCPF(cpf) {
     cpf = cpf.replace(/\D/g, "");
 
     if (cpf.length !== 11) return false;
-
-    // Verificar se todos os dígitos são iguais
     if (/^(\d)\1{10}$/.test(cpf)) return false;
 
-    // Validar dígitos verificadores
     let soma = 0;
     for (let i = 0; i < 9; i++) {
       soma += parseInt(cpf.charAt(i)) * (10 - i);
@@ -177,9 +157,7 @@ document.addEventListener("DOMContentLoaded", () => {
     return tel.length === 10 || tel.length === 11;
   }
 
-  // ===== SISTEMA DE NOTIFICAÇÕES (TOAST) =====
   function showToast(message, type = "info") {
-    // Criar elemento toast se não existir
     let toastContainer = document.getElementById("toast-container");
     if (!toastContainer) {
       toastContainer = document.createElement("div");
@@ -213,7 +191,6 @@ document.addEventListener("DOMContentLoaded", () => {
     toast.textContent = message;
     toastContainer.appendChild(toast);
 
-    // Remover após 4 segundos
     setTimeout(() => {
       toast.style.animation = "slideOut 0.3s ease-in";
       setTimeout(() => {
@@ -224,7 +201,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }, 4000);
   }
 
-  // Adicionar estilos para animações do toast
   if (!document.getElementById("toast-styles")) {
     const style = document.createElement("style");
     style.id = "toast-styles";
@@ -241,7 +217,6 @@ document.addEventListener("DOMContentLoaded", () => {
     document.head.appendChild(style);
   }
 
-  // ===== SALVAR USUÁRIO =====
   function salvarUsuario(usuario) {
     const usuarios = JSON.parse(localStorage.getItem("usuarios")) || [];
     const existe = usuarios.some((u) => u.cpf === usuario.cpf);
@@ -254,7 +229,6 @@ document.addEventListener("DOMContentLoaded", () => {
       return false;
     }
 
-    // Verificar se email já existe
     const emailExiste = usuarios.some((u) => u.email === usuario.email);
     if (emailExiste) {
       showToast("E-mail já cadastrado! Use outro e-mail.", "error");
@@ -264,7 +238,6 @@ document.addEventListener("DOMContentLoaded", () => {
     usuarios.push(usuario);
     localStorage.setItem("usuarios", JSON.stringify(usuarios));
 
-    // Login automático após cadastro
     localStorage.setItem("usuarioLogado", JSON.stringify(usuario));
 
     showToast(
@@ -279,7 +252,6 @@ document.addEventListener("DOMContentLoaded", () => {
     return true;
   }
 
-  // ===== VALIDAR LOGIN =====
   function validarLogin(cpf, senha) {
     const usuarios = JSON.parse(localStorage.getItem("usuarios")) || [];
     const usuario = usuarios.find((u) => u.cpf === cpf && u.senha === senha);
@@ -302,15 +274,12 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // ===== SUBMISSÃO DO FORMULÁRIO =====
   formulario.addEventListener("submit", (e) => {
     e.preventDefault();
 
-    // Mostrar loading
     loadingSpinner.style.display = "inline-block";
     botaoEnviar.disabled = true;
 
-    // Simular processamento
     setTimeout(() => {
       const dados = {
         nome: document.getElementById("nome").value.trim(),
@@ -328,9 +297,6 @@ document.addEventListener("DOMContentLoaded", () => {
       };
 
       if (modoCadastro) {
-        // ===== VALIDAÇÕES PARA CADASTRO =====
-
-        // Verificar campos obrigatórios
         const camposVazios = camposObrigatoriosCadastro.filter(
           (campo) => !dados[campo]
         );
@@ -341,7 +307,6 @@ document.addEventListener("DOMContentLoaded", () => {
           return;
         }
 
-        // Validar CPF
         if (!validarCPF(dados.cpf)) {
           showToast("CPF inválido. Verifique e tente novamente.", "error");
           document.getElementById("cpf").focus();
@@ -350,7 +315,6 @@ document.addEventListener("DOMContentLoaded", () => {
           return;
         }
 
-        // Validar email
         if (!validarEmail(dados.email)) {
           showToast("E-mail inválido. Verifique e tente novamente.", "error");
           document.getElementById("email").focus();
@@ -359,7 +323,6 @@ document.addEventListener("DOMContentLoaded", () => {
           return;
         }
 
-        // Validar telefone
         if (dados.telefone && !validarTelefone(dados.telefone)) {
           showToast("Telefone inválido. Verifique e tente novamente.", "error");
           document.getElementById("telefone").focus();
@@ -368,7 +331,6 @@ document.addEventListener("DOMContentLoaded", () => {
           return;
         }
 
-        // Validar senha
         if (!validarSenha(dados.senha)) {
           showToast("A senha deve ter pelo menos 6 caracteres.", "error");
           document.getElementById("senha").focus();
@@ -377,7 +339,6 @@ document.addEventListener("DOMContentLoaded", () => {
           return;
         }
 
-        // Validar confirmação de senha
         const confirmarSenha = document.getElementById("confirmar-senha").value;
         if (dados.senha !== confirmarSenha) {
           showToast(
@@ -390,7 +351,6 @@ document.addEventListener("DOMContentLoaded", () => {
           return;
         }
 
-        // Validar idade (maior de 13 anos)
         const hoje = new Date();
         const nascimento = new Date(dados.nascimento);
         const idade = hoje.getFullYear() - nascimento.getFullYear();
@@ -417,8 +377,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
         salvarUsuario(dados);
       } else {
-        // ===== VALIDAÇÕES PARA LOGIN =====
-
         if (!dados.cpf || !dados.senha) {
           showToast("Preencha CPF e senha.", "warning");
           loadingSpinner.style.display = "none";
@@ -429,13 +387,11 @@ document.addEventListener("DOMContentLoaded", () => {
         validarLogin(dados.cpf, dados.senha);
       }
 
-      // Esconder loading
       loadingSpinner.style.display = "none";
       botaoEnviar.disabled = false;
-    }, 1200); // Delay para simular processamento
+    }, 1200);
   });
 
-  // ===== VALIDAÇÃO EM TEMPO REAL =====
   document.getElementById("cpf").addEventListener("blur", (e) => {
     const cpf = e.target.value.trim();
     if (cpf) {
@@ -495,7 +451,6 @@ document.addEventListener("DOMContentLoaded", () => {
       e.target.classList.remove("is-valid", "is-invalid");
     }
 
-    // Verificar confirmação de senha se já foi preenchida
     const confirmarSenha = document.getElementById("confirmar-senha").value;
     if (confirmarSenha) {
       const confirmarField = document.getElementById("confirmar-senha");
@@ -526,7 +481,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // ===== VALIDAÇÃO DE CAMPOS OBRIGATÓRIOS =====
   camposObrigatoriosCadastro.forEach((id) => {
     const campo = document.getElementById(id);
     if (campo) {
@@ -545,7 +499,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // ===== ENTER PARA PRÓXIMO CAMPO =====
   document.querySelectorAll("input").forEach((input, index, inputs) => {
     input.addEventListener("keypress", (e) => {
       if (e.key === "Enter") {
@@ -560,7 +513,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // ===== FEEDBACK VISUAL APRIMORADO =====
   document.querySelectorAll(".form-control").forEach((input) => {
     input.addEventListener("focus", (e) => {
       e.target.style.transform = "scale(1.02)";

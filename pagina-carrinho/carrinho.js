@@ -6,14 +6,11 @@ document.addEventListener("DOMContentLoaded", () => {
   const btnFinalizar = document.getElementById("btn-finalizar");
   const cartCountEl = document.getElementById("cart-count");
 
-  // Elementos de pagamento
   const radioPagamento = document.querySelectorAll('input[name="pagamento"]');
   const camposCartao = document.getElementById("campos-cartao");
 
-  // Carregar usuário logado
   const usuarioLogado = JSON.parse(localStorage.getItem("usuarioLogado"));
   if (!usuarioLogado) {
-    // Se não há usuário logado, redirecionar para login
     window.location.href = "../pagina-login/login.html";
     return;
   }
@@ -21,22 +18,17 @@ document.addEventListener("DOMContentLoaded", () => {
   const nomeUsuario = usuarioLogado.nome?.split(" ")[0] || "Usuário";
   document.getElementById("nome-usuario-nav").textContent = nomeUsuario;
 
-  // Chaves específicas do usuário
   const carrinhoKey = `carrinho_${usuarioLogado.cpf}`;
   const pedidosKey = `pedidos_${usuarioLogado.cpf}`;
 
-  // Carregar carrinho do localStorage (específico do usuário)
   let carrinho = JSON.parse(localStorage.getItem(carrinhoKey)) || [];
 
-  // Produtos exemplo (normalmente viria de uma API)
   let produtos = [];
 
   fetch("../pagina-inicial/produtos_ficticios.json")
-    // ou o caminho correto da sua API ou JSON
     .then((res) => res.json())
     .then((data) => {
       produtos = data;
-      // Agora que os produtos estão carregados, você pode renderizar ou ativar os botões de "adicionar ao carrinho"
       renderizarCarrinho();
       calcularTotais();
     })
@@ -49,34 +41,28 @@ document.addEventListener("DOMContentLoaded", () => {
     .then((data) => {
       produtos = data;
       produtosFiltrados = [...produtos];
-      //  renderizarProdutos(produtosFiltrados);
       atualizarContadorCarrinho();
 
-      // ✅ SALVA OS PRODUTOS NO LOCALSTORAGE PARA O CARRINHO USAR
       localStorage.setItem("produtosDisponiveis", JSON.stringify(produtos));
     })
     .catch((error) => {
       console.error("Erro ao carregar produtos:", error);
       produtos = [];
       produtosFiltrados = [...produtos];
-      // renderizarProdutos(produtosFiltrados);
       atualizarContadorCarrinho();
 
-      // ✅ Fallback também salvo
       localStorage.setItem(
         "produtosDisponiveis",
         JSON.stringify(produtosFallback)
       );
     });
 
-  // Função para obter produto por ID
   function obterProduto(id) {
     const produtos =
       JSON.parse(localStorage.getItem("produtosDisponiveis")) || [];
     return produtos.find((p) => p.id == id);
   }
 
-  // Função para atualizar contador do carrinho
   function atualizarContadorCarrinho() {
     const totalItens = carrinho.reduce(
       (total, item) => total + item.quantidade,
@@ -85,7 +71,6 @@ document.addEventListener("DOMContentLoaded", () => {
     cartCountEl.textContent = totalItens;
   }
 
-  // Função para renderizar carrinho
   function renderizarCarrinho() {
     if (carrinho.length === 0) {
       listaCarrinho.innerHTML = `
@@ -162,7 +147,6 @@ document.addEventListener("DOMContentLoaded", () => {
     btnFinalizar.disabled = false;
   }
 
-  // Função para calcular totais
   function calcularTotais() {
     const subtotal = carrinho.reduce((total, item) => {
       const produto = obterProduto(item.id);
@@ -178,7 +162,6 @@ document.addEventListener("DOMContentLoaded", () => {
     totalEl.textContent = `R$ ${total.toFixed(2).replace(".", ",")}`;
   }
 
-  // Função para alterar quantidade
   window.alterarQuantidade = function (id, delta) {
     const item = carrinho.find((item) => item.id === id);
     if (item) {
@@ -194,7 +177,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   };
 
-  // Função para definir quantidade específica
   window.definirQuantidade = function (id, quantidade) {
     const item = carrinho.find((item) => item.id === id);
     if (item) {
@@ -206,7 +188,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   };
 
-  // Função para remover item
   window.removerItem = function (id) {
     if (confirm("Deseja remover este item do carrinho?")) {
       carrinho = carrinho.filter((item) => item.id !== id);
@@ -217,12 +198,10 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   };
 
-  // Função para salvar carrinho (específico do usuário)
   function salvarCarrinho() {
     localStorage.setItem(carrinhoKey, JSON.stringify(carrinho));
   }
 
-  // Gerenciar formas de pagamento
   radioPagamento.forEach((radio) => {
     radio.addEventListener("change", () => {
       if (radio.value === "cartao") {
@@ -233,7 +212,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // Aplicar máscaras nos campos do cartão
   const numeroCartao = document.getElementById("numero-cartao");
   const validade = document.getElementById("validade");
   const cvv = document.getElementById("cvv");
@@ -256,13 +234,11 @@ document.addEventListener("DOMContentLoaded", () => {
     e.target.value = e.target.value.replace(/\D/g, "").substring(0, 3);
   });
 
-  // Finalizar compra
   btnFinalizar.addEventListener("click", () => {
     const formaPagamento = document.querySelector(
       'input[name="pagamento"]:checked'
     ).value;
 
-    // Validar campos do cartão se necessário
     if (formaPagamento === "cartao") {
       const numero = numeroCartao.value.replace(/\s/g, "");
       const val = validade.value;
@@ -275,7 +251,6 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     }
 
-    // Criar pedido
     const subtotal = carrinho.reduce((total, item) => {
       const produto = obterProduto(item.id);
       return produto ? total + produto.preco * item.quantidade : total;
@@ -296,24 +271,21 @@ document.addEventListener("DOMContentLoaded", () => {
       total,
       pagamento: formaPagamento,
       status: "Pendente",
-      usuarioCpf: usuarioLogado.cpf, // Adicionar referência do usuário
+      usuarioCpf: usuarioLogado.cpf,
     };
 
-    // Salvar pedido no localStorage (específico do usuário)
     let pedidos = JSON.parse(localStorage.getItem(pedidosKey)) || [];
     pedidos.push(pedido);
     localStorage.setItem(pedidosKey, JSON.stringify(pedidos));
 
-    // Limpar carrinho
     carrinho = [];
     salvarCarrinho();
     renderizarCarrinho();
     calcularTotais();
     atualizarContadorCarrinho();
 
-    // Redirecionar ou mostrar confirmação
     alert("Compra finalizada com sucesso!");
-    window.location.href = "../pagina-pedido/pedido.html"; // Corrigido o caminho
+    window.location.href = "../pagina-pedido/pedido.html";
   });
 
   // Logout
@@ -325,7 +297,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // Inicializar a página ao carregar
   renderizarCarrinho();
   calcularTotais();
   atualizarContadorCarrinho();

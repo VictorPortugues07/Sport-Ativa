@@ -10,10 +10,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
   let pedidoParaCancelar = null;
 
-  // Carregar usuário logado
   const usuarioLogado = JSON.parse(localStorage.getItem("usuarioLogado"));
   if (!usuarioLogado) {
-    // Se não há usuário logado, redirecionar para login
     window.location.href = "../pagina-login/login.html";
     return;
   }
@@ -21,11 +19,9 @@ document.addEventListener("DOMContentLoaded", () => {
   const nomeUsuario = usuarioLogado.nome?.split(" ")[0] || "Usuário";
   document.getElementById("nome-usuario-nav").textContent = nomeUsuario;
 
-  // Chaves específicas do usuário
   const carrinhoKey = `carrinho_${usuarioLogado.cpf}`;
   const pedidosKey = `pedidos_${usuarioLogado.cpf}`;
 
-  // Atualizar contador do carrinho (específico do usuário)
   function atualizarContadorCarrinho() {
     const carrinho = JSON.parse(localStorage.getItem(carrinhoKey)) || [];
     const totalItens = carrinho.reduce(
@@ -37,17 +33,15 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // Função para gerar data de entrega aleatória (3-10 dias úteis)
   function gerarDataEntrega() {
     const hoje = new Date();
-    const diasAleatorios = Math.floor(Math.random() * 8) + 3; // 3 a 10 dias
+    const diasAleatorios = Math.floor(Math.random() * 8) + 3;
     let diasUteis = 0;
     let dataEntrega = new Date(hoje);
 
     while (diasUteis < diasAleatorios) {
       dataEntrega.setDate(dataEntrega.getDate() + 1);
       const diaSemana = dataEntrega.getDay();
-      // Se não for sábado (6) nem domingo (0), conta como dia útil
       if (diaSemana !== 0 && diaSemana !== 6) {
         diasUteis++;
       }
@@ -56,38 +50,31 @@ document.addEventListener("DOMContentLoaded", () => {
     return dataEntrega.toISOString();
   }
 
-  // Função para atualizar status dos pedidos automaticamente (específico do usuário)
   function atualizarStatusPedidos() {
     let pedidos = JSON.parse(localStorage.getItem(pedidosKey)) || [];
     let foiAtualizado = false;
 
     pedidos.forEach((pedido) => {
-      // Se não tem data de entrega, gera uma
       if (!pedido.dataEntrega) {
         pedido.dataEntrega = gerarDataEntrega();
         foiAtualizado = true;
       }
 
-      // Lógica de progressão automática de status
       const agora = new Date();
       const dataPedido = new Date(pedido.data);
       const dataEntrega = new Date(pedido.dataEntrega);
       const horasDesdeCompra = (agora - dataPedido) / (1000 * 60 * 60);
 
       if (pedido.status === "Pendente" && horasDesdeCompra > 0.1) {
-        // 6 minutos depois vira "Confirmado"
         pedido.status = "Confirmado";
         foiAtualizado = true;
       } else if (pedido.status === "Confirmado" && horasDesdeCompra > 0.2) {
-        // 12 minutos depois vira "Processando"
         pedido.status = "Processando";
         foiAtualizado = true;
       } else if (pedido.status === "Processando" && horasDesdeCompra > 0.3) {
-        // 18 minutos depois vira "Enviado"
         pedido.status = "Enviado";
         foiAtualizado = true;
       } else if (pedido.status === "Enviado" && agora >= dataEntrega) {
-        // Se passou da data de entrega, vira "Entregue"
         pedido.status = "Entregue";
         foiAtualizado = true;
       }
@@ -100,7 +87,6 @@ document.addEventListener("DOMContentLoaded", () => {
     return pedidos;
   }
 
-  // Função para formatar data
   function formatarData(dataISO) {
     const data = new Date(dataISO);
     return data.toLocaleDateString("pt-BR", {
@@ -110,7 +96,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Função para formatar data com hora
   function formatarDataHora(dataISO) {
     const data = new Date(dataISO);
     return data.toLocaleString("pt-BR", {
@@ -122,7 +107,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Função para obter classe CSS do status
   function obterClasseStatus(status) {
     const classes = {
       Pendente: "status-pendente",
@@ -135,7 +119,6 @@ document.addEventListener("DOMContentLoaded", () => {
     return classes[status] || "status-pendente";
   }
 
-  // Função para obter ícone do status
   function obterIconeStatus(status) {
     const icones = {
       Pendente: "bi-clock",
@@ -148,7 +131,6 @@ document.addEventListener("DOMContentLoaded", () => {
     return icones[status] || "bi-clock";
   }
 
-  // Função para obter ícone da forma de pagamento
   function obterIconePagamento(formaPagamento) {
     const icones = {
       cartao: "bi-credit-card",
@@ -158,7 +140,6 @@ document.addEventListener("DOMContentLoaded", () => {
     return icones[formaPagamento] || "bi-credit-card";
   }
 
-  // Função para renderizar pedidos
   function renderizarPedidos() {
     const pedidos = atualizarStatusPedidos();
 
@@ -176,7 +157,6 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    // Ordenar pedidos por data (mais recente primeiro)
     pedidos.sort((a, b) => new Date(b.data) - new Date(a.data));
 
     let html = "";
@@ -289,7 +269,6 @@ document.addEventListener("DOMContentLoaded", () => {
     listaPedidos.innerHTML = html;
   }
 
-  // Função para ver detalhes do pedido
   window.verDetalhes = function (pedidoId) {
     const pedidos = JSON.parse(localStorage.getItem(pedidosKey)) || [];
     const pedido = pedidos.find((p) => p.id === pedidoId);
@@ -411,13 +390,11 @@ document.addEventListener("DOMContentLoaded", () => {
     modalDetalhesPedido.show();
   };
 
-  // Função para confirmar cancelamento
   window.confirmarCancelamento = function (pedidoId) {
     pedidoParaCancelar = pedidoId;
     modalCancelarPedido.show();
   };
 
-  // Evento do botão de confirmar cancelamento
   document
     .getElementById("confirmar-cancelamento")
     .addEventListener("click", () => {
@@ -428,7 +405,6 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
 
-  // Função para cancelar pedido
   function cancelarPedido(pedidoId) {
     let pedidos = JSON.parse(localStorage.getItem(pedidosKey)) || [];
     const pedidoIndex = pedidos.findIndex((p) => p.id === pedidoId);
@@ -438,7 +414,6 @@ document.addEventListener("DOMContentLoaded", () => {
       localStorage.setItem(pedidosKey, JSON.stringify(pedidos));
       renderizarPedidos();
 
-      // Mostrar notificação de sucesso
       const alertDiv = document.createElement("div");
       alertDiv.className =
         "alert alert-success alert-dismissible fade show position-fixed";
@@ -459,7 +434,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // Função para comprar novamente
   window.comprarNovamente = function (pedidoId) {
     const pedidos = JSON.parse(localStorage.getItem(pedidosKey)) || [];
     const pedido = pedidos.find((p) => p.id === pedidoId);
@@ -468,7 +442,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let carrinho = JSON.parse(localStorage.getItem(carrinhoKey)) || [];
 
-    // Adicionar todos os itens do pedido ao carrinho
     pedido.itens.forEach((item) => {
       const itemExistente = carrinho.find((c) => c.id === item.id);
 
@@ -485,7 +458,6 @@ document.addEventListener("DOMContentLoaded", () => {
     localStorage.setItem(carrinhoKey, JSON.stringify(carrinho));
     atualizarContadorCarrinho();
 
-    // Mostrar notificação e redirecionar
     const alertDiv = document.createElement("div");
     alertDiv.className =
       "alert alert-success alert-dismissible fade show position-fixed";
@@ -503,7 +475,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }, 1500);
   };
 
-  // Logout
   document.getElementById("btn-logout")?.addEventListener("click", (e) => {
     e.preventDefault();
     if (confirm("Deseja realmente sair?")) {
@@ -512,11 +483,9 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // Inicializar a página
   atualizarContadorCarrinho();
   renderizarPedidos();
 
-  // Atualizar status dos pedidos a cada 30 segundos
   setInterval(() => {
     renderizarPedidos();
   }, 30000);

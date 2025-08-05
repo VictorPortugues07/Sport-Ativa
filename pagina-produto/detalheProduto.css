@@ -1,4 +1,3 @@
-/* Navbar com nova cor */
 .navbar-top {
   background-color: #b30000;
   color: #b30000;
@@ -49,7 +48,6 @@
   color: #b30000;
 }
 
-/* Informações do produto */
 .product-info {
   padding: 0 15px;
 }
@@ -73,7 +71,6 @@
   font-size: 0.9rem;
 }
 
-/* Seção de especificações */
 .specifications {
   background: #f8f9fa;
   padding: 20px;
@@ -84,7 +81,6 @@
   margin-bottom: 8px;
 }
 
-/* Seletor de quantidade */
 .quantity-selector .input-group {
   max-width: 150px;
 }
@@ -98,7 +94,6 @@
   border: 1px solid #ced4da;
 }
 
-/* Botões de ação */
 .action-buttons {
   margin-top: 20px;
 }
@@ -128,7 +123,6 @@
   box-shadow: 0 4px 12px rgba(220, 53, 69, 0.3);
 }
 
-/* Seção de benefícios */
 .benefits {
   background: #f8f9fa;
   padding: 20px;
@@ -140,7 +134,6 @@
   margin-bottom: 10px;
 }
 
-/* Produtos relacionados */
 .related-products {
   border-top: 1px solid #dee2e6;
   padding-top: 40px;
@@ -172,7 +165,6 @@
   font-weight: bold;
 }
 
-/* Animações */
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -188,13 +180,11 @@
   animation: fadeIn 0.6s ease-out;
 }
 
-/* Loading state */
 .spinner-border {
   width: 3rem;
   height: 3rem;
 }
 
-/* Breadcrumb */
 .breadcrumb {
   background: transparent;
   padding: 0;
@@ -209,7 +199,6 @@
   text-decoration: underline;
 }
 
-/* Modal de zoom */
 #imageZoomModal .modal-content {
   border: none;
   border-radius: 10px;
@@ -220,7 +209,6 @@
   height: auto;
 }
 
-/* Responsividade */
 @media (max-width: 768px) {
   .product-info {
     padding: 0;
@@ -251,7 +239,6 @@
   }
 }
 
-/* Estados dos botões */
 .btn-success-temp {
   background-color: #28a745 !important;
   border-color: #28a745 !important;
@@ -262,7 +249,6 @@
   cursor: not-allowed;
 }
 
-/* Footer (aproveitando da página inicial) */
 .footer {
   margin-top: 80px;
 }
@@ -275,7 +261,6 @@
   color: #dc3545 !important;
 }
 
-/* Animação para adição ao carrinho */
 @keyframes addToCart {
   0% {
     transform: scale(1);
@@ -292,7 +277,6 @@
   animation: addToCart 0.3s ease;
 }
 
-/* Estilos para a logo personalizada */
 .logo-img {
   border-radius: 8px;
   transition: transform 0.3s ease;
@@ -304,7 +288,6 @@
   transform: scale(1.05);
 }
 
-/* Ajustes responsivos para a logo */
 @media (max-width: 768px) {
   .logo-img {
     width: 35px;
@@ -326,7 +309,7 @@
     font-size: 1.2rem !important;
   }
 }
-/* Sugestões de busca */
+
 .sugestoes-busca {
   max-height: 200px;
   overflow-y: auto;
@@ -341,7 +324,6 @@
   border-bottom: none !important;
 }
 
-/* Estados de busca */
 .busca-carrinho-vazia,
 .busca-pedidos-vazia {
   border: 2px dashed #dee2e6;

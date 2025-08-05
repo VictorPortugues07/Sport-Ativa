@@ -1,5 +1,3 @@
-// ===== BUSCA COM DROPDOWN DE RESULTADOS =====
-
 class BuscaDropdown {
   constructor() {
     this.inputBusca = document.querySelector('input[type="search"]');
@@ -14,22 +12,18 @@ class BuscaDropdown {
   inicializar() {
     if (!this.inputBusca || !this.formBusca) return;
 
-    // Carregar produtos do localStorage ou fetch
     this.carregarProdutos();
 
-    // Event listeners
     this.inputBusca.addEventListener("input", (e) => this.aoDigitar(e));
     this.inputBusca.addEventListener("keydown", (e) => this.aoTeclar(e));
     this.inputBusca.addEventListener("focus", (e) => this.aoFocar(e));
     this.inputBusca.addEventListener("blur", (e) => this.aoDesfocar(e));
 
-    // Prevenir submit do formulário
     this.formBusca.addEventListener("submit", (e) => {
       e.preventDefault();
       this.selecionarItem();
     });
 
-    // Clique fora fecha dropdown
     document.addEventListener("click", (e) => {
       if (!e.target.closest(".busca-container")) {
         this.fecharDropdown();
@@ -40,14 +34,12 @@ class BuscaDropdown {
   }
 
   carregarProdutos() {
-    // Tentar pegar do localStorage primeiro
     const produtosLocal = localStorage.getItem("produtosDisponiveis");
     if (produtosLocal) {
       this.produtos = JSON.parse(produtosLocal);
       return;
     }
 
-    // Se não tiver, fazer fetch (ajustado para funcionar em qualquer página)
     const isHomePage = window.location.pathname.includes("paginaInicial.html");
     const jsonPath = isHomePage
       ? "produtos_ficticios.json"
@@ -61,7 +53,6 @@ class BuscaDropdown {
       })
       .catch((err) => {
         console.log("Produtos não carregados:", err);
-        // Fallback: tentar o outro caminho
         const fallbackPath = isHomePage
           ? "../pagina-inicial/produtos_ficticios.json"
           : "produtos_ficticios.json";
@@ -129,7 +120,6 @@ class BuscaDropdown {
   }
 
   aoDesfocar(e) {
-    // Delay para permitir clique nos itens
     setTimeout(() => {
       this.fecharDropdown();
     }, 200);
@@ -141,12 +131,10 @@ class BuscaDropdown {
     const termoLower = termo.toLowerCase();
     const resultados = [];
 
-    // Buscar em diferentes campos com pesos diferentes
     this.produtos.forEach((produto) => {
       let relevancia = 0;
       let match = false;
 
-      // Nome do produto (peso mais alto)
       if (produto.nome.toLowerCase().includes(termoLower)) {
         relevancia += produto.nome.toLowerCase().startsWith(termoLower)
           ? 10
@@ -154,7 +142,6 @@ class BuscaDropdown {
         match = true;
       }
 
-      // Marca (peso médio)
       if (produto.marca.toLowerCase().includes(termoLower)) {
         relevancia += produto.marca.toLowerCase().startsWith(termoLower)
           ? 8
@@ -162,13 +149,11 @@ class BuscaDropdown {
         match = true;
       }
 
-      // Tipo/Categoria (peso baixo)
       if (produto.tipo.toLowerCase().includes(termoLower)) {
         relevancia += 2;
         match = true;
       }
 
-      // Descrição (peso muito baixo)
       if (produto.descricao.toLowerCase().includes(termoLower)) {
         relevancia += 1;
         match = true;
@@ -182,7 +167,6 @@ class BuscaDropdown {
       }
     });
 
-    // Ordenar por relevância e limitar resultados
     return resultados.sort((a, b) => b.relevancia - a.relevancia).slice(0, 8);
   }
 
@@ -205,7 +189,6 @@ class BuscaDropdown {
     dropdown.style.maxHeight = "400px";
     dropdown.style.overflowY = "auto";
 
-    // Header do dropdown
     const header = document.createElement("div");
     header.className = "dropdown-header-busca p-2 border-bottom bg-light";
     header.innerHTML = `
@@ -216,13 +199,11 @@ class BuscaDropdown {
     `;
     dropdown.appendChild(header);
 
-    // Itens dos produtos
     resultados.forEach((produto, index) => {
       const item = this.criarItemDropdown(produto, termo, index);
       dropdown.appendChild(item);
     });
 
-    // Footer com ação
     const footer = document.createElement("div");
     footer.className =
       "dropdown-footer-busca p-2 border-top bg-light text-center";
@@ -246,7 +227,6 @@ class BuscaDropdown {
     item.dataset.index = index;
     item.dataset.produtoId = produto.id;
 
-    // Destacar termo no nome
     const nomeDestacado = this.destacarTermo(produto.nome, termo);
     const marcaDestacada = this.destacarTermo(produto.marca, termo);
 
@@ -271,7 +251,6 @@ class BuscaDropdown {
       </div>
     `;
 
-    // Event listeners - IMPORTANTE: Clique no produto vai para a página de detalhes
     item.addEventListener("click", (e) => {
       e.preventDefault();
       e.stopPropagation();
@@ -318,13 +297,11 @@ class BuscaDropdown {
   }
 
   destacarItem() {
-    // Remover destaque anterior
     document.querySelectorAll(".dropdown-item-busca").forEach((item) => {
       item.classList.remove("active");
       item.style.backgroundColor = "";
     });
 
-    // Destacar item atual
     if (this.indiceSelecionado >= 0) {
       const itemAtivo = document.querySelector(
         `[data-index="${this.indiceSelecionado}"]`
@@ -352,29 +329,23 @@ class BuscaDropdown {
       }
     }
 
-    // Se não tem item selecionado, fazer busca geral
     const termo = this.inputBusca.value.trim();
     if (termo) {
       this.irParaBusca(termo);
     }
   }
 
-  // NOVA FUNÇÃO: Método dedicado para navegar para a página do produto
   navegarParaProduto(produto) {
     this.fecharDropdown();
 
-    // Determinar o caminho correto baseado na página atual
     const currentPath = window.location.pathname;
     let targetPath;
 
     if (currentPath.includes("paginaInicial.html")) {
-      // Está na página inicial
       targetPath = `../pagina-produto/detalheProduto.html?id=${produto.id}`;
     } else if (currentPath.includes("pagina-produto")) {
-      // Já está na pasta de produto
       targetPath = `detalheProduto.html?id=${produto.id}`;
     } else {
-      // Está em outra página (login, carrinho, etc.)
       targetPath = `../pagina-produto/detalheProduto.html?id=${produto.id}`;
     }
 
@@ -386,7 +357,6 @@ class BuscaDropdown {
   }
 
   selecionarProduto(produto) {
-    // Mantido para compatibilidade, mas agora chama o novo método
     this.navegarParaProduto(produto);
   }
 
@@ -394,13 +364,11 @@ class BuscaDropdown {
     this.fecharDropdown();
 
     if (window.location.pathname.includes("paginaInicial.html")) {
-      // Já está na página inicial, aplicar busca
       if (typeof aplicarFiltros === "function") {
         termoBusca = termo.toLowerCase();
         aplicarFiltros();
       }
     } else {
-      // Ir para página inicial com busca
       window.location.href = `../pagina-inicial/paginaInicial.html?search=${encodeURIComponent(
         termo
       )}`;
@@ -417,7 +385,6 @@ class BuscaDropdown {
   }
 }
 
-// ===== ESTILOS CSS (Adicionar ao CSS) =====
 const estilosDropdown = `
 <style>
 .dropdown-busca {
@@ -483,7 +450,6 @@ kbd {
 </style>
 `;
 
-// Adicionar estilos ao head se ainda não existirem
 if (!document.querySelector("#busca-dropdown-styles")) {
   const styleElement = document.createElement("style");
   styleElement.id = "busca-dropdown-styles";
@@ -491,14 +457,11 @@ if (!document.querySelector("#busca-dropdown-styles")) {
   document.head.appendChild(styleElement);
 }
 
-// ===== INICIALIZAÇÃO =====
 document.addEventListener("DOMContentLoaded", () => {
-  // Adicionar classe container ao elemento pai da busca
   const inputBusca = document.querySelector('input[type="search"]');
   if (inputBusca && inputBusca.parentElement) {
     inputBusca.parentElement.classList.add("busca-container");
   }
 
-  // Inicializar busca dropdown
   new BuscaDropdown();
 });
