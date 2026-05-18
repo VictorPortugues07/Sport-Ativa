@@ -149,7 +149,7 @@ document.addEventListener("DOMContentLoaded", () => {
           <i class="bi bi-box"></i>
           <h4>Você ainda não fez nenhum pedido</h4>
           <p>Explore nossos produtos e faça seu primeiro pedido!</p>
-          <a href="../pagina-inicial/index.html" class="btn btn-danger">
+          <a href="../index.html" class="btn btn-danger">
             <i class="bi bi-shop me-2"></i>Começar a Comprar
           </a>
         </div>

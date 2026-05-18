@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
   const container = document.getElementById("container-produtos");
   const filtroCheckboxes = document.querySelectorAll(
-    ".accordion-body input[type='checkbox']"
+    ".accordion-body input[type='checkbox']",
   );
   const filtroPrecos = document.querySelectorAll(".btn-group .btn");
   const ordenarSelect = document.querySelector("select");
@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   verificarStatusLogin();
 
-  fetch("produtos_ficticios.json")
+  fetch("./pagina-inicial/produtos_ficticios.json")
     .then((res) => {
       if (!res.ok) {
         throw new Error(`HTTP error! status: ${res.status}`);
@@ -29,7 +29,7 @@ document.addEventListener("DOMContentLoaded", () => {
       localStorage.setItem("produtosDisponiveis", JSON.stringify(produtos));
 
       const menuTodos = Array.from(
-        document.querySelectorAll(".menu-link")
+        document.querySelectorAll(".menu-link"),
       ).find((el) => el.textContent.trim().toLowerCase() === "todos");
 
       if (menuTodos) {
@@ -52,7 +52,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
   filtroCheckboxes.forEach((cb) =>
-    cb.addEventListener("change", aplicarFiltros)
+    cb.addEventListener("change", aplicarFiltros),
   );
 
   filtroPrecos.forEach((btn) =>
@@ -61,7 +61,7 @@ document.addEventListener("DOMContentLoaded", () => {
       filtroPrecos.forEach((b) => b.classList.remove("active"));
       btn.classList.add("active");
       aplicarFiltros();
-    })
+    }),
   );
 
   ordenarSelect.addEventListener("change", aplicarOrdenacao);
@@ -72,7 +72,7 @@ document.addEventListener("DOMContentLoaded", () => {
       menuLinks.forEach((l) => l.classList.remove("active"));
       e.target.classList.add("active");
       aplicarFiltros();
-    })
+    }),
   );
 
   const btnLogout = document.getElementById("btn-logout");
@@ -165,7 +165,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     console.log(
-      `Produtos encontrados: ${produtosFiltrados.length} de ${produtos.length} total`
+      `Produtos encontrados: ${produtosFiltrados.length} de ${produtos.length} total`,
     );
 
     aplicarOrdenacao();
@@ -181,7 +181,7 @@ document.addEventListener("DOMContentLoaded", () => {
       produtosFiltrados.sort((a, b) => b.vendas - a.vendas);
     } else {
       produtosFiltrados.sort(
-        (a, b) => (b.relevancia || b.vendas) - (a.relevancia || a.vendas)
+        (a, b) => (b.relevancia || b.vendas) - (a.relevancia || a.vendas),
       );
     }
     renderizarProdutos(produtosFiltrados);

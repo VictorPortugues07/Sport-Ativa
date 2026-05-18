@@ -78,7 +78,7 @@ document.addEventListener("DOMContentLoaded", () => {
           <i class="bi bi-cart-x"></i>
           <h4>Seu carrinho está vazio</h4>
           <p>Adicione produtos para continuar suas compras</p>
-          <a href="../pagina-inicial/index.html" class="btn btn-danger">
+          <a href="../index.html" class="btn btn-danger">
             <i class="bi bi-arrow-left me-2"></i>Continuar Comprando
           </a>
         </div>

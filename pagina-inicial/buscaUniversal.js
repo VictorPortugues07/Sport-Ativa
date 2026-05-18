@@ -40,9 +40,13 @@ class BuscaDropdown {
       return;
     }
 
-    const isHomePage = window.location.pathname.includes("paginaInicial.html");
+    const isHomePage =
+      window.location.pathname.endsWith("index.html") ||
+      window.location.pathname === "/" ||
+      window.location.pathname.includes("SPORT-ATIVA");
+
     const jsonPath = isHomePage
-      ? "produtos_ficticios.json"
+      ? "./pagina-inicial/produtos_ficticios.json"
       : "../pagina-inicial/produtos_ficticios.json";
 
     fetch(jsonPath)
@@ -369,9 +373,7 @@ class BuscaDropdown {
         aplicarFiltros();
       }
     } else {
-      window.location.href = `../pagina-inicial/index.html?search=${encodeURIComponent(
-        termo,
-      )}`;
+      window.location.href = `./index.html?search=${encodeURIComponent(termo)}`;
     }
   }
 

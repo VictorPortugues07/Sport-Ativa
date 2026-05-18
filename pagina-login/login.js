@@ -246,7 +246,7 @@ document.addEventListener("DOMContentLoaded", () => {
     );
 
     setTimeout(() => {
-      window.location.href = "../pagina-inicial/index.html";
+      window.location.href = "../index.html";
     }, 2000);
 
     return true;
@@ -264,7 +264,7 @@ document.addEventListener("DOMContentLoaded", () => {
       );
 
       setTimeout(() => {
-        window.location.href = "../pagina-inicial/index.html";
+        window.location.href = "../index.html";
       }, 1500);
     } else {
       showToast(
