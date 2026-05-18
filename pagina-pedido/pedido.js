@@ -2,10 +2,10 @@ document.addEventListener("DOMContentLoaded", () => {
   const listaPedidos = document.getElementById("lista-pedidos");
   const cartCountEl = document.getElementById("cart-count");
   const modalDetalhesPedido = new bootstrap.Modal(
-    document.getElementById("modalDetalhesPedido")
+    document.getElementById("modalDetalhesPedido"),
   );
   const modalCancelarPedido = new bootstrap.Modal(
-    document.getElementById("modalCancelarPedido")
+    document.getElementById("modalCancelarPedido"),
   );
 
   let pedidoParaCancelar = null;
@@ -26,7 +26,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const carrinho = JSON.parse(localStorage.getItem(carrinhoKey)) || [];
     const totalItens = carrinho.reduce(
       (total, item) => total + item.quantidade,
-      0
+      0,
     );
     if (cartCountEl) {
       cartCountEl.textContent = totalItens;
@@ -149,7 +149,7 @@ document.addEventListener("DOMContentLoaded", () => {
           <i class="bi bi-box"></i>
           <h4>Você ainda não fez nenhum pedido</h4>
           <p>Explore nossos produtos e faça seu primeiro pedido!</p>
-          <a href="../pagina-inicial/paginaInicial.html" class="btn btn-danger">
+          <a href="../pagina-inicial/index.html" class="btn btn-danger">
             <i class="bi bi-shop me-2"></i>Começar a Comprar
           </a>
         </div>
@@ -186,14 +186,14 @@ document.addEventListener("DOMContentLoaded", () => {
                   .replace(".", ",")}</div>
                 <div class="small text-muted">
                   <i class="pagamento-icone bi ${obterIconePagamento(
-                    pedido.pagamento
+                    pedido.pagamento,
                   )}"></i>
                   ${
                     pedido.pagamento === "cartao"
                       ? "Cartão"
                       : pedido.pagamento === "pix"
-                      ? "PIX"
-                      : "Boleto"
+                        ? "PIX"
+                        : "Boleto"
                   }
                 </div>
               </div>
@@ -284,8 +284,8 @@ document.addEventListener("DOMContentLoaded", () => {
           <div class="row align-items-center">
             <div class="col-2">
               <img src="${item.produto.imagem}" alt="${
-        item.produto.nome
-      }" class="produto-img-modal">
+                item.produto.nome
+              }" class="produto-img-modal">
             </div>
             <div class="col-6">
               <div class="produto-nome-modal">${item.produto.nome}</div>
@@ -336,7 +336,7 @@ document.addEventListener("DOMContentLoaded", () => {
             <tr>
               <td><strong>Entrega Prevista:</strong></td>
               <td class="text-success fw-bold">${formatarData(
-                pedido.dataEntrega
+                pedido.dataEntrega,
               )}</td>
             </tr>
             `
@@ -352,14 +352,14 @@ document.addEventListener("DOMContentLoaded", () => {
               <td><strong>Forma:</strong></td>
               <td>
                 <i class="pagamento-icone bi ${obterIconePagamento(
-                  pedido.pagamento
+                  pedido.pagamento,
                 )}"></i>
                 ${
                   pedido.pagamento === "cartao"
                     ? "Cartão de Crédito/Débito"
                     : pedido.pagamento === "pix"
-                    ? "PIX"
-                    : "Boleto Bancário"
+                      ? "PIX"
+                      : "Boleto Bancário"
                 }
               </td>
             </tr>

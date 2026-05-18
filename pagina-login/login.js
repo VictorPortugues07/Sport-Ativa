@@ -98,7 +98,7 @@ document.addEventListener("DOMContentLoaded", () => {
           e.target.classList.remove("is-valid");
           showToast(
             "CEP não encontrado. Verifique e tente novamente.",
-            "warning"
+            "warning",
           );
         }
 
@@ -224,7 +224,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (existe) {
       showToast(
         "CPF já cadastrado! Tente fazer login ou use outro CPF.",
-        "error"
+        "error",
       );
       return false;
     }
@@ -242,11 +242,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
     showToast(
       "Cadastro realizado com sucesso! Bem-vindo à Sport Ativa!",
-      "success"
+      "success",
     );
 
     setTimeout(() => {
-      window.location.href = "../pagina-inicial/paginaInicial.html";
+      window.location.href = "../pagina-inicial/index.html";
     }, 2000);
 
     return true;
@@ -260,16 +260,16 @@ document.addEventListener("DOMContentLoaded", () => {
       localStorage.setItem("usuarioLogado", JSON.stringify(usuario));
       showToast(
         `Bem-vindo de volta, ${usuario.nome.split(" ")[0]}!`,
-        "success"
+        "success",
       );
 
       setTimeout(() => {
-        window.location.href = "../pagina-inicial/paginaInicial.html";
+        window.location.href = "../pagina-inicial/index.html";
       }, 1500);
     } else {
       showToast(
         "CPF ou senha inválidos. Verifique seus dados e tente novamente.",
-        "error"
+        "error",
       );
     }
   }
@@ -298,7 +298,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (modoCadastro) {
         const camposVazios = camposObrigatoriosCadastro.filter(
-          (campo) => !dados[campo]
+          (campo) => !dados[campo],
         );
         if (camposVazios.length > 0 || !dados.cpf || !dados.senha) {
           showToast("Preencha todos os campos obrigatórios.", "warning");
@@ -343,7 +343,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (dados.senha !== confirmarSenha) {
           showToast(
             "As senhas não coincidem. Verifique e tente novamente.",
-            "error"
+            "error",
           );
           document.getElementById("confirmar-senha").focus();
           loadingSpinner.style.display = "none";
@@ -367,7 +367,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (idade < 13) {
           showToast(
             "Você deve ter pelo menos 13 anos para se cadastrar.",
-            "error"
+            "error",
           );
           document.getElementById("nascimento").focus();
           loadingSpinner.style.display = "none";

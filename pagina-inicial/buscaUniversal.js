@@ -88,7 +88,7 @@ class BuscaDropdown {
         e.preventDefault();
         this.indiceSelecionado = Math.min(
           this.indiceSelecionado + 1,
-          itens.length - 1
+          itens.length - 1,
         );
         this.destacarItem();
         break;
@@ -239,8 +239,8 @@ class BuscaDropdown {
         <div class="produto-nome fw-semibold">${nomeDestacado}</div>
         <div class="produto-details d-flex justify-content-between align-items-center">
           <small class="text-muted">${marcaDestacada} • ${produto.tamanho} • ${
-      produto.cor
-    }</small>
+            produto.cor
+          }</small>
           <span class="produto-preco fw-bold text-danger">R$ ${produto.preco
             .toFixed(2)
             .replace(".", ",")}</span>
@@ -304,7 +304,7 @@ class BuscaDropdown {
 
     if (this.indiceSelecionado >= 0) {
       const itemAtivo = document.querySelector(
-        `[data-index="${this.indiceSelecionado}"]`
+        `[data-index="${this.indiceSelecionado}"]`,
       );
       if (itemAtivo) {
         itemAtivo.classList.add("active");
@@ -317,7 +317,7 @@ class BuscaDropdown {
   selecionarItem() {
     if (this.indiceSelecionado >= 0) {
       const itemSelecionado = document.querySelector(
-        `[data-index="${this.indiceSelecionado}"]`
+        `[data-index="${this.indiceSelecionado}"]`,
       );
       if (itemSelecionado) {
         const produtoId = itemSelecionado.dataset.produtoId;
@@ -369,8 +369,8 @@ class BuscaDropdown {
         aplicarFiltros();
       }
     } else {
-      window.location.href = `../pagina-inicial/paginaInicial.html?search=${encodeURIComponent(
-        termo
+      window.location.href = `../pagina-inicial/index.html?search=${encodeURIComponent(
+        termo,
       )}`;
     }
   }

@@ -53,7 +53,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       localStorage.setItem(
         "produtosDisponiveis",
-        JSON.stringify(produtosFallback)
+        JSON.stringify(produtosFallback),
       );
     });
 
@@ -66,7 +66,7 @@ document.addEventListener("DOMContentLoaded", () => {
   function atualizarContadorCarrinho() {
     const totalItens = carrinho.reduce(
       (total, item) => total + item.quantidade,
-      0
+      0,
     );
     cartCountEl.textContent = totalItens;
   }
@@ -78,7 +78,7 @@ document.addEventListener("DOMContentLoaded", () => {
           <i class="bi bi-cart-x"></i>
           <h4>Seu carrinho está vazio</h4>
           <p>Adicione produtos para continuar suas compras</p>
-          <a href="../pagina-inicial/paginaInicial.html" class="btn btn-danger">
+          <a href="../pagina-inicial/index.html" class="btn btn-danger">
             <i class="bi bi-arrow-left me-2"></i>Continuar Comprando
           </a>
         </div>
@@ -97,8 +97,8 @@ document.addEventListener("DOMContentLoaded", () => {
           <div class="row align-items-center">
             <div class="col-md-2 col-3 text-center">
               <img src="${produto.imagem}" alt="${
-        produto.nome
-      }" class="produto-img">
+                produto.nome
+              }" class="produto-img">
             </div>
             <div class="col-md-4 col-9">
               <h6 class="produto-nome">${produto.nome}</h6>
@@ -236,7 +236,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   btnFinalizar.addEventListener("click", () => {
     const formaPagamento = document.querySelector(
-      'input[name="pagamento"]:checked'
+      'input[name="pagamento"]:checked',
     ).value;
 
     if (formaPagamento === "cartao") {
